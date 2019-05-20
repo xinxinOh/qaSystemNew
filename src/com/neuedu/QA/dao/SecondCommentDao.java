@@ -6,8 +6,8 @@ import com.neuedu.QA.entity.SecondComment;
 
 public interface SecondCommentDao {
 	
-	ResultSet SelectSecondDiscussID(int discuss_id,int start,int end);
-	int addSecondDiscuss(SecondComment sd);
-	int deleteSecondDiscuss(int SecondDiscuss_id);
+	public ResultSet SelectSecondCommentID(int comment_id,int start,int end);
+	public int addSecondComment(SecondComment sd);
+	public int deleteSecondComment(int SecondComment_id);
 
 }
