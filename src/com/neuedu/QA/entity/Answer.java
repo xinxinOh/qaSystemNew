@@ -80,7 +80,7 @@ public class Answer {
 		return comment_num;
 	}
 
-	public void setComment_num(int comment_num) {
+	public void setComment_num(Integer comment_num) {
 		this.comment_num = comment_num;
 	}
 
