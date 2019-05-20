@@ -6,7 +6,7 @@ import com.neuedu.QA.dbutil.BaseDao;
 import com.neuedu.QA.entity.Collect;
 import com.neuedu.QA.service.CollectionService;
 
-public class CollectionServiceImpl extends BaseDao implements CollectionService {
+public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public Integer addCollection(int user_id, int question_id) {

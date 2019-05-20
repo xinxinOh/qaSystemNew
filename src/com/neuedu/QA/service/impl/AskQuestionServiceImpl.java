@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import com.neuedu.QA.dbutil.BaseDao;
 import com.neuedu.QA.entity.Question;
+import com.neuedu.QA.service.AskQuestionService;
 
-public class AskQuestionServiceImpl extends BaseDao implements com.neuedu.QA.service.AskQuestionService {
+public class AskQuestionServiceImpl implements AskQuestionService {
 
 	@Override
 	public Integer askQuestion(Question question, int user_id) {
