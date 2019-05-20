@@ -5,6 +5,7 @@ import java.util.Date;
 public class Comment {
 	private Integer comment_id;
 	private Integer question_id;
+	private String user_id;
 	private String content;
 	private Date disscuss_date;
 	private Integer upvote_num;
@@ -54,6 +55,12 @@ public class Comment {
 	}
 	public void setDownvote_num(Integer downvote_num) {
 		this.downvote_num = downvote_num;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 	
 	

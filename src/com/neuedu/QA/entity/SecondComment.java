@@ -1,15 +1,15 @@
 package com.neuedu.QA.entity;
 
-public class ScencondComment {
+public class SecondComment {
 
 	private Integer comment_id;
 	private Integer second_comment_id;
 	
-	public ScencondComment() {
+	public SecondComment() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ScencondComment(Integer comment_id,Integer second_comment_id) {
+	public SecondComment(Integer comment_id,Integer second_comment_id) {
 		this.comment_id = comment_id;
 		this.second_comment_id = second_comment_id;
 	}

@@ -1,18 +1,18 @@
 package com.neuedu.QA.entity;
 
 public class Collect {
-	private String u_id;
+	private String user_id;
 	private Integer question_id;
-	public Collect(String u_id, Integer question_id) {
+	public Collect(String user_id, Integer question_id) {
 		super();
-		this.u_id = u_id;
+		this.user_id = user_id;
 		this.question_id = question_id;
 	}
-	public String getU_id() {
-		return u_id;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setU_id(String u_id) {
-		this.u_id = u_id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 	public Integer getQuestion_id() {
 		return question_id;
