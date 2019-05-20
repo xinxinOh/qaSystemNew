@@ -125,7 +125,7 @@ public class BaseDao {
 		BaseDao bb = new BaseDao();
 		
 		int i = bb.executeIUD("update userinfo set name=? ,password=? where id=?",
-				new Object[]{"zhangsanfeng","111111",1});
+				new Object[]{"zhangsanfeng","111111","1"});
 		
 		System.out.println(i);
 	}
