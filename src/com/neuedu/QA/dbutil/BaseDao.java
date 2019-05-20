@@ -13,12 +13,12 @@ import java.sql.Statement;
  */
 public class BaseDao {
 	private String driver="com.mysql.jdbc.Driver";
-	private String url="jdbc:mysql://localhost:3306/lianxi1";
+	private String url="jdbc:mysql://localhost:3306/qasys";
 	private String user="root";
 	private String pwd="123456";
 	public static Connection con=null;
-	public static  PreparedStatement pst =null;
-	public static  ResultSet rs = null;
+	public static PreparedStatement pst =null;
+	public static ResultSet rs = null;
 	
 	/**
 	 * 获取会话的方法
@@ -123,11 +123,7 @@ public class BaseDao {
 	
 	public static void main(String[] args) {
 		BaseDao bb = new BaseDao();
-		
-		int i = bb.executeIUD("update userinfo set name=? ,password=? where id=?",
-				new Object[]{"zhangsanfeng","111111","1"});
-		
-		System.out.println(i);
+		bb.getCon();
 	}
 	
 }
