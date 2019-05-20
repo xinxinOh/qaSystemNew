@@ -1,4 +1,4 @@
-package entity;
+package com.neuedu.QA.entity;
 
 public class User_follow {
 	

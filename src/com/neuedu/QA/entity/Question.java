@@ -1,4 +1,4 @@
-package entity;
+package com.neuedu.QA.entity;
 
 import java.util.Date;
 

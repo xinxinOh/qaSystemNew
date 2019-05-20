@@ -1,7 +1,7 @@
 /**
  * 
  */
-package entity;
+package com.neuedu.QA.entity;
 
 import java.util.Date;
 
@@ -21,7 +21,6 @@ public class UserInfo {
     	
     	
     	/**
-    	 * 构造函数
 		 * @param u_id
 		 * @param password
 		 * @param nickname
@@ -38,7 +37,7 @@ public class UserInfo {
 			this.age = age;
 			this.introduction = introduction;
 		}
-		//get、set方法
+		//get銆乻et鏂规硶
 		public String getU_id() {
 			return u_id;
 		}
