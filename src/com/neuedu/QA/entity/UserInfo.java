@@ -9,27 +9,29 @@ import java.util.Date;
  * @author lenovo
  *
  */
+
 public class UserInfo {
-    	private  String  u_id;
+    	private  String  user_id;
     	private  String  password;
     	private  String  nickname;
     	private  Date  birthdate;
     	private  String  sex;
     	private  Integer  age;
     	private  String  introduction;
+    	  	
     	
-    	
-    	
-    	/**
+    	/**132
 		 * @param u_id
 		 * @param password
 		 * @param nickname
 		 * @param introduction
 		 */
+    	
+    	
     	public UserInfo() {}
     	
-		public UserInfo(String u_id, String password, String nickname, String introduction) {
-			this.u_id = u_id;
+		public UserInfo(String user_id, String password, String nickname, String introduction) {
+			this.user_id = user_id;
 			this.password = password;
 			this.nickname = nickname;
 			this.birthdate = birthdate;
@@ -38,11 +40,11 @@ public class UserInfo {
 			this.introduction = introduction;
 		}
 		//get銆乻et鏂规硶
-		public String getU_id() {
-			return u_id;
+		public String getUser_id() {
+			return user_id;
 		}
-		public void setU_id(String u_id) {
-			this.u_id = u_id;
+		public void setUser_id(String user_id) {
+			this.user_id = user_id;
 		}
 		public String getPassword() {
 			return password;
