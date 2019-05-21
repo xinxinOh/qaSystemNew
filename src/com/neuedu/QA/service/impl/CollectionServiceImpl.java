@@ -2,12 +2,14 @@ package com.neuedu.QA.service.impl;
 
 import java.util.ArrayList;
 
-import com.neuedu.QA.dbutil.BaseDao;
+import com.neuedu.QA.dao.impl.CollectionInfoDaoImpl;
 import com.neuedu.QA.entity.Collect;
 import com.neuedu.QA.service.CollectionService;
 
 public class CollectionServiceImpl implements CollectionService {
 
+	public CollectionInfoDaoImpl collectionInfo = new CollectionInfoDaoImpl();
+		
 	@Override
 	public Integer addCollection(int user_id, int question_id) {
 		// TODO Auto-generated method stub
