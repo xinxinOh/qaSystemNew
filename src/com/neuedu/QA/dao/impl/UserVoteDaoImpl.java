@@ -8,15 +8,16 @@ public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
 
 	@Override
 	public int addVote(UserVote UserVote) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "insert into user_vote(u_id,id,type,category) values (?,?,?,?)";
+		Object[] param = new Object[]{UserVote};
+		return executeIUD(sql,param);
 	}
 	
 	@Override
 	public int deleteVote(UserVote UserVote) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql  = "delete from user_vote where id=?";
+		Object[] param = new Object[]{UserVote};
+		return executeIUD(sql, param);
 	}
-	
-	
+
 }
