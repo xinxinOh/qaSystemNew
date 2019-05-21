@@ -28,6 +28,10 @@ public class Answer {
 		
 	}
 
+	public Answer() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getAnswer_id() {
 		return answer_id;
 	}
