@@ -5,7 +5,7 @@ import com.neuedu.QA.entity.UserInfo;
 import com.neuedu.QA.service.UserService;
 
 public class UserServiceImpl implements UserService{
-
+	
 	public UserInfoDaoImpl userInfoDaoImpl = new UserInfoDaoImpl();
 	
 	

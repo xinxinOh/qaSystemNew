@@ -1,17 +1,20 @@
 package com.neuedu.QA.service.impl;
 
-
 import java.util.ArrayList;
 
 import com.neuedu.QA.dao.impl.AnswerDaoImpl;
-import com.neuedu.QA.dao.impl.QuestionDaoImpl;
 import com.neuedu.QA.entity.Answer;
 import com.neuedu.QA.service.AnswerService;
 
-public class AnswerServiceImpl implements AnswerService{
+public class AnswerServiceImpl implements AnswerService {
 	
-	public AnswerDaoImpl answerDaoImpl=new AnswerDaoImpl();
-	public QuestionDaoImpl questionDaoImpl=new QuestionDaoImpl();
+	private AnswerDaoImpl answerDaoImpl;
+	
+	public AnswerServiceImpl() {
+		// TODO Auto-generated constructor stub
+		answerDaoImpl = new AnswerDaoImpl();
+	}
+
 	@Override
 	public int addAnswer(Answer answer, int question_id, int user_id) {
 		// TODO Auto-generated method stub
