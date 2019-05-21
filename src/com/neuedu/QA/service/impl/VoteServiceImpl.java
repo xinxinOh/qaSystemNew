@@ -1,10 +1,14 @@
 package com.neuedu.QA.service.impl;
 
-import com.neuedu.QA.dao.impl.QuestionDaoImpl;
+import com.neuedu.QA.dao.impl.AnswerDaoImpl;
+import com.neuedu.QA.dao.impl.CommentDaoImpl;
+import com.neuedu.QA.entity.UserVote;
 import com.neuedu.QA.service.VoteService;
 
 public class VoteServiceImpl implements VoteService{
-	QuestionDaoImpl questionDaoImpl;
+	AnswerDaoImpl answerDaoImpl=new AnswerDaoImpl();
+	CommentDaoImpl commentDaoImpl=new CommentDaoImpl();
+	UserVote userVote=new UserVote();
 	
 
 	@Override
