@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import com.neuedu.QA.dao.CollectionInfoDao;
 import com.neuedu.QA.dbutil.BaseDao;
 
-public class CollectionInfoDaoImple extends BaseDao implements CollectionInfoDao {
+public class CollectionInfoDaoImpl extends BaseDao implements CollectionInfoDao {
 
 	@Override
 	public ResultSet SelectAllCollection(int user_id) {
