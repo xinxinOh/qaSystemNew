@@ -17,5 +17,6 @@ public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	
 }

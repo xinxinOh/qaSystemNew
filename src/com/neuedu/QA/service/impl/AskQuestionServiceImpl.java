@@ -11,7 +11,7 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 	public QuestionDaoImpl questionDaoImpl = new QuestionDaoImpl();
 	
 	@Override
-	public Integer askQuestion(Question question, int user_id) {
+	public Integer askQuestion(Question question, String user_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,7 +29,7 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 	}
 
 	@Override
-	public ArrayList<Question> ShowUserQuestion(int user_id) {
+	public ArrayList<Question> ShowUserQuestion(String user_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

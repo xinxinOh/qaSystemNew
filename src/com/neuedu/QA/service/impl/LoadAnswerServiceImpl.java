@@ -23,7 +23,7 @@ public class LoadAnswerServiceImpl implements LoadAnswerService{
 	}
 
 	@Override
-	public ArrayList<Question> LoadUserCenterQuestion(int user_id) {
+	public ArrayList<Question> LoadUserCenterQuestion(String user_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

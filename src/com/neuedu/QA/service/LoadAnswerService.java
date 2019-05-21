@@ -8,6 +8,6 @@ public interface LoadAnswerService {
 	
 	ArrayList<Question> LoadPopularQuestion();
 	ArrayList<Question> LoadCategoryQuestion(int type,int start,int end);
-	ArrayList<Question> LoadUserCenterQuestion(int user_id);
+	ArrayList<Question> LoadUserCenterQuestion(String user_id);
 	
 }

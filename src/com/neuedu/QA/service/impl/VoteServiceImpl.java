@@ -19,7 +19,7 @@ public class VoteServiceImpl implements VoteService{
 	}
 
 	@Override
-	public int userVote(int user_id, int id, int type, int category) {
+	public int userVote(String user_id, int id, int type, int category) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

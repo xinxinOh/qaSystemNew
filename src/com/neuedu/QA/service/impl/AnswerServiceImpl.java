@@ -16,7 +16,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int addAnswer(Answer answer, int question_id, int user_id) {
+	public int addAnswer(Answer answer, int question_id, String user_id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public ArrayList<Answer> showUserAnswer(int user_id) {
+	public ArrayList<Answer> showUserAnswer(String user_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

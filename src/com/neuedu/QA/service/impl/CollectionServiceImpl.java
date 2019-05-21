@@ -11,19 +11,19 @@ public class CollectionServiceImpl implements CollectionService {
 	public CollectionInfoDaoImpl collectionInfo = new CollectionInfoDaoImpl();
 		
 	@Override
-	public Integer addCollection(int user_id, int question_id) {
+	public Integer addCollection(String user_id, int question_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer deleteCollection(int user_id, int question_id) {
+	public Integer deleteCollection(String user_id, int question_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Collect> showCollection(int user_id, int start, int end) {
+	public ArrayList<Collect> showCollection(String user_id, int start, int end) {
 		// TODO Auto-generated method stub
 		return null;
 	}

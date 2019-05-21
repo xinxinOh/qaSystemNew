@@ -25,7 +25,7 @@ public class LoadCommentServiceImpl implements LoadCommentService{
 	}
 
 	@Override
-	public ArrayList<Comment> LoadUserComment(int user_id) {
+	public ArrayList<Comment> LoadUserComment(String user_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
