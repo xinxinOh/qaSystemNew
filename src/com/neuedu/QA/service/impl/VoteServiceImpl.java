@@ -1,8 +1,10 @@
 package com.neuedu.QA.service.impl;
 
+import com.neuedu.QA.dao.impl.QuestionDaoImpl;
 import com.neuedu.QA.service.VoteService;
 
 public class VoteServiceImpl implements VoteService{
+	QuestionDaoImpl questionDaoImpl;
 	
 
 	@Override
