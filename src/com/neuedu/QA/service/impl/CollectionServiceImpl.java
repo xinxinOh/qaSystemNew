@@ -8,13 +8,8 @@ import com.neuedu.QA.service.CollectionService;
 
 public class CollectionServiceImpl implements CollectionService {
 
-	private CollectionInfoDaoImpl collectionInfo;
-	
-	public CollectionServiceImpl() {
-		// TODO Auto-generated constructor stub
-		collectionInfo = new CollectionInfoDaoImpl();
-	}
-	
+	public CollectionInfoDaoImpl collectionInfo = new CollectionInfoDaoImpl();
+		
 	@Override
 	public Integer addCollection(int user_id, int question_id) {
 		// TODO Auto-generated method stub

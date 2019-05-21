@@ -12,7 +12,7 @@ public class UserFollowDaoImpl extends BaseDao implements UserFollowDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public int AddFollow(int user_id, int to_user_id) {
 		// TODO Auto-generated method stub
