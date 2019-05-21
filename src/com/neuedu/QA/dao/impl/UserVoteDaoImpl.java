@@ -5,6 +5,11 @@ import com.neuedu.QA.dbutil.BaseDao;
 import com.neuedu.QA.entity.UserVote;
 
 public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
+	public static void main(String[] args) {
+		UserVoteDaoImpl userVoteDaoImpl=new UserVoteDaoImpl();
+		UserVote userVote=new UserVote("479", 11, 1, 1);
+		userVoteDaoImpl.addVote(userVote);
+	}
 
 	@Override
 	public int addVote(UserVote UserVote) {

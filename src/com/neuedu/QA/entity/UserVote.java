@@ -15,6 +15,7 @@ public class UserVote {
 	public Integer getVote_to_id() {
 		return vote_to_id;
 	}
+	
 	public void setVote_to_id(Integer vote_to_id) {
 		this.vote_to_id = vote_to_id;
 	}
@@ -28,6 +29,13 @@ public class UserVote {
 		return category;
 	}
 	public void setCategory(Integer category) {
+		this.category = category;
+	}
+	public UserVote(String user_id, Integer vote_to_id, Integer vote_type, Integer category) {
+		super();
+		this.user_id = user_id;
+		this.vote_to_id = vote_to_id;
+		this.vote_type = vote_type;
 		this.category = category;
 	}
 }
