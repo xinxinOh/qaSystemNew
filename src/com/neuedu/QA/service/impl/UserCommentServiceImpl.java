@@ -6,7 +6,7 @@ import com.neuedu.QA.service.UserCommentService;
 
 public class UserCommentServiceImpl implements UserCommentService{
 
-	CommentDaoImpl commentDaoImpl=new CommentDaoImpl();
+	public CommentDaoImpl commentDaoImpl=new CommentDaoImpl();
 	
 	@Override
 	public int AddComment(Comment comment) {
