@@ -8,11 +8,11 @@ import com.neuedu.QA.service.AnswerService;
 
 public class AnswerServiceImpl implements AnswerService {
 	
-	private AnswerDaoImpl answerDao;
+	private AnswerDaoImpl answerDaoImpl;
 	
 	public AnswerServiceImpl() {
 		// TODO Auto-generated constructor stub
-		answerDao = new AnswerDaoImpl();
+		answerDaoImpl = new AnswerDaoImpl();
 	}
 
 	@Override
