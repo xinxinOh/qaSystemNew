@@ -9,5 +9,6 @@ public interface SecondCommentDao {
 	public ResultSet SelectSecondCommentID(int comment_id,int start,int end);
 	public int addSecondComment(SecondComment sd);
 	public int deleteSecondComment(int SecondComment_id);
-
+	
+	
 }
