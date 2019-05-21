@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 
 public interface UserFollowDao {
 	
-	ResultSet SelectAllFollow(int user_id);
-	int AddFollow(int user_id, int to_user_id);
-	int DeleteFollow(int user_id, int to_user_id);
+	ResultSet SelectAllFollow(String user_id);
+	int AddFollow(String user_id, String to_user_id);
+	int DeleteFollow(String user_id, String to_user_id);
 	
 }
 
