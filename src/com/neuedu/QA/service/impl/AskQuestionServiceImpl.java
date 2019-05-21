@@ -8,11 +8,7 @@ import com.neuedu.QA.service.AskQuestionService;
 
 public class AskQuestionServiceImpl implements AskQuestionService {
 
-	private QuestionDaoImpl questionDao;
-	public AskQuestionServiceImpl() {
-		// TODO Auto-generated constructor stub
-		questionDao = new QuestionDaoImpl();
-	}
+	public QuestionDaoImpl questionDaoImpl = new QuestionDaoImpl();
 	
 	@Override
 	public Integer askQuestion(Question question, int user_id) {
