@@ -9,21 +9,22 @@ import com.neuedu.QA.entity.SecondComment;
 public class SecondCommentDaoImpl extends BaseDao implements SecondCommentDao {
 
 	@Override
-	public ResultSet SelectSecondDiscussID(int discuss_id, int start, int end) {
+	public ResultSet SelectSecondCommentID(int comment_id, int start, int end) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int addSecondDiscuss(SecondComment sd) {
+	public int addSecondComment(SecondComment sd) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteSecondDiscuss(int SecondDiscuss_id) {
+	public int deleteSecondComment(int SecondComment_id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

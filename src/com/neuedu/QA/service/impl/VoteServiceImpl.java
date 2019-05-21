@@ -4,9 +4,9 @@ import com.neuedu.QA.dao.impl.QuestionDaoImpl;
 import com.neuedu.QA.service.VoteService;
 
 public class VoteServiceImpl implements VoteService{
-	QuestionDaoImpl questionDaoImpl;
 	
-
+	public QuestionDaoImpl questionDaoImpl = new QuestionDaoImpl();
+	
 	@Override
 	public int updateAnswerOrComment(int ID, int type) {
 		// TODO Auto-generated method stub
