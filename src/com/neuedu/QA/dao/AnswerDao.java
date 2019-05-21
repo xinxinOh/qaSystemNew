@@ -12,7 +12,7 @@ import com.neuedu.QA.entity.Answer;
  *
  */
 public interface AnswerDao {
-        public ResultSet SelectAllAnswer(int user_id);
+        public ResultSet SelectAllAnswer(String user_id);
         public ResultSet SelectAnswer(int question_id,int start,int end);
         public Answer SelectOneAnswer(int answer_id);
         public int addAnswer(Answer a);
