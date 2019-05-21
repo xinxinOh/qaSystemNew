@@ -9,7 +9,7 @@ import com.neuedu.QA.dbutil.BaseDao;
 import com.neuedu.QA.entity.Question;
 
 public class QuestionDaoImpl extends BaseDao implements QuestionDao {
-	
+	//sdf
 	//@SuppressWarnings("deprecation")
 	//public static void main(String[] args) {
 		//UserInfo user=new UserInfo(null, "11", "wxx", "hello");
