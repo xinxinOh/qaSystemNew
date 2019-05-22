@@ -8,11 +8,14 @@ import com.neuedu.QA.dbutil.BaseDao;
 public class UserFollowDaoImpl extends BaseDao implements UserFollowDao {
 	
 	@Override
-	public ResultSet SelectAllFollow(String user_id) {
+	public ResultSet SelectFollow(String user_id, int start, int end) {
 		// TODO Auto-generated method stub
-		String sql_1 = "select follow_u_id from user_follow where u_id = ?";
+		
+       Object[] params =new Object[]{user_id,start,end-start};
+		
+
+		String sql_1 = "select follow_u_id from user_follow where u_id = ? LIMIT ?,?";
 		String sql = "select * from user_info where u_id in ("+sql_1+")";
-		String params[] = {user_id};
 		return executeSelect(sql, params);
 	}
 	
@@ -27,11 +30,11 @@ public class UserFollowDaoImpl extends BaseDao implements UserFollowDao {
 	@Override
 	public int DeleteFollow(String user_id, String to_user_id) {
 		// TODO Auto-generated method stub
-		//¸üÐÂÊý¾Ý¿â²»Í¨¹ýÖ÷¼ü£¬mysql»á±¨´í£¬ÐèÒª°Ñset¡ª¡ªsafe¡ª¡ªupdateÉèÖÃÎª0²ÅÄÜÖ´ÐÐ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿â²»Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mysqlï¿½á±¨ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½setï¿½ï¿½ï¿½ï¿½safeï¿½ï¿½ï¿½ï¿½updateï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½
 		String set_safe_0 = "set sql_safe_updates = 0;";
-		//sqlÓï¾ä
+		//sqlï¿½ï¿½ï¿½
 		String sql = "delete from user_follow where u_id = ? and follow_u_id = ?;";
-		//»Ö¸´°²È«ÉèÖÃ
+		//ï¿½Ö¸ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½
 		String set_safe_1 = "set sql_safe_updates = 1;";
 				
 		String params[] = {user_id , to_user_id};

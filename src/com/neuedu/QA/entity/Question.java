@@ -18,15 +18,14 @@ public class Question {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Question(Integer question_id,String user_id ,String title , String content , Integer fever,
-				 Integer answer_num , Integer collect_mun,Date question_date ,Integer type) {
-		this.question_id = question_id;
+	public Question(String user_id ,String title , String content ,Date question_date ,Integer type) {
+		this.question_id = null;
 		this.user_id = user_id;
 		this.title = title;
 		this.content = content;
-		this.fever = fever;
-		this.answer_num = answer_num;
-		this.collect_num = collect_mun;
+		this.fever = 0;
+		this.answer_num = 0;
+		this.collect_num = 0;
 		this.question_date = question_date;
 		this.type = type;
 				

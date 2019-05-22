@@ -11,7 +11,7 @@ import com.neuedu.QA.service.CollectionService;
 public class CollectionServiceImpl implements CollectionService {
 
 	public CollectionInfoDaoImpl collectionInfo = new CollectionInfoDaoImpl();
-		
+
 	@Override
 	public Integer addCollection(String user_id, int question_id) {
 		// TODO Auto-generated method stub
@@ -34,14 +34,15 @@ public class CollectionServiceImpl implements CollectionService {
 			while (resultSet.next()) {
 				Question question = new Question();
 				question.setQuestion_id(resultSet.getInt(1));
-				question.setUser_id(resultSet.getString(resultSet.getString(2)));
+				question.setUser_id(resultSet.getString(2));
 				question.setTitle(resultSet.getString(3));
 				question.setContent(resultSet.getString(4));
 				question.setFever(resultSet.getInt(5));
 				question.setAnswer_num(resultSet.getInt(6));
 				question.setCollect_num(resultSet.getInt(7));
 				question.setQuestion_date(resultSet.getDate(8));
-				question.setType(resultSet.getInt(9));		
+				question.setType(resultSet.getInt(9));	
+				questions.add(question);
 			}
 			resultSet.close();
 		} catch (SQLException e) {
@@ -51,4 +52,11 @@ public class CollectionServiceImpl implements CollectionService {
 		return questions;
 	}
 
+	/*≤‚ ‘*/
+	
+	public static void main(String[] args) {
+		//ÃÌº” ’≤ÿ
+		//…æ≥˝ ’≤ÿ
+		//∑÷“≥≤È’“ ’≤ÿ
+	}
 }
