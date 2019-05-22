@@ -31,7 +31,7 @@ public class SecondCommentDaoImpl extends BaseDao implements SecondCommentDao {
 		
 		Object[] params =new Object[]{sd.getComment_id(),sd.getSecond_comment_id()};
 		int ret = super.executeIUD("insert second_comment (comment_id,second_comment_id) values (?,?);", params);
-		return 1;
+		return ret;
 		
 	}
 
@@ -40,7 +40,7 @@ public class SecondCommentDaoImpl extends BaseDao implements SecondCommentDao {
 		// TODO Auto-generated method stub
 		Object[] params =new Object[]{SecondComment_id};
 		int ret = super.executeIUD("DELETE FROM second_comment WHERE second_comment_id = ?" ,params);
-		return 1;
+		return ret;
 		
 	}
 
