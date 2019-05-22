@@ -2,12 +2,11 @@ package com.neuedu.QA.service;
 
 import java.util.ArrayList;
 
-import com.neuedu.QA.entity.Question;
+import com.neuedu.QA.entity.Answer;
 
 public interface LoadAnswerService {
 	
-	ArrayList<Question> LoadPopularQuestion();
-	ArrayList<Question> LoadCategoryQuestion(int type,int start,int end);
-	ArrayList<Question> LoadUserCenterQuestion(String user_id);
+	ArrayList<Answer> LoadAnswer(int question_id,int start,int end);
+	ArrayList<Answer> LoadUserCenterAnswer(String user_id);
 	
 }
