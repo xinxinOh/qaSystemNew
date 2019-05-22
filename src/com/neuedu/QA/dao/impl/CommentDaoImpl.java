@@ -101,7 +101,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 
 		Object[] params =new Object[]{c.getAnswer_id(),c.getContent(),c.getDisscuss_date(),c.getUpvote_num(),c.getDownvote_num(),c.getUser_id()};
 		int ret = super.executeIUD("insert comment (comment_id,answer_id,content,discuss_date,upvote_num,downvote_num,u_id) values (0,?,?,?,?,?,?);", params);
-		return 1;
+		return ret;
 		
 	}
 
@@ -110,7 +110,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 		
 		Object[] params =new Object[]{c.getContent(),c.getDisscuss_date(),c.getComment_id()};
 		int ret = super.executeIUD("UPDATE comment SET content=?,discuss_date=? WHERE comment_id = ?;", params);
-		return 1;
+		return ret;
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 		
 		Object[] params =new Object[]{Comment_id};
 		int ret = super.executeIUD("DELETE FROM comment WHERE comment_id = ?" ,params);
-		return 1;
+		return ret;
 		
 	}
 	
