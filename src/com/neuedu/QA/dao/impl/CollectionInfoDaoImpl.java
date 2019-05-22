@@ -37,4 +37,13 @@ public class CollectionInfoDaoImpl extends BaseDao implements CollectionInfoDao 
 		return executeIUD(set_safe_0+sql+set_safe_1, params);
 	}
 
+	@Override
+	public ResultSet showCollection(String user_id, int start, int end) {
+		// TODO Auto-generated method stub
+		String sql_1 = "select question_id from collect where u_id = ? ";
+		String sql = "select * from question where question_id in("+sql_1+") order by question_id desc LIMIT ?,?";
+		Object params[] = {user_id,start,end};
+		return executeSelect(sql, params);
+	}
+
 }
