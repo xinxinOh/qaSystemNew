@@ -7,32 +7,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 /**
- * 锟斤拷锟斤拷锟斤拷
+ * 閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
  * @author Administrator
  *
  */
 public class BaseDao {
 	private String driver="com.mysql.jdbc.Driver";
-	private String url="jdbc:mysql://localhost:3306/qasys";
+	private String url="jdbc:mysql://localhost:3306/qasys?useUnicode=true&characterEncoding=utf-8&useSSL=true";
 	private String user="root";
-	private String pwd="ddd123";
+	private String pwd="";
 	public static Connection con=null;
 	public static PreparedStatement pst =null;
 	public static ResultSet rs = null;
 	
 	/**
-	 * 锟斤拷取锟结话锟侥凤拷锟斤拷
+	 * 閿熸枻鎷峰彇閿熺粨璇濋敓渚ュ嚖鎷烽敓鏂ゆ嫹
 	 * @return
 	 */
 	public Connection getCon(){
 		try {
-			Class.forName(driver);//加载mysql驱动
+			Class.forName(driver);//鍔犺浇mysql椹卞姩
 			con=DriverManager.getConnection(url,user,pwd);
 		} catch (ClassNotFoundException e) {
-			System.out.println("驱动加载失败");
+			System.out.println("椹卞姩鍔犺浇澶辫触");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("连接建立失败");
+			System.out.println("杩炴帴寤虹珛澶辫触");
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class BaseDao {
 	}
 	
 	/**
-	 * 锟斤拷锟矫的关闭革拷锟斤拷jdbc锟斤拷锟斤拷姆锟斤拷锟�
+	 * 閿熸枻鎷烽敓鐭殑鍏抽棴闈╂嫹閿熸枻鎷穓dbc閿熸枻鎷烽敓鏂ゆ嫹濮嗛敓鏂ゆ嫹閿燂拷
 	 * @param con
 	 * @param st
 	 * @param rs
@@ -59,31 +59,31 @@ public class BaseDao {
 				con.close();
 			}
 		} catch (Exception e2) {
-			System.out.println("锟截憋拷锟斤拷锟捷匡拷失锟斤拷");
+			System.out.println("閿熸埅鎲嬫嫹閿熸枻鎷烽敓鎹峰尅鎷峰け閿熸枻鎷�");
 			e2.printStackTrace();
 		}
 		
 	}
 	
 	/**
-	 * 锟斤拷锟斤拷删锟侥的诧拷锟斤拷锟斤拷取锟缴癸拷通锟侥凤拷锟斤拷
-	 * @return int 锟斤拷示影锟斤拷锟斤拷锟斤拷锟�
+	 * 閿熸枻鎷烽敓鏂ゆ嫹鍒犻敓渚ョ殑璇ф嫹閿熸枻鎷烽敓鏂ゆ嫹鍙栭敓缂寸櫢鎷烽�氶敓渚ュ嚖鎷烽敓鏂ゆ嫹
+	 * @return int 閿熸枻鎷风ず褰遍敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿燂拷
 	 */
 	
 	public int executeIUD(String sql , Object[] params){
-		PreparedStatement pst =null;//预锟斤拷锟斤拷sql锟斤拷锟斤拷锟斤拷
-		con = getCon();//通锟斤拷锟斤拷通锟斤拷锟斤拷锟矫碉拷锟斤拷锟捷匡拷锟斤拷锟斤拷
-		int count =0;//锟斤拷锟斤拷影锟斤拷锟斤拷锟斤拷锟侥憋拷锟斤拷
+		PreparedStatement pst =null;//棰勯敓鏂ゆ嫹閿熸枻鎷穝ql閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
+		con = getCon();//閫氶敓鏂ゆ嫹閿熸枻鎷烽�氶敓鏂ゆ嫹閿熸枻鎷烽敓鐭鎷烽敓鏂ゆ嫹閿熸嵎鍖℃嫹閿熸枻鎷烽敓鏂ゆ嫹
+		int count =0;//閿熸枻鎷烽敓鏂ゆ嫹褰遍敓鏂ゆ嫹閿熸枻鎷烽敓鏂ゆ嫹閿熶茎鎲嬫嫹閿熸枻鎷�
 		try {
 			pst=con.prepareStatement(sql);
-			//拼锟接诧拷锟斤拷  ,一锟斤拷?锟斤拷应一锟斤拷锟斤拷锟斤拷
+			//鎷奸敓鎺ヨ鎷烽敓鏂ゆ嫹  ,涓�閿熸枻鎷�?閿熸枻鎷峰簲涓�閿熸枻鎷烽敓鏂ゆ嫹閿熸枻鎷�
 			if (null!=params) {
 				for (int i = 0; i <params.length; i++) {
-					pst.setObject(i+1, params[i]);//为sql锟叫碉拷每一锟斤拷?锟斤拷值
+					pst.setObject(i+1, params[i]);//涓簊ql閿熷彨纰夋嫹姣忎竴閿熸枻鎷�?閿熸枻鎷峰��
 				}
 			}
 			
-			count=pst.executeUpdate();//PreparedStatement锟斤拷锟斤拷删锟侥凤拷锟斤拷
+			count=pst.executeUpdate();//PreparedStatement閿熸枻鎷烽敓鏂ゆ嫹鍒犻敓渚ュ嚖鎷烽敓鏂ゆ嫹
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,18 +95,18 @@ public class BaseDao {
 	}
 	
 	/**
-	 * 锟斤拷通锟侥诧拷询锟斤拷锟斤拷,锟斤拷锟斤拷值锟角斤拷锟斤拷锟�
+	 * 閿熸枻鎷烽�氶敓渚ヨ鎷疯閿熸枻鎷烽敓鏂ゆ嫹,閿熸枻鎷烽敓鏂ゆ嫹鍊奸敓瑙掓枻鎷烽敓鏂ゆ嫹閿燂拷
 	 * @param sql
 	 * @param params
 	 * @return
 	 */
 	public ResultSet executeSelect(String sql , Object[] params){
-		con = getCon();//通锟斤拷锟斤拷通锟斤拷锟斤拷锟矫碉拷锟斤拷锟捷匡拷锟斤拷锟斤拷
+		con = getCon();//閫氶敓鏂ゆ嫹閿熸枻鎷烽�氶敓鏂ゆ嫹閿熸枻鎷烽敓鐭鎷烽敓鏂ゆ嫹閿熸嵎鍖℃嫹閿熸枻鎷烽敓鏂ゆ嫹
 		try {
 			pst=con.prepareStatement(sql);
 			if (null!=params) {
 				for (int i = 0; i <params.length; i++) {
-					pst.setObject(i+1, params[i]);//为sql锟叫碉拷每一锟斤拷?锟斤拷值
+					pst.setObject(i+1, params[i]);//涓簊ql閿熷彨纰夋嫹姣忎竴閿熸枻鎷�?閿熸枻鎷峰��
 				}
 			}
 			
@@ -114,7 +114,7 @@ public class BaseDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
-			//锟斤拷锟斤拷注锟解不锟杰碉拷锟斤拷closeAll锟斤拷锟斤拷,锟斤拷然锟斤拷锟节得诧拷锟斤拷rs锟叫碉拷值哦
+			//閿熸枻鎷烽敓鏂ゆ嫹娉ㄩ敓瑙ｄ笉閿熸澃纰夋嫹閿熸枻鎷穋loseAll閿熸枻鎷烽敓鏂ゆ嫹,閿熸枻鎷风劧閿熸枻鎷烽敓鑺傚緱璇ф嫹閿熸枻鎷穜s閿熷彨纰夋嫹鍊煎摝
 		}
 		
 		return rs;
