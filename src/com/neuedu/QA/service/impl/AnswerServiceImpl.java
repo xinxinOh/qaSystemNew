@@ -1,5 +1,6 @@
 package com.neuedu.QA.service.impl;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.neuedu.QA.dao.impl.AnswerDaoImpl;
@@ -23,20 +24,27 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public int deleteAnswer(int answer_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		int i=answerDaoImpl.deleteAnswer(answer_id);
+		return i;
 	}
 
 	@Override
 	public int updateAnswer(Answer answer) {
-		// TODO Auto-generated method stub
-		return 0;
+		int i=answerDaoImpl.updateAnswer(answer);
+		return i;
 	}
 
 	@Override
 	public ArrayList<Answer> showUserAnswer(String user_id) {
 		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs=answerDaoImpl.SelectAllAnswer(user_id);
+		ArrayList<Answer> answers=new ArrayList<Answer>();
+		/*
+		 * try { for(int i=0;rs.next();i++) { answers[i]=new Answer(answer_id,
+		 * question_id, user_id, content, upvote_num, downvote_num, comment_num,
+		 * answer_date); } return answers;
+		 */
+		 return null;
 	}
 
 }

@@ -14,14 +14,14 @@ public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
 	@Override
 	public int addVote(UserVote UserVote) {
 		String sql = "insert into user_vote(u_id,id,type,category) values (?,?,?,?)";
-		Object[] param = new Object[]{UserVote};
+		Object[] param = new Object[]{UserVote.getUser_id(),UserVote.getVote_to_id(),UserVote.getVote_type(),UserVote.getCategory()};
 		return executeIUD(sql,param);
 	}
 	
 	@Override
 	public int deleteVote(UserVote UserVote) {
-		String sql  = "delete from user_vote where id=?";
-		Object[] param = new Object[]{UserVote};
+		String sql  = "delete from user_vote where u_id=?,id=?";
+		Object[] param = new Object[]{UserVote.getUser_id(),UserVote.getVote_to_id()};
 		return executeIUD(sql, param);
 	}
 

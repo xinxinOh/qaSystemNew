@@ -38,4 +38,7 @@ public class UserVote {
 		this.vote_type = vote_type;
 		this.category = category;
 	}
+	public UserVote() {
+		super();
+	}
 }
