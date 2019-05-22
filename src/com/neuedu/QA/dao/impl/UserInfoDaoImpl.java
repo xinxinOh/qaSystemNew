@@ -21,13 +21,11 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 			if (rs.next()) {
 				userInfo.setUser_id(rs.getString(1));
 				userInfo.setPassword(rs.getString(2));
-				/*
-				 * userInfo.sets answer.setAnswer_id(rs.getInt(1));
-				 * answer.setQuestion_id(rs.getInt(2)); answer.setUser_id(rs.getString(3));
-				 * answer.setContent(rs.getString(4)); answer.setUpvote_num(rs.getInt(5));
-				 * answer.setDownvote_num(rs.getInt(6)); answer.setComment_num(rs.getInt(7));
-				 * answer.setAnswer_date(rs.getDate(8));
-				 */
+				userInfo.setNickname(rs.getString(3));
+				userInfo.setBirthdate(rs.getDate(4));
+				userInfo.setSex(rs.getString(5));
+				userInfo.setAge(rs.getInt(6));
+				userInfo.setIntroduction(rs.getString(7));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
