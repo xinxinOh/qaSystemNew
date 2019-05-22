@@ -60,7 +60,7 @@ public class FollowServiceImpl implements FollowService {
 	 */
 	@Override
 	public int DeleteFollow(String user_id, String to_user_id) {
-		 int ret = userFollowDaoImpl.AddFollow(user_id, to_user_id);		    
+		 int ret = userFollowDaoImpl.DeleteFollow(user_id, to_user_id);		    
 	    return ret;
 	}
 
