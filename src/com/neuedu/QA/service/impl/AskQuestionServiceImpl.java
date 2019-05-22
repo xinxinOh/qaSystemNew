@@ -33,9 +33,9 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 	}
 
 	@Override
-	public ArrayList<Question> ShowUserQuestion(String user_id) {
+	public ArrayList<Question> ShowUserQuestion(String user_id,int start , int end) {
 		// TODO Auto-generated method stub
-		ResultSet resultSet = questionDaoImpl.SelectAllQuestion(user_id);
+		ResultSet resultSet = questionDaoImpl.SelectAllQuestion(user_id,start ,end);
 		
 		ArrayList<Question> questions = new ArrayList<Question>();
 		try {

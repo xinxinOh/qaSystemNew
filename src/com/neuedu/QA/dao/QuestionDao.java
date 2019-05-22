@@ -6,7 +6,7 @@ import com.neuedu.QA.entity.Question;
 
 public interface QuestionDao {
 	
-	ResultSet SelectAllQuestion(String user_id);
+	ResultSet SelectAllQuestion(String user_id,int start ,int end);
 	ResultSet SelectPopularQuestion();
 	ResultSet SelectLoadQuestion(Integer type,int start ,int end);
 	Question selectQuestion(Integer question_id);

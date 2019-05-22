@@ -2,5 +2,4 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.css">
-<%@taglib prefix="c" uri="http://Java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="/qaSystem/layui/css/layui.css">

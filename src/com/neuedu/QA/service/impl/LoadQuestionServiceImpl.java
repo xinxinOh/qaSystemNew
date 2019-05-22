@@ -61,10 +61,5 @@ public class LoadQuestionServiceImpl implements LoadQuestionService {
 	/* (non-Javadoc)
 	 * @see com.neuedu.QA.service.LoadQuestionService#LoadUserQuestion(java.lang.String)
 	 */
-	@Override
-	public ArrayList<Question> LoadUserQuestion(String user_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

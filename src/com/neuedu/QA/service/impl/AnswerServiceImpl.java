@@ -36,21 +36,30 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public ArrayList<Answer> showUserAnswer(String user_id) {
-		ResultSet rs=answerDaoImpl.SelectAllAnswer(user_id);
-		ArrayList<Answer> answers=new ArrayList<Answer>();
-	    try {
-			for(;rs.next();) {
-				Answer answer=new Answer(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7),rs.getDate(8));                       
-			    answers.add(answer);
+	public ArrayList<Answer> showUserAnswer(String user_id, int start, int end) {
+		// TODO Auto-generated method stub
+		ResultSet resultSet =answerDaoImpl.SelectAllAnswer(user_id, start, end);
+		
+		ArrayList<Answer> answers = new ArrayList<Answer>();
+		try {
+			while (resultSet.next()) {
+				Answer answer = new Answer();
+				answer.setQuestion_id(resultSet.getInt(2));
+				answer.setUser_id(resultSet.getString(3));
+				answer.setContent(resultSet.getString(4));
+				answer.setUpvote_num(resultSet.getInt(5));
+				answer.setDownvote_num(resultSet.getInt(6));
+				answer.setComment_num(resultSet.getInt(7));
+				answer.setAnswer_date(resultSet.getDate(8));
+				answers.add(answer);
+				
 			}
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		 
-		 return answers;
+		return null;
 	}
 
 }
