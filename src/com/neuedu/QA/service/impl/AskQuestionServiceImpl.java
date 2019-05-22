@@ -61,6 +61,7 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 	}
 	
 	/*测试*/
+	/*
 	public static void main(String[] args) {
 		AskQuestionService askQuestionService = new AskQuestionServiceImpl();
 		//提出问题
@@ -71,10 +72,11 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 		//删除问题
 		//askQuestionService.deleteQuestion(4);
 		//显示问题
+		/*
 		ArrayList<Question> questions = askQuestionService.ShowUserQuestion("sssss1");
 		for (Question question : questions) {
 			System.out.println(question.getQuestion_id()+"    "+question.getTitle() +"    "+question.getUser_id());
 		}
-	}
+	}*/
 
 }
