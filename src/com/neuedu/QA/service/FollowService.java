@@ -12,8 +12,9 @@ import com.neuedu.QA.entity.UserFollow;
  *
  */
 public interface FollowService {
-	public int AddFollow(String user_id,int to_user_id);
+	
+	public int AddFollow(String user_id,String to_user_id);
 	public ArrayList<UserFollow>  ShowFollow(String user_id,int start,int end);
-    public int DeleteFollow(String user_id,int to_user_id);
+    public int DeleteFollow(String user_id,String to_user_id);
 	
 }
