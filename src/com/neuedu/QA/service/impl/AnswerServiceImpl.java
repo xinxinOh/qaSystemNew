@@ -1,6 +1,7 @@
 package com.neuedu.QA.service.impl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.neuedu.QA.dao.impl.AnswerDaoImpl;
@@ -17,9 +18,9 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int addAnswer(Answer answer, int question_id, String user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addAnswer(Answer answer) {
+		int i=answerDaoImpl.addAnswer(answer);
+		return i;
 	}
 
 	@Override
@@ -36,15 +37,20 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public ArrayList<Answer> showUserAnswer(String user_id) {
-		// TODO Auto-generated method stub
 		ResultSet rs=answerDaoImpl.SelectAllAnswer(user_id);
 		ArrayList<Answer> answers=new ArrayList<Answer>();
-		/*
-		 * try { for(int i=0;rs.next();i++) { answers[i]=new Answer(answer_id,
-		 * question_id, user_id, content, upvote_num, downvote_num, comment_num,
-		 * answer_date); } return answers;
-		 */
-		 return null;
+	    try {
+			for(;rs.next();) {
+				Answer answer=new Answer(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7),rs.getDate(8));                       
+			    answers.add(answer);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 
+		 return answers;
 	}
 
 }
