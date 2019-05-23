@@ -57,9 +57,9 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
 	//}
 
 	@Override
-	public ResultSet SelectAllQuestion(String user_id) {//“我提问过的问题”
-		Object[] params =new Object[]{user_id};
-		ResultSet rs = super.executeSelect("select * from question where u_id = ? order by question_date desc" , params);
+	public ResultSet SelectAllQuestion(String user_id, int start, int end) {//“我提问过的问题”
+		Object[] params =new Object[]{user_id , start ,end};
+		ResultSet rs = super.executeSelect("select * from question where u_id = ? order by question_date desc limit ?,?" , params);
 		//super.closeAll(BaseDao.con, BaseDao.pst, rs);
 		return rs;
 	}

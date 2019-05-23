@@ -46,15 +46,6 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 		
 	//}
 			
-			 
-
-	@Override
-	public ResultSet SelectAllAnswer(String user_id) {//“我回答过的”
-		Object[] params =new Object[]{user_id};
-		ResultSet rs = super.executeSelect("select * from answer where u_id=? order by answer_date desc", params);
-		//super.closeAll(BaseDao.con, BaseDao.pst, rs);
-		return rs;
-	}
 
 	@Override
 	public ResultSet SelectAnswer(int question_id, int start, int end) {//"提问页按分页显示回答"
@@ -79,6 +70,7 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 				answer.setDownvote_num(rs.getInt(6));
 				answer.setComment_num(rs.getInt(7));
 				answer.setAnswer_date(rs.getDate(8));
+				
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -104,10 +96,17 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 	}
 
 	@Override
+	public ResultSet SelectAllAnswer(String user_id, int start, int end) {
+		Object[] params =new Object[]{user_id,start,end};
+		ResultSet rs = executeSelect("select * from answer where u_id=? order by answer_date desc LIMIT ?,?", params);
+		//super.closeAll(BaseDao.con, BaseDao.pst, rs);
+		return rs;
+	}
+
+	@Override
 	public int deleteAnswer(int Answer_id) {
-		Object[] params =new Object[]{Answer_id};
-		int i=super.executeIUD("delete from answer where answer_id=?", params);
-		return i;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
