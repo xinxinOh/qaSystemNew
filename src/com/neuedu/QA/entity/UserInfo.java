@@ -30,7 +30,7 @@ public class UserInfo {
     	
     	public UserInfo() {}
     	
-		public UserInfo(String user_id, String password, String nickname, String introduction) {
+		public UserInfo(String user_id, String password, String nickname, Date birthdate , String sex , int age,String introduction) {
 			this.user_id = user_id;
 			this.password = password;
 			this.nickname = nickname;
