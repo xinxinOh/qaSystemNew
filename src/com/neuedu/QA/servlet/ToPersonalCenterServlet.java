@@ -2,6 +2,7 @@ package com.neuedu.QA.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +50,18 @@ public class ToPersonalCenterServlet extends HttpServlet {
 		AnswerService answerService = new AnswerServiceImpl();
 		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,0,10);
 		request.getSession().setAttribute("answers", answers);
+		
+		//回答的问题
+		AskQuestionService askQuestionService = new AskQuestionServiceImpl();
+		ArrayList<Question> answerQuestions = new ArrayList<Question>();
+		Iterator<Answer> answerIt = answers.iterator();
+		while (answerIt.hasNext()) {
+			Answer answer = answerIt.next();
+			int q_id = answer.getQuestion_id();
+			Question question = askQuestionService.selectQuestion(q_id);
+			answerQuestions.add(question);
+		}
+		request.getSession().setAttribute("answerQuestions", answerQuestions);
 		
 		//设置收藏问题;
 		CollectionService collectionService = new CollectionServiceImpl();
