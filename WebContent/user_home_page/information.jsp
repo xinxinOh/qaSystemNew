@@ -24,8 +24,8 @@
 	<div class = "share">
 		<p></p>
 		<p class = "light_font_color">分享</p>
-		<p class="layui-icon layui-icon-login-wechat" style="font-size: 30px; color: darkolivegreen;"></p>
-		<p class="layui-icon layui-icon-login-qq" style="font-size: 30px; color: darkolivegreen;"></p>
-		<p class="layui-icon layui-icon-login-weibo" style="font-size: 30px; color: darkolivegreen;"></p>
+		<p class="layui-icon layui-icon-login-wechat shar_icon" style="font-size: 30px; color: darkolivegreen;"></p>
+		<p class="layui-icon layui-icon-login-qq shar_icon" style="font-size: 30px; color: darkolivegreen;"></p>
+		<p class="layui-icon layui-icon-login-weibo shar_icon" style="font-size: 30px; color: darkolivegreen;"></p>
 	</div>
 </div>
