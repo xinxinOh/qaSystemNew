@@ -30,7 +30,9 @@ layui.use('laydate', function(){
 
 
 });
-
+$("#user_content_return").click(function() {
+	$("#content").load("/qaSystem/user_home_page/content.jsp");
+});
 </script>
 
 <div class = "user_edit_box">
@@ -75,6 +77,7 @@ layui.use('laydate', function(){
     	<div class="layui-input-block">
       		<button class="layui-btn" type="submit">立即提交</button>
       		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      		<button type = "button" class ="layui-btn layui-btn-primary" id = "user_content_return">返回</button>
     	</div>
   	</div>
  

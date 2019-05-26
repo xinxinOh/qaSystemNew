@@ -58,7 +58,7 @@ public class ToPersonalCenterServlet extends HttpServlet {
 		//回答的问题
 		AskQuestionService askQuestionService = new AskQuestionServiceImpl();
 		ArrayList<Question> answerQuestions = new ArrayList<Question>();
-		if (answers!=null) {
+		if (answers.size()==0) {
 			Iterator<Answer> answerIt = answers.iterator();
 			while (answerIt.hasNext()) {
 				Answer answer = answerIt.next();

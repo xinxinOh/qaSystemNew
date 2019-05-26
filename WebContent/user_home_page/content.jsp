@@ -11,38 +11,6 @@ layui.use('element', function(){
   //…
 });
 
-//分页变量:
-	var start1 = 0;
-	var start2 = 0;
-	var start3 = 0;
-//调用分页
-var layPage_1 = layui.laypage;
-layPage_1.render({
-    elem: 'content_page_1',
-    count: "${answers.size()}",
-    limit:10,
-    groups:3,
-    theme:"darkolivegreen",
-    jump: function(obj){
-      start1 = obj.cuur;
-      start2 = 0;
-      start3 = 0;
-    }
-  });
-  
-var layPage_2 = layui.laypage;
-layPage_2.render({
-    elem: 'content_page_2',
-    count: "${collectQuestions.size()}",
-    limit:10,
-    groups:3,
-    theme:"darkolivegreen",
-    jump: function(obj){
-      start2 = obj.cuur;
-      start1 = 0;
-      start3 = 0;
-    }
-  });
 </script>
 <div class="layui-tab layui-tab-card content_box">
   	<ul class="layui-tab-title content_bar">
@@ -52,8 +20,11 @@ layPage_2.render({
 		<li>提问</li>
 	</ul>
 	<div class="layui-tab-content" style="height: 100px;">
+	
     	<div class="layui-tab-item layui-show contentDetail_box">暂无动态</div>
-    	<div class="layui-tab-item contentDetail_box">2
+    
+    	<!-- 回答 -->
+    	<div class="layui-tab-item contentDetail_box">
     		<c:forEach items = "${answers}" var="answer">
 				<div class="contentDetail">
 					<p class="answer_content">${answer.content}</p>					
@@ -63,11 +34,14 @@ layPage_2.render({
 					<p>${answer.date}</p>
 				</div>    		
    			</c:forEach>
-   			<div id="content_page_1"></div>
+   			
  		 </div>
-    <div class="layui-tab-item contentDetail_box">3
+ 		 
+ 		 <!-- 收藏 -->
+    <div class="layui-tab-item contentDetail_box">
         <c:forEach items = "${collectQuestions}" var="collectQuestion" varStatus="status">
-        	<p class="question_title">${collectQuestions.get(status.count).title}</p>
+        	
+        	<p class="question_title">"${collectQuestions[status.count].title}"</p>
     		<div class = "contentDetail">
     			<p class="question_content">${collectQuestion.content}</p>
    				<div class="question_discribe">
@@ -77,10 +51,10 @@ layPage_2.render({
     				</div>
     		</div>
     	</c:forEach>
-    	<div id="content_page_2"></div>
-    	<p>收藏</p>
     </div>
-    <div class="layui-tab-item contentDetail_box">4
+    
+    <!-- 提问 -->
+    <div class="layui-tab-item contentDetail_box">
     	<c:forEach items = "${questions}" var="question">
     		<div class = "contentDetail">
     			<p class="question_title">${question.title}</p>
@@ -91,11 +65,8 @@ layPage_2.render({
    					<p>${question.answer_num}</p>
     				<p>${question.collect_num}</p>
    				</div>
-    				
    			</div>
    		</c:forEach>
    		
-   		<div id="content_page_3"></div>
-   		<p>提问</p>
    	</div>
 </div>

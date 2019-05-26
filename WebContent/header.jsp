@@ -4,4 +4,4 @@
 <html>
 <link rel="stylesheet" href="/qaSystem/layui/css/layui.css" media="all">
 <script type="text/javascript" src="/qaSystem/layui/layui.js"></script>
-<!-- <script type="text/javascript" src="/qaSystem/jquery/2.0.0/jquery.min.js"></script> -->
+<script type="text/javascript" src="/qaSystem/jquery/jquery-1.8.3.min.js"></script>
