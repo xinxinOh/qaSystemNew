@@ -1,29 +1,23 @@
 package com.neuedu.QA.servlet;
 
 import java.io.IOException;
-import java.util.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.neuedu.QA.entity.UserInfo;
-import com.neuedu.QA.service.UserService;
-import com.neuedu.QA.service.impl.UserServiceImpl;
-
 /**
- * Servlet implementation class testServlet
+ * Servlet implementation class UserContentPageServlet
  */
-@WebServlet("/testServlet")
-public class testServlet extends HttpServlet {
+@WebServlet("/UserContentPageServlet")
+public class UserContentPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public testServlet() {
+    public UserContentPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,15 +27,7 @@ public class testServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserService userService = new UserServiceImpl();
-		Date date = new Date();
-		date.setYear(2018);
-		UserInfo user = new UserInfo("test", "test", "test",date , "ƒ–", 10, "”√”⁄≤‚ ‘");
-		request.getSession().setAttribute("user", user);
-		System.out.println(user.getSex()+user.getBirthdate());
-		request.getRequestDispatcher("//ToPersonalCenterServlet").forward(request, response);;
-		date.getYear();
-		return;
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

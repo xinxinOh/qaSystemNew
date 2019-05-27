@@ -52,14 +52,13 @@ public class AnswerServiceImpl implements AnswerService {
 				answer.setComment_num(resultSet.getInt(7));
 				answer.setAnswer_date(resultSet.getDate(8));
 				answers.add(answer);
-				
 			}
 			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return answers;
 	}
 
 }
