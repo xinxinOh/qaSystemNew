@@ -1,0 +1,152 @@
+.navbar {
+	postion: absolute;
+	height: 50px;
+}
+
+.category {
+	height: 40px;
+	top: 250px;
+}
+
+.question-btn-padding-right {
+	padding-right: 20px;
+}
+
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.div-inline {
+	display: inline;
+}
+
+.category ul {
+	list-style-type: none;
+	margin: 0 auto;
+	padding: 0;
+	overflow: hidden;
+}
+
+.category li {
+	font-size: 16px;
+	float: left;
+	width: 10%;
+	border: 1px solid #ccc;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+}
+
+body {}
+
+.category a:link,
+a:visited {
+	display: block;
+	text-align: center;
+	padding: 4px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.category a:hover,
+a:active {
+	color: darkseagreen;
+}
+
+.list-group-item.active {
+	background-color: #ea0c3c;
+}
+
+.left {}
+
+.center {
+	background-color: white;
+}
+
+.question {}
+
+.innerQuestion {
+	border: 1px solid #ccc;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+}
+
+.title {
+	display: block;
+	color: #444;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	line-height: 1.5;
+}
+
+.description {}
+
+.brief {}
+
+.picture {}
+
+.status {
+	color: darkgray;
+}
+
+.fever {
+	color: darkgray;
+}
+
+.like {
+	color: darkgray;
+}
+
+.comment {
+	color: darkgray;
+}
+
+.report {
+	color: darkgray;
+}
+
+.uninterest {
+	color: darkgray;
+}
+
+.personalInfo {
+	background-color: white;
+}
+
+.right {}
+
+
+/*.userPage {
+    position: absolute;
+    top: 40px;
+}
+.share {
+    position: relative;
+    top: 20px;
+}
+.shar_icon {
+    display: inline;
+}
+.light_font_color {
+    color: #8b8b8b;
+}
+.user_introduction {
+    font-size: 16px;
+    height: 100px;
+}
+.weight_font_color {
+    font-weight: 1000;
+}
+.user_information_detail {
+    font-size: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    margin-top: 30px;
+    line-height: 35px;
+}*/
