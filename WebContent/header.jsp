@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/qaSystem/jquery/jquery-1.8.3.min.js"></script>
 <link rel="stylesheet" href="/qaSystem/layui/css/layui.css" media="all">
 <script type="text/javascript" src="/qaSystem/layui/layui.js"></script>
+<script type="text/javascript" src="/qaSystem/json/fastjson-1.2.9.js"></script>
+
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.mobile.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/modules/layer/default/layer.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/modules/laydate/default/ladate.css">
