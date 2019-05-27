@@ -60,8 +60,11 @@ $(function () {
 	$(".page_bar").click(function(){
 
 		$.ajax({
+			type:"GET",
 			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3
 			,success: function(data) {
+				$(".content_box").remove();
+				alert("start remove!");
 			}
 		});
 		
@@ -73,7 +76,7 @@ $(function () {
 */
 </script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/MainPage.css">
-<div class="layui-tab layui-tab-card content_box">
+<div class="layui-tab layui-tab-card">
   	<ul class="layui-tab-title content_bar">
 		<li class="layui-this">动态</li>
 		<li>回答</li>
@@ -86,6 +89,8 @@ $(function () {
     
     	<!-- 回答 -->
     	<div class="layui-tab-item contentDetail_box" varStatus="status" id = "">
+    		<div id = "answer_content_box">
+    		<div class = "content_box">
     		<c:forEach items = "${answers}" var="answer">
 				<div class="innerQuestion" id="innerAnswer${answer.answer_id}">
 				<div class="layui-row ">&nbsp;</div>
@@ -154,12 +159,15 @@ $(function () {
 						</div>
 			</div>   		
    			</c:forEach>
+   			</div>
+   			</div>
    			<div id="demo1" class = "page_bar"></div>
-   			
  		 </div>
  		 
  		 <!-- 收藏 -->
-    <div class="layui-tab-item contentDetail_box" id = "colect_content_box">
+    <div class="layui-tab-item contentDetail_box">
+   		<div id = "collect_content_box">
+    	<div class = "content_box">
         <c:forEach items = "${collectQuestions}" var="question" >
         	<div class="innerQuestion" id="innerQuestion${question.question_id}">
 				<div class="layui-row ">&nbsp;</div>
@@ -228,12 +236,15 @@ $(function () {
 						</div>
 			</div>
     	</c:forEach>
+    	</div>
+    	</div>
 		<div id="demo2" class = "page_bar"></div>
     </div>
     
     <!-- 提问 -->
     <div class="layui-tab-item contentDetail_box" >
     	<div id = "question_content_box">
+    	<div class = "content_box">
     	<c:forEach items = "${questions}" var="question">
     		<div class="innerQuestion" id="innerQuestion${question.question_id}">
 				<div class="layui-row ">&nbsp;</div>
@@ -302,6 +313,7 @@ $(function () {
 						</div>
 			</div>
    		</c:forEach>
+   		</div>
    		</div>
    		<div id="demo3" class = "page_bar"></div>
    		
