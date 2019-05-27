@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.neuedu.QA.dao.impl.AnswerDaoImpl;
 import com.neuedu.QA.entity.Answer;
 import com.neuedu.QA.service.LoadAnswerService;
-import com.sun.prism.paint.RadialGradient;
+
 
 public class LoadAnswerServiceImpl implements LoadAnswerService{
 

@@ -33,7 +33,7 @@
       
        <li class="layui-nav-item" style="float: right;">
        	<form class="layui-form" action="" method='post'>
-       		    <div class="layui-input-inline" style="margin-top: 17px;">
+       		    <div class="layui-input-inline" style="margin-top: 16px;">
       						<input style="width: 330px;height:30px;" name="title" required  placeholder="请输入想查询的问题" autocomplete="off" class="layui-input"> 
    				</div>
        	</form>
