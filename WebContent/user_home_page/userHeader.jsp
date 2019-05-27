@@ -6,4 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </html>
 <link rel="stylesheet" href="/qaSystem/css/user_home_page.css"/>
+<script>
+layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
 
+	//分页
+	var start1 = 0;
+	var start2 = 0;
+	var start3 = 0;
+
+	
+</script>
