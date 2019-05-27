@@ -19,7 +19,7 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 		 * "update", 18, 23, 9, date3);
 		 */
 	
-		AnswerDaoImpl answerDaoImpl=new AnswerDaoImpl();
+		//AnswerDaoImpl answerDaoImpl=new AnswerDaoImpl();
 		//answerDaoImpl.addAnswer(answer1);
 		/*
 		 * answerDaoImpl.deleteAnswer(4); answerDaoImpl.deleteAnswer(5);

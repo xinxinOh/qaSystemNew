@@ -5,4 +5,5 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </html>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/user_home_page.css"/>
+<link rel="stylesheet" href="/qaSystem/css/user_home_page.css"/>
+

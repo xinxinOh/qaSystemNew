@@ -10,5 +10,6 @@ public interface AskQuestionService {
 	public int deleteQuestion(int question_id);
 	public int updateQuestion(Question question);
 	ArrayList<Question> ShowUserQuestion(String user_id, int start, int end);
+	public Question selectQuestion(int question_id);
 
 }
