@@ -13,7 +13,7 @@ layui.use(['laypage', 'layer'], function(){
 		laypage.render({
 			elem: 'demo1'
 		    ,count: "${answers_num}"
-		    ,group:5
+		    ,limit:5
 		    ,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -29,7 +29,7 @@ layui.use(['laypage', 'layer'], function(){
 		laypage.render({	    
 			elem: 'demo2'
 		   	,count: "${collects_num}"
-		   	,group:5
+		   	,limit:5
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -45,6 +45,7 @@ layui.use(['laypage', 'layer'], function(){
 	 	laypage.render({
 		    elem: 'demo3'		    
 		    ,count: "${questions_num}"
+		    ,limit:5
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -59,8 +60,9 @@ layui.use(['laypage', 'layer'], function(){
 	});
 
 $(function () {
-	alert( "${answers_num}"+"   !!!!1   "+ "${collects_num}"+"  vdsfs   "+ "${questions_num}");
+	
 	$(".page_bar").click(function(){
+		//alert("LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3);
 		$.ajax({
 			type:"GET",
 			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
@@ -74,18 +76,20 @@ $(function () {
 				//alert(appendDiv);
 				var answerQuestions = data[1];
 				
-				if(answers.length!=0){
+				//alert(answers.length);
+				if(answers.length !=0){
 					
-				
-				$.each(test,function(index, answer){
+				//	alert("answers.length!=0 start each!");
+				$.each(answers,function(index, answer){
 					//alert(appendDiv);
 					//var answer = answer[i];
-					
+					//alert("answer start append");
+					//alert(answer.content +"   "+answerQuestions[index].title );
 					appendDiv += '<div class="innerQuestion" id="innerAnswer'+answer.answer_id+'">'
 						+'<div class="layui-row ">&nbsp;</div>'
 						
 						+'<div class="title">'
-					+'		<a href="">'+answerQuestions[i].title+'</a>'
+					+'		<a href="">'+answerQuestions[index].title+'</a>'
 					+'	</div>'
 						
 					+'	<div class="layui-row ">'
@@ -149,15 +153,17 @@ $(function () {
 					+'</div>   '		;
 				
 				});
+				//alert("all box finish");
 				}
 				appendDiv +='</div>';
 				$("#answer_content_box").append(appendDiv);			
-				
+				//alert("append end!");
 				
 				appendDiv = '<div class = "content_box">';
 
 				
 				var collectQuestions = data[2];
+				//alert(collectQuestions.length);
 				if(collectQuestions.length!=0){
 				$.each(collectQuestions,function(index, question){
 					
@@ -232,18 +238,20 @@ $(function () {
 				+'</div>'
 				
 				});
+				
 				}
 				appendDiv +='</div>';
 				$("#collect_content_box").append(appendDiv);	
 				
 				appendDiv = '<div class = "content_box">';
 				var questions = data[3];
+				//alert(questions.length);
 				if(questions.length!=0){
 				$.each(questions,function(index, question){
 					//alert(appendDiv);
 					//var answer = answer[i];
 					//alert(answers);
-					alert(question.title);
+				//	alert(question.title);
 					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id+'">'
 				+'	<div class="layui-row ">&nbsp;</div>'
 					
@@ -346,7 +354,7 @@ $(function () {
 				<div class="layui-row ">&nbsp;</div>
 				
 				<div class="title">
-					<a href="">"${answerQuestions[status.count].title}"</a>
+					<a href="">"${answerQuestions.get(status.count).title}"</a>
 				</div>
 				
 				<div class="layui-row ">

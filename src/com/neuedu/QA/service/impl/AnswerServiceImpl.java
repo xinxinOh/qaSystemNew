@@ -44,6 +44,7 @@ public class AnswerServiceImpl implements AnswerService {
 		try {
 			while (resultSet.next()) {
 				Answer answer = new Answer();
+				answer.setAnswer_id(resultSet.getInt(1));
 				answer.setQuestion_id(resultSet.getInt(2));
 				answer.setUser_id(resultSet.getString(3));
 				answer.setContent(resultSet.getString(4));
