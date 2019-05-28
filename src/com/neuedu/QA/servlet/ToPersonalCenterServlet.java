@@ -29,7 +29,7 @@ import com.neuedu.QA.service.impl.LoadQuestionServiceImpl;
  * Servlet implementation class ToPersonalCenterServlet
  */
 @WebServlet("/ToPersonalCenterServlet")
-public class ToPersonalCenterServlet extends HttpServlet {
+public class ToPersonalCenterServlet extends  HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	
@@ -46,6 +46,7 @@ public class ToPersonalCenterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	request.getRequestDispatcher("//LoadUserContentServlet").forward(request, response);
+	request.getRequestDispatcher("//user_home_page/userPage.jsp").forward(request, response);
 	}
 
 	/**

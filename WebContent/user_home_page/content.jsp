@@ -58,14 +58,252 @@ layui.use(['laypage', 'layer'], function(){
 
 $(function () {
 	$(".page_bar").click(function(){
-
+	alert("LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3);
 		$.ajax({
 			type:"GET",
-			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3
-			,success: function(data) {
+			url:"PageContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
+			dataType:"json",		
+			success: function(anSwers,anSwerQuestions,colleCtQuestions,quEstions) {
 				$(".content_box").remove();
-				alert("start remove!");
+				alert("success!");
+				var appendDiv = '<div class = "content_box">';
+				var answers = anSwers;
+				var answerQuestions = anSwerQuestions;
+				$.each(answers,function(index, answer){
+					alert(appendDiv);
+					//var answer = answer[i];
+					//alert(answers);
+					alert(answerQuestions[i].title);
+					appendDiv += '<div class="innerQuestion" id="innerAnswer'+answer.answer_id+'">'
+						+'<div class="layui-row ">&nbsp;</div>'
+						
+						+'<div class="title">'
+					+'		<a href="">'+answerQuestions[i].title+'</a>'
+					+'	</div>'
+						
+					+'	<div class="layui-row ">'
+					+'		<div class="layui-col-md8">'
+					+'			<div class="brief">'
+					+'				<a href="">'+answer.content'</a>'
+					+'				<a href="" style="color: steelblue;">查看全文</a>'
+					+'				<a style="visibility: hidden;" name="questionID"></a>'
+					+'			</div>'
+					+'		</div>'
+					+'		<div class="layui-col-md1"><span>&nbsp;</span></div>'
+					+'			<div class="layui-col-md3">'
+					+'				<div class="picture"><img src="Resource/webSite/test1.jpg" /></div>'
+					+'			</div>'
+					+'		</div>'
+					+'		<div class="status">'
+					+'			<div class="answer-button" style="margin-top: 20px;">'
+					+'				<div class="upvote  div-inline question-btn-padding-right">'
+					+'					<a href="">'
+					+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<span>'+answer.upvote_num+'赞</span>'
+					+'					</a>'
+					+'				</div>'
+
+					+'			<div class="downvote div-inline question-btn-padding-right">'
+					+'				<a href="">'
+					+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'				<span>'+answer.downvote_num+'踩</span>'									
+					+'				</a>'
+					+'			</div>'
+
+					+'			<div class="comment div-inline question-btn-padding-right">'
+					+'				<a href="">'
+					+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+					+'					<span>'+answer.comment_num+'评论</span>'
+					+'				</a>'
+					+'			</div>'
+								
+					+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
+					+'				<a href="">'
+					+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>	'								
+					+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'				</a>'
+					+'			</div>'
+					
+					+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
+					+'				<a href="">'
+					+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<span>分享</span>								'
+					+'				</a>'
+					+'			</div>'
+
+					+'		</div>'
+
+					+'	</div>'
+					+'		<div class="layui-row "><span>&nbsp;</span></div>'
+					+'			<div class="layui-row ">'
+					+'				<span>&nbsp;</span>'
+					+'			</div>'
+					+'</div>   '		;
+				
+				});
+				appendDiv +='</div>';
+				$("#answer_content_box").append(appendDiv);			
+				
+				appendDiv = '<div class = "content_box">';
+				var collectQuestions = colleCtQuestions;
+				$.each(collectQuestions,function(index, question){
+					alert(appendDiv);
+					//var answer = answer[i];
+					//alert(answers);
+					alert(question.title);
+					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id}'">'
+				+'	<div class="layui-row ">&nbsp;</div>'
+					
+				+'	<div class="title">'
+				+'		<a href="">'+question.title'</a>'
+				+'	</div>'
+					
+				+'	<div class="layui-row ">'
+				+'		<div class="layui-col-md8">'
+				+'			<div class="brief">'
+				+'				<a href="">+'question.content+'</a>'
+				+'				<a href="" style="color: steelblue;">查看全文</a>'
+				+'				<a style="visibility: hidden;" name ="questionID"></a>'
+				+'			</div>'
+				+'		</div>'
+				+'		<div class="layui-col-md1"><span>&nbsp;</span></div>'
+				+'			<div class="layui-col-md3">'
+				+'				<div class="picture"><img src="Resource/webSite/test1.jpg" /></div>'
+				+'			</div>'
+				+'		</div>'
+				+'		<div class="status">'
+				+'			<div class="answer-button" style="margin-top: 20px;">'
+				+'				<div class="upvote  div-inline question-btn-padding-right">'
+				+'					<a href="">'
+				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<span>+'question.fever+'热度</span>'
+				+'					</a>'
+				+'				</div>'
+	
+				+'			<div class="downvote div-inline question-btn-padding-right">'
+				+'				<a href="">'
+				+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				<span>'+question.collect_num+'收藏</span>'									
+				+'				</a>'
+				+'			</div>'
+
+				+'			<div class="comment div-inline question-btn-padding-right">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+				+'					<span>'+question.answer_num+'评论</span>'
+				+'				</a>'
+				+'			</div>'
+							
+				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>		'							
+				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				</a>'
+				+'			</div>'
+				
+				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<span>分享</span>								'
+				+'				</a>'
+				+'			</div>'
+
+				+'		</div>'
+
+				+'	</div>'
+				+'		<div class="layui-row "><span>&nbsp;</span></div>'
+				+'			<div class="layui-row ">'
+				+'				<span>&nbsp;</span>'
+				+'			</div>'
+				+'</div>;'
+				
+				});
+				appendDiv +='</div>';
+				$("#collect_content_box").append(appendDiv);	
+				
+				appendDiv = '<div class = "content_box">';
+				var questions = quEstions;
+				$.each(questions,function(index, question){
+					alert(appendDiv);
+					//var answer = answer[i];
+					//alert(answers);
+					alert(question.title);
+					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id}'">'
+				+'	<div class="layui-row ">&nbsp;</div>'
+					
+				+'	<div class="title">'
+				+'		<a href="">'+question.title'</a>'
+				+'	</div>'
+					
+				+'	<div class="layui-row ">'
+				+'		<div class="layui-col-md8">'
+				+'			<div class="brief">'
+				+'				<a href="">+'question.content+'</a>'
+				+'				<a href="" style="color: steelblue;">查看全文</a>'
+				+'				<a style="visibility: hidden;" name ="questionID"></a>'
+				+'			</div>'
+				+'		</div>'
+				+'		<div class="layui-col-md1"><span>&nbsp;</span></div>'
+				+'			<div class="layui-col-md3">'
+				+'				<div class="picture"><img src="Resource/webSite/test1.jpg" /></div>'
+				+'			</div>'
+				+'		</div>'
+				+'		<div class="status">'
+				+'			<div class="answer-button" style="margin-top: 20px;">'
+				+'				<div class="upvote  div-inline question-btn-padding-right">'
+				+'					<a href="">'
+				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<span>+'question.fever+'热度</span>'
+				+'					</a>'
+				+'				</div>'
+	
+				+'			<div class="downvote div-inline question-btn-padding-right">'
+				+'				<a href="">'
+				+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				<span>'+question.collect_num+'收藏</span>'									
+				+'				</a>'
+				+'			</div>'
+
+				+'			<div class="comment div-inline question-btn-padding-right">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+				+'					<span>'+question.answer_num+'评论</span>'
+				+'				</a>'
+				+'			</div>'
+							
+				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>		'							
+				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				</a>'
+				+'			</div>'
+				
+				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
+				+'				<a href="">'
+				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<span>分享</span>								'
+				+'				</a>'
+				+'			</div>'
+
+				+'		</div>'
+
+				+'	</div>'
+				+'		<div class="layui-row "><span>&nbsp;</span></div>'
+				+'			<div class="layui-row ">'
+				+'				<span>&nbsp;</span>'
+				+'			</div>'
+				+'</div>;'
+				
+				});
+				appendDiv +='</div>';
+				$("#question_content_box").append(appendDiv);			
+			
 			}
+		
+		
 		});
 		
 	});
