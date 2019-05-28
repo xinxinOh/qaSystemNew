@@ -55,7 +55,7 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 			start1 = Integer.parseInt(request.getParameter("start1"));
 		}
 		AnswerService answerService = new AnswerServiceImpl();
-		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1*5, start1*5+4);
+		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1*5, 4);
 		request.getSession().setAttribute("answers", answers);
 		
 		//求得回答总数
@@ -84,7 +84,7 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 			start2 = Integer.parseInt(request.getParameter("start2"));
 		}
 		CollectionService collectionService = new CollectionServiceImpl();
-		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2*5+4);
+		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, 4);
 		request.getSession().setAttribute("collectQuestions", collectQuestions);
 		//System.out.println("sherched "+collectQuestions.size());
 		//System.out.println("questions");
@@ -101,7 +101,7 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 		}
 		//System.out.println(start3);
 		AskQuestionService questionService = new AskQuestionServiceImpl();
-		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3*5+4);
+		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, 4);
 		request.getSession().setAttribute("questions", questions);
 		
 		//设置提出问题个数

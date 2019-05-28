@@ -12,8 +12,8 @@ layui.use(['laypage', 'layer'], function(){
 		  //自定义首页、尾页、上一页、下一页文本
 		laypage.render({
 			elem: 'demo1'
-		    ,count: "${answers_num}"
-		    ,limit:5
+		    ,count: "${answers_num}"-4
+		    ,limit:4
 		    ,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -28,8 +28,8 @@ layui.use(['laypage', 'layer'], function(){
 		  
 		laypage.render({	    
 			elem: 'demo2'
-		   	,count: "${collects_num}"
-		   	,limit:5
+		   	,count: "${collects_num}"-4
+		   	,limit:4
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -44,8 +44,8 @@ layui.use(['laypage', 'layer'], function(){
 		  
 	 	laypage.render({
 		    elem: 'demo3'		    
-		    ,count: "${questions_num}"
-		    ,limit:5
+		    ,count: "${questions_num}"-4
+		    ,limit:4
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -68,6 +68,10 @@ $(function () {
 			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
 			dataType:"json",		
 			success: function(data) {
+				//alert(data[0]);
+				//alert(data[1]);
+				//alert(data[2]);
+				//alert(data[3]);
 				$(".content_box").remove();
 				
 				var appendDiv = '<div class = "content_box">';
