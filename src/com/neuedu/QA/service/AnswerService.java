@@ -9,4 +9,5 @@ public interface AnswerService {
 	public int deleteAnswer(int answer_id);
 	public int updateAnswer(Answer answer);
 	public ArrayList<Answer> showUserAnswer(String user_id, int start, int end);
+	public int totall(String param , Object value);
 }

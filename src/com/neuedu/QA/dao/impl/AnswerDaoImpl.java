@@ -1,6 +1,7 @@
 package com.neuedu.QA.dao.impl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import com.neuedu.QA.dao.AnswerDao;
@@ -106,6 +107,19 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 	@Override
 	public int deleteAnswer(int Answer_id) {
 		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int total(String param, Object value) {
+		// TODO Auto-generated method stub
+		Object[]params = new Object[] {value};
+		try {
+			return executeSelect("select count(answer_id) from answer where "+param+" = ?", params).getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 

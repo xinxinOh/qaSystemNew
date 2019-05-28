@@ -18,4 +18,5 @@ public interface AnswerDao {
         public int addAnswer(Answer a);
         public int updateAnswer(Answer a);
         public int deleteAnswer(int Answer_id);
+        public int total(String param , Object value);
 }
