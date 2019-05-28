@@ -50,13 +50,17 @@ public class CollectionInfoDaoImpl extends BaseDao implements CollectionInfoDao 
 	@Override
 	public int total(String param, Object value) {
 		Object[]params = new Object[] {value};
+		int ans = 0;
 		try {
-			return executeSelect("select count(u_id) from collect where "+param+" = ?", params).getInt(1);
+			ResultSet resultSet = executeSelect("select count(u_id) from collect where "+param+" = ?", params);
+			resultSet.next();
+			ans = resultSet.getInt(1);
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return ans;
 	}
 
 }

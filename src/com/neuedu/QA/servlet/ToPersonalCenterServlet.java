@@ -59,6 +59,9 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 		request.getSession().setAttribute("answers", answers);
 		
 		//求得回答总数
+		int answers_num = answerService.total("u_id", user_id);
+		System.out.println(answers_num);
+		request.getSession().setAttribute("answers_num", answers_num);
 		//回答的问题
 		AskQuestionService askQuestionService = new AskQuestionServiceImpl();
 		ArrayList<Question> answerQuestions = new ArrayList<Question>();
@@ -68,7 +71,7 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 				Answer answer = answerIt.next();
 				int q_id = answer.getQuestion_id();
 				Question question = askQuestionService.selectQuestion(q_id);
-				System.out.println("question   !!!"+question.getTitle());
+				//System.out.println("question   !!!"+question.getTitle());
 				answerQuestions.add(question);
 			}	
 		}
@@ -82,18 +85,30 @@ public class ToPersonalCenterServlet extends  HttpServlet {
 		}
 		CollectionService collectionService = new CollectionServiceImpl();
 		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2+5);
-		System.out.println("sherched "+collectQuestions.size());
-		System.out.println("questions");
+		request.getSession().setAttribute("collectQuestions", collectQuestions);
+		//System.out.println("sherched "+collectQuestions.size());
+		//System.out.println("questions");
+		
+		//设置收藏问题的个数
+		int collects_num =  collectionService.total("u_id", user_id);
+		System.out.println(collects_num);
+		request.getSession().setAttribute("collects_num",collects_num);
 		//设置提问题
 		String start3_s = request.getParameter("start3");
 		int start3 = 0;
 		if (start3_s != null && !start3_s.equals("")) {
 			start3 = Integer.parseInt(request.getParameter("start3"));
 		}
-		System.out.println(start3);
+		//System.out.println(start3);
 		AskQuestionService questionService = new AskQuestionServiceImpl();
 		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3+5);
 		request.getSession().setAttribute("questions", questions);
+		
+		//设置提出问题个数
+		int questions_num =  questionService.total("u_id", user_id);
+		System.out.println(questions_num);
+		request.getSession().setAttribute("questions_num",questions_num);
+		
 		request.getRequestDispatcher("//user_home_page/userPage.jsp").forward(request, response);
 	}
 

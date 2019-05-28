@@ -114,13 +114,17 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 	public int total(String param, Object value) {
 		// TODO Auto-generated method stub
 		Object[]params = new Object[] {value};
+		int ans = 0;
 		try {
-			return executeSelect("select count(answer_id) from answer where "+param+" = ?", params).getInt(1);
+			ResultSet resultSet = executeSelect("select count(answer_id) from answer where "+param+" = ?", params);
+			resultSet.next();
+			ans = resultSet.getInt(1);
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return ans;
 	}
 
 }

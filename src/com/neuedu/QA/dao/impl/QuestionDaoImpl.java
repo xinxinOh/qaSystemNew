@@ -130,13 +130,17 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
 	@Override
 	public int total(String param, Object value) {
 		Object[]params = new Object[] {value};
+		int ans = 0;
 		try {
-			return executeSelect("select count(question_id) from question where "+param+" = ?", params).getInt(1);
+			ResultSet resultSet =  executeSelect("select count(question_id) from question where "+param+" = ?", params);
+			resultSet.next();
+			ans = resultSet.getInt(1);
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return ans;
 	}
 
 }

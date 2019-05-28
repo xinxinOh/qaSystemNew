@@ -44,7 +44,7 @@ layui.use(['laypage', 'layer'], function(){
 		  
 	 	laypage.render({
 		    elem: 'demo3'		    
-		    ,count: 100
+		    ,count: "${questions_num}"
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
@@ -59,6 +59,7 @@ layui.use(['laypage', 'layer'], function(){
 	});
 
 $(function () {
+	alert( "${answers_num}"+"   !!!!1   "+ "${collects_num}"+"  vdsfs   "+ "${questions_num}");
 	$(".page_bar").click(function(){
 		$.ajax({
 			type:"GET",
