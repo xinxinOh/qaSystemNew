@@ -15,7 +15,49 @@ $(function () {
 		
 	});
 });
+
+//更改用户头像
+function changeUserAccount() {
+	layer.open({
+		  title: ''
+		  ,btn:[]
+		  ,content: '<p>点击上传的头像</p>'
+		  +'<button type="button" class="layui-btn" id="test1">'
+		  +' <i class="layui-icon">&#xe67c;</i>上传图片'
+		  +'</button>'
+		}); 
+	
+
+	layui.use('upload', function(){
+		  var upload = layui.upload;
+		   
+		  //执行实例
+		  var uploadInst = upload.render({
+		    elem: '#test1' //绑定元素
+		    ,data:{name:"picture"}
+		    ,url: '/qaSystem/UserAccountPictureServlet?servletType = batchInFiles' //上传接口
+		    ,accept:'images'
+		    ,done: function(){
+		    	layer.open({
+		  		  title: ''
+		  		  ,btn:[]
+		  		  ,content: '<p>上传成功</p>'
+		  		});
+		    }
+		    ,error: function(){
+		    	layer.open({
+			  		  title: ''
+			  		  ,btn:[]
+			  		  ,content: '<p>上传失败</p>'
+			  		});
+		    }
+		  });
+		});
+}
+    
+ 
 </script>
+
 </head>
 
 <body>
