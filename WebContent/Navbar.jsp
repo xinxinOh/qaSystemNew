@@ -12,7 +12,7 @@
 
 </head>
 <body>
-       <ul class="layui-nav" style="background-color:darkolivegreen;">
+       <ul class="layui-nav" style="background-color:darkseagreen;">
       <li class="layui-nav-item">
        <a href="">图标</a>
       </li>

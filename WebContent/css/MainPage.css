@@ -119,34 +119,3 @@ a:active {
 }
 
 .right {}
-
-
-/*.userPage {
-    position: absolute;
-    top: 40px;
-}
-.share {
-    position: relative;
-    top: 20px;
-}
-.shar_icon {
-    display: inline;
-}
-.light_font_color {
-    color: #8b8b8b;
-}
-.user_introduction {
-    font-size: 16px;
-    height: 100px;
-}
-.weight_font_color {
-    font-weight: 1000;
-}
-.user_information_detail {
-    font-size: 30px;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    margin-top: 30px;
-    line-height: 35px;
-}*/

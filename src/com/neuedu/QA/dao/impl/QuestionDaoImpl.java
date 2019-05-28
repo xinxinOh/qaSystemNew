@@ -65,9 +65,9 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
 	}
 
 	@Override
-	public ResultSet SelectPopularQuestion() {//"首页 右侧 显示热门问题"
-		Object[] params =new Object[]{};
-		ResultSet rs = super.executeSelect("select * from question  order by fever desc LIMIT 10", params);
+	public ResultSet SelectPopularQuestion(int start, int end) {//"首页 右侧 显示热门问题"
+		Object[] params =new Object[]{start,end};
+		ResultSet rs = super.executeSelect("select * from question  order by fever desc LIMIT ?,?", params);
 		//super.closeAll(BaseDao.con, BaseDao.pst, rs);
 		return rs;
 	}

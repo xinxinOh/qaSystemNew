@@ -12,6 +12,6 @@ import com.neuedu.QA.entity.Question;
  *
  */
 public interface LoadQuestionService {
-    public ArrayList<Question> LoadPopularQuestion();    
+    public ArrayList<Question> LoadPopularQuestion(int start,int end);    
 	public ArrayList<Question> LoadCategoryQuestion(int type,int start,int end);
 }

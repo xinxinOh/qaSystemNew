@@ -5,15 +5,346 @@
 <html>
 
 	<head>
+
 		<script src="./js/jquery-3.2.1.min.js"></script>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>Insert title here</title>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/Answer.css">
-
+		<script src="<%=request.getContextPath()%>/layui/layer/layer.js"></script>
 		<script type="text/javascript">
+			var Follow_user = load_user_follow("bfdshter4");
+
+			function load_user_follow(user_id) {
+				var Follow_userid = new Array()
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "FollowUserServlet?type=allfollow&user_id=" + user_id + "&start=" + "0" + "&end=" + "1000",
+					dataType: "text",
+					success: function(data_user) {
+
+						$.each($.parseJSON(data_user), function(idx_user, obj_user) {
+							Follow_userid[idx_user] = obj_user.follow_user_id;
+						})
+					},
+					error: function() {
+						alert(123);
+					}
+				});
+				return Follow_userid;
+			}
+
+			function check_follow() {
+				var str = "follow-user-id-";
+				var follow_id = "";
+				alert(Follow_user[0]);
+				for(x in Follow_user) {
+
+					follow_id = str + Follow_user[x];
+					$("button[id='" + follow_id + "'").text("已关注");
+				}
+			}
+
+			function Search_user_name(user_id) {
+				var nickname = "error";
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "LoadAnswerServlet?type=user&user_id=" + user_id,
+					dataType: "text",
+					success: function(data_user) {
+						nickname = $.parseJSON(data_user).nickname;
+					},
+					error: function() {
+						alert(123);
+					}
+				});
+
+				return nickname;
+			}
+
+			function loadAnswer() {
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "LoadAnswerServlet?type=answer&question_id=" + "1" + "&start=" + $('.all-answers').children().length + "&end=" + $('.all-answers').children().length + 3,
+					dataType: "text",
+					success: function(data_answer) {
+						if($.parseJSON(data_answer) == "") {
+							layer.msg('已经到底啦！');
+						}
+						$.each($.parseJSON(data_answer), function(idx_answer, obj_answer) {
+							user_id = obj_answer.user_id;
+							answer_id = obj_answer.answer_id;
+							$.ajax({
+								async: false,
+								type: "GET",
+								url: "LoadAnswerServlet?type=user&user_id=" + user_id,
+								dataType: "text",
+								success: function(data_user) {
+									var new_data = $.parseJSON(data_user);
+
+									var odiv = '<div class="one-answer">' +
+										'<div class="writer-info">' +
+										'<img src="//t.cn/RCzsdCq" class="layui-nav-img">' +
+										'<span>' + new_data.nickname + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + '</span>' +
+										'<span>' + new_data.introduction + '</span>' +
+										'<button class="layui-btn layui-btn-normal layui-btn-sm user-follow" style="float:right;" id=follow-user-id-' + new_data.user_id + ' >' + '&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>' +
+										'</div>' +
+										'<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;">' +
+										'<p>' + obj_answer.content + '</p>' +
+										'</div>' +
+										'<div class="answer-date">' +
+										'<p>最后编辑' + obj_answer.answer_date + '</p>' +
+										'</div>' +
+										'<div class="answer-button" style="margin-top: 30px;">' +
+										'<div class="upvote  div-inline question-btn-padding-right">' +
+										'<a class="answer-upvote" href="javascript:void(0)" id=answer-upvote-' + obj_answer.answer_id + '>' +
+										'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<span>' + obj_answer.upvote_num + '赞</span>' +
+										'</a>' +
+										'</div>' +
+										'<div class="downvote div-inline question-btn-padding-right">' +
+										'<a class="answer-downvote" href="javascript:void(0)" id=answer-downvote-' + obj_answer.answer_id + '>' +
+										'<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<span>' + obj_answer.downvote_num + '踩</span>' +
+										'</a>' +
+										'</div>' +
+										'<div class="comment div-inline question-btn-padding-right">' +
+										'<a class="see-comment" href="javascript:void(0)">' +
+										'<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<span>' + obj_answer.comment_num + '评论</span>' +
+										'</a>' +
+										'</div>' +
+										'<div class="answer-share div-inline question-btn-padding-right">' +
+										'<a href="">' +
+										'<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<span>分享</span>' +
+										'</a>' +
+										'</div>' +
+										'<div class="answer-share-type div-inline question-btn-padding-right">' +
+										'<a href="">' +
+										'<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'</a>' +
+										'</div>' +
+										'</div>' +
+										'<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F0F0F0;">' +
+										'<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">' +
+										'<div class="input-comment" style="padding-top: 30px;">' +
+										'<textarea id=textarea-answer-' + obj_answer.answer_id + ' name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 30px; width:540px; height:120px; "></textarea>' +
+										'</div>' +
+										'</div>' +
+										'<div class="comment-submit" style="width: 510px;margin-left: 30px;height: 38px;">' +
+										'<button class="layui-btn comment-submit-btn" style="margin-left: 440px;width: 100px;">发表</button>' +
+										'</div>' +
+										'<div class="all-comments" style="margin-top: 30px;margin-bottom: 30px;">' +
+
+										'<ul class="comment" id=answer_' + answer_id + '>' +
+
+										'</ul>' +
+
+										'<div class="load-more" style="margin-top: 30px; height: 50px;text-align:center;line-height:50px;">' +
+										'<a href="javascript:void(0)">点击加载更多</a>' +
+										'</div>' +
+										'</div>' +
+										'</div>' +
+										'<hr />' +
+										'</div>';
+
+									$(".all-answers").append(odiv);
+									$(".see-comment").parent().parent().next().hide();
+
+								},
+								error: function() {
+									alert(123);
+								}
+							});
+
+							$.ajax({
+								async: false,
+								type: "GET",
+								url: "LoadAnswerServlet?type=comment&answer_id=" + answer_id + "&start=" + "1" + "&end=" + "4",
+								dataType: "text",
+								success: function(data_comment) {
+
+									$.each($.parseJSON(data_comment), function(idx_comment, obj_comment) {
+										var comment_li =
+											'<li class="comment-item">' +
+											'<div class="layui-row">' +
+											'<div class="layui-col-md1">' +
+											'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+											'</div>' +
+											'<div class="layui-col-md11">' +
+
+											'<a>' + Search_user_name(obj_comment.user_id) + '</a>' +
+											'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+											obj_comment.content +
+											'</div>' +
+
+											'<div class="comment-button">' +
+											'<p style="margin-bottom: 10px;">' + obj_comment.comment_date + '</p>' +
+											'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+											'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_comment.comment_id + '>' +
+											'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<span>' + obj_comment.upvote_num + '赞</span>' +
+											'</a>' +
+											'</div>' +
+											'<div class="downvote div-inline question-btn-padding-right">' +
+											'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_comment.comment_id + '>' +
+											'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<span>' + obj_comment.downvote_num + '踩</span>' +
+											'</a>' +
+											'</div>' +
+											'<div class="comment div-inline question-btn-padding-right">' +
+											'<a class ="comment-answer" href="javascript:void(0)" id=answer-user-id-' + obj_comment.user_id + ' >' +
+											'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<span>评论</span>' +
+											'</a>' +
+											'</div>' +
+											'</div>' +
+
+											'<ul class="second-comment" id=comment_' + obj_comment.comment_id + '>' +
+
+											'</ul>' +
+
+											'</div>' +
+											'</div>' +
+
+											'</li>';
+
+										var search_answer_id = "answer_" + answer_id;
+										$("ul[id='" + search_answer_id + "'").append(comment_li);
+
+										$.ajax({
+											async: false,
+											type: "GET",
+											url: "LoadAnswerServlet?type=second_comment&comment_id=" + obj_comment.comment_id + "&start=" + "1" + "&end=" + "3",
+											dataType: "text",
+											success: function(data_second_comment) {
+
+												$.each($.parseJSON(data_second_comment), function(idx_second_comment, obj_second_comment) {
+													var seconde_comment_li = '<li class="second-comment-item">' +
+
+														'<div class="layui-row">' +
+														'<div class="layui-col-md1">' +
+														'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+														'</div>' +
+														'<div class="layui-col-md11">' +
+
+														'<a>' + Search_user_name(obj_second_comment.user_id) + '</a>' +
+														'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+														obj_second_comment.content +
+														'</div>' +
+
+														'<div class="comment-button">' +
+														'<p style="margin-bottom: 10px;">' + obj_second_comment.comment_date + '</p>' +
+														'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+														'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_second_comment.comment_id + '>' +
+														'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<span>' + obj_second_comment.upvote_num + '赞</span>' +
+														'</a>' +
+														'</div>' +
+														'<div class="downvote div-inline question-btn-padding-right">' +
+														'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_second_comment.comment_id + '>' +
+														'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<span>' + obj_second_comment.downvote_num + '踩</span>' +
+														'</a>' +
+														'</div>' +
+														'<div class="comment div-inline question-btn-padding-right">' +
+														'<a class ="second-comment" href="javascript:void(0)" id=comment-user-id-' + obj_second_comment.user_id + ' >' +
+														'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<span>评论</span>' +
+														'</a>' +
+														'</div>' +
+														'</div>' +
+
+														'</div>' +
+														'</div>' +
+
+														'</li>';
+
+													var search_comment_id = "comment_" + obj_comment.comment_id;
+													$("ul[id='" + search_comment_id + "'").append(seconde_comment_li);
+												})
+
+											},
+											error: function() {
+												alert(123);
+											}
+										});
+									})
+								},
+								error: function() {
+									alert(123);
+								}
+							});
+						})
+
+					},
+					error: function() {
+						alert(123);
+					}
+				});
+
+			}
+
+			function addNewComment(content) {
+
+				var comment_li =
+					'<li class="comment-item">' +
+					'<div class="layui-row">' +
+					'<div class="layui-col-md1">' +
+					'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+					'</div>' +
+					'<div class="layui-col-md11">' +
+
+					'<a>' + Search_user_name("bfdshter4") + '</a>' +
+					'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+					content +
+					'</div>' +
+
+					'<div class="comment-button">' +
+					'<p style="margin-bottom: 10px;">' + new Date() + '</p>' +
+					'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+					'<a class="comment-upvote" href="javascript:void(0)">' +
+					'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<span>0赞</span>' +
+					'</a>' +
+					'</div>' +
+					'<div class="downvote div-inline question-btn-padding-right">' +
+					'<a class="comment-downvote" href="javascript:void(0)" >' +
+					'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<span>0踩</span>' +
+					'</a>' +
+					'</div>' +
+					'<div class="comment div-inline question-btn-padding-right">' +
+					'<a class ="comment-answer" href="javascript:void(0)">' +
+					'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<span>评论</span>' +
+					'</a>' +
+					'</div>' +
+					'</div>' +
+
+					'<ul class="second-comment">' +
+
+					'</ul>' +
+
+					'</div>' +
+					'</div>' +
+
+					'</li>';
+
+				var search_answer_id = "answer_" + answer_id;
+				$("ul[id='" + search_answer_id + "'").append(comment_li);
+			}
+
 			$(document).ready(function() {
+				loadAnswer();
+				check_follow();
 				$(".see-comment").parent().parent().next().hide();
 				$(document).scroll(function() {
 					//滚动条滑动的时候获取滚动条距离顶部的距离
@@ -21,139 +352,13 @@
 					//屏幕的高度
 					var client = $(window).height();
 					var h = $(document).height();
-					var nickname = '1234';
-					var intro = '4123';
 					var flag = true;
 					if(h <= scroll + client) { // 到达底部时,加载新内容
 						if(flag == false) {
 							return;
 						}
-						$.each($.parseJSON(data),function(idx,obj){
-//							
-//							var odiv = '<div class="one-answer">' +
-//							'<div class="writer-info">' +
-//							'<img src="//t.cn/RCzsdCq" class="layui-nav-img">' +
-//							'<span>' + nickname +'&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + '</span>' +
-//							'<span>' + intro + '</span>' +
-//							'<button class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 170px;">&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>' +
-//							'</div>'+
-//							'<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;">' +
-//							'<p>' + obj.content +'</p>' +
-//							'</div>'+
-//							'<div class="answer-date">'+
-//							'<p>最后编辑' + obj.answer_date +'</p>' +
-//							'</div>'+ 
-//							'<div class="answer-button" style="margin-top: 30px;">'+
-//							'<div class="upvote  div-inline question-btn-padding-right">'+
-//							'<a href="">'+
-//							'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>'+obj.upvote_num+'赞</span>'+
-//							'</a>'+
-//							'</div>'+
-//							'<div class="downvote div-inline question-btn-padding-right">'+
-//							'<a href="">'+
-//							'<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>'+obj.downvote_num+'踩</span>'+
-//							'</a>'+
-//							'</div>'+
-//							'<div class="comment div-inline question-btn-padding-right">'+
-//							'<a class="see-comment" href="javascript:void(0)">'+
-//							'<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>'+obj.comment_num+'评论</span>'+
-//							'</a>'+
-//							'</div>'+
-//							'<div class="answer-share div-inline question-btn-padding-right">'+
-//							'<a href="">'+
-//							'<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>分享</span>'+
-//							'</a>'+
-//							'</div>'+
-//							'<div class="answer-share-type div-inline question-btn-padding-right">'+
-//							'<a href="">'+
-//							'<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'</a>'+
-//							'</div>'+
-//							'</div>'+
-//							'<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F0F0F0;">'+
-//							'<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">'+
-//							'<div class="input-comment" style="padding-top: 30px;">'+
-//							'<textarea name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 30px; overflow:hidden; width:540px; height:120px; "></textarea>'+
-//							'</div>'+
-//							'</div>'+
-//							'<div class="comment-submit" style="width: 510px;margin-left: 30px;height: 38px;">'+
-//							'<button class="layui-btn" style="margin-left: 440px;width: 100px;">发表</button>'+
-//							'</div>'+
-//							'<div class="all-comments" style="margin-top: 30px;margin-bottom: 30px;">'+
-//							'<div class="comment">'+
-//							'<div class="layui-row">'+
-//							'<div class="layui-col-md1">'+
-//							'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">'+
-//							'</div>'+
-//							'<div class="layui-col-md11">'+
-//							'<ul class="comment-list">'+
-//							'<li class="comment-item">'+
-//							'<a>啊啊啊啊啊</a>'+
-//							'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">'+
-//							'是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是'+
-//							'</div>'+
-//							'<div class="comment-button">'+
-//							'<p style="margin-bottom: 10px;">2019-5-23</p>'+
-//							'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">'+
-//							'<a href="">'+
-//							'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>142赞</span>'+
-//						    '</a>'+
-//						    '</div>'+
-//						    '<div class="downvote div-inline question-btn-padding-right">'+
-//						    '<a href="">'+
-//						    '<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>14踩</span>'+
-//						    '</a>'+
-//						    '</div>'+
-//						    '<div class="comment div-inline question-btn-padding-right">'+
-//						    '<a href="">'+
-//						    '<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>'+
-//							'<span>评论</span>'+
-//						    '</a>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '</li>'+
-//						    '</ul>'+
-//						    '<div class="load-more" style="margin-top: 30px; height: 50px;text-align:center;line-height:50px;">'+
-//						    '<a href="javascript:void(0)">点击加载更多</a>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '</div>'+
-//						    '<hr />'+
-//						    '</div>';
-//							
-//									
-//							$(".all-answers").append(odiv);		
-//							$(".see-comment").parent().parent().next().hide();
-//							
-//
-							})		
-								
-						alert(1);
-						$.ajax({
-							type: "GET",
-							url: "LoadAnswerServlet?question_id=" + "1" + "&start=" + "1" + "&end=" + "4",
-							dataType: "text",
-							success: function(data) {
-								
-							alert(data);
-							
-							
-							},
-							error: function() {
-								alert(123);
-							}
-						});
+
+						loadAnswer();
 
 					}
 
@@ -176,11 +381,318 @@
 					$('textarea[autoHeight]').autoHeight();
 				});
 
-				$("body").on("click",".see-comment",function(){
-								
-								$(this).parent().parent().next().toggle();
-								
+				$("body").on("click", ".see-comment", function() {
+
+					$(this).parent().parent().next().toggle();
+
 				});
+
+				$("body").on("click", ".comment-answer", function() {
+
+					var user_id = $(this).attr('id').split('-')[3];
+					var nickname = Search_user_name(user_id);
+					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").val("//@" + nickname + " ");
+				});
+
+				$("body").on("click", ".second-comment", function() {
+
+					var user_id = $(this).attr('id').split('-')[3];
+					var nickname = Search_user_name(user_id);
+					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").val("//@" + nickname + " ");
+
+				});
+
+				$("body").on("click", ".answer-upvote", function() {
+
+					var answer_id = $(this).attr('id').split('-')[2];
+					var s = $(this).find("span");
+
+					$.ajax({
+						type: "GET",
+						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "0",
+						dataType: "text",
+						success: function(data) {
+							if(data == 1) {
+								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
+								s.html(upvote_num + "赞");
+								s.text(upvote_num + "赞");
+							}
+
+							if(data == 0) {
+
+								layer.confirm('您已赞过该回答，是否取消赞？', {
+									btn: ['不取消', '取消赞'] //按钮
+								}, function() {
+									layer.msg('', {
+										icon: 1,
+										time: 1,
+										isOutAnim: false
+									});
+								}, function() {
+									$.ajax({
+										type: "GET",
+										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "0",
+										dataType: "text",
+										success: function(data_quxiao) {
+											if(data_quxiao == 1) {
+
+												var upvote_num = parseInt(s.text().replace("赞", "")) - 1; //截取数字
+												s.html(upvote_num + "赞");
+												s.text(upvote_num + "赞");
+
+												layer.msg('取消赞成功', {
+													icon: 1
+												});
+											}
+											if(data_quxiao == 0) {
+												layer.msg('取消赞失败', {
+													icon: 1
+												});
+											}
+										},
+										error: function() {
+											alert(123);
+										}
+									});
+
+								});
+							}
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+
+				});
+
+				$("body").on("click", ".answer-downvote", function() {
+
+					var answer_id = $(this).attr('id').split('-')[2];
+					var s = $(this).find("span");
+
+					$.ajax({
+						type: "GET",
+						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "0",
+						dataType: "text",
+						success: function(data) {
+							if(data == 1) {
+								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
+								s.html(downvote_num + "踩");
+								s.text(downvote_num + "踩");
+							}
+							if(data == 0) {
+
+								layer.confirm('您已踩过该回答，是否取消踩？', {
+									btn: ['不取消', '取消踩'] //按钮
+								}, function() {
+									layer.msg('', {
+										icon: 1,
+										time: 1,
+										isOutAnim: false
+									});
+								}, function() {
+									$.ajax({
+										type: "GET",
+										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "0",
+										dataType: "text",
+										success: function(data_quxiao) {
+											if(data_quxiao == 1) {
+
+												var downvote_num = parseInt(s.text().replace("踩", "")) - 1; //截取数字
+												s.html(downvote_num + "踩");
+												s.text(downvote_num + "踩");
+
+												layer.msg('取消踩成功', {
+													icon: 1
+												});
+											}
+											if(data_quxiao == 0) {
+												layer.msg('取消踩失败', {
+													icon: 1
+												});
+											}
+										},
+										error: function() {
+											alert(123);
+										}
+									});
+
+								});
+							}
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+
+				});
+
+				$("body").on("click", ".comment-upvote", function() {
+
+					var answer_id = $(this).attr('id').split('-')[2];
+					var s = $(this).find("span");
+
+					$.ajax({
+						type: "GET",
+						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "1",
+						dataType: "text",
+						success: function(data) {
+							if(data == 1) {
+								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
+								s.html(upvote_num + "赞");
+								s.text(upvote_num + "赞");
+							}
+
+							if(data == 0) {
+
+								layer.confirm('您已赞过该评论，是否取消赞？', {
+									btn: ['不取消', '取消赞'] //按钮
+								}, function() {
+									layer.msg('', {
+										icon: 1,
+										time: 1,
+										isOutAnim: false
+									});
+								}, function() {
+									$.ajax({
+										type: "GET",
+										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "1",
+										dataType: "text",
+										success: function(data_quxiao) {
+											if(data_quxiao == 1) {
+
+												var upvote_num = parseInt(s.text().replace("赞", "")) - 1; //截取数字
+												s.html(upvote_num + "赞");
+												s.text(upvote_num + "赞");
+
+												layer.msg('取消赞成功', {
+													icon: 1
+												});
+											}
+											if(data_quxiao == 0) {
+												layer.msg('取消赞失败', {
+													icon: 1
+												});
+											}
+										},
+										error: function() {
+											alert(123);
+										}
+									});
+
+								});
+							}
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+
+				});
+
+				$("body").on("click", ".comment-downvote", function() {
+
+					var answer_id = $(this).attr('id').split('-')[2];
+					var s = $(this).find("span");
+
+					$.ajax({
+						type: "GET",
+						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "1",
+						dataType: "text",
+						success: function(data) {
+							if(data == 1) {
+								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
+								s.html(downvote_num + "踩");
+								s.text(downvote_num + "踩");
+							}
+							if(data == 0) {
+
+								layer.confirm('您已踩过该评论，是否取消踩？', {
+									btn: ['不取消', '取消踩'] //按钮
+								}, function() {
+									layer.msg('', {
+										icon: 1,
+										time: 1,
+										isOutAnim: false
+									});
+								}, function() {
+									$.ajax({
+										type: "GET",
+										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "1",
+										dataType: "text",
+										success: function(data_quxiao) {
+											if(data_quxiao == 1) {
+
+												var downvote_num = parseInt(s.text().replace("踩", "")) - 1; //截取数字
+												s.html(downvote_num + "踩");
+												s.text(downvote_num + "踩");
+
+												layer.msg('取消踩成功', {
+													icon: 1
+												});
+											}
+											if(data_quxiao == 0) {
+												layer.msg('取消踩失败', {
+													icon: 1
+												});
+											}
+										},
+										error: function() {
+											alert(123);
+										}
+									});
+
+								});
+							}
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+
+				});
+
+				$("body").on("click", ".comment-submit-btn", function() {
+					var answer_id = $(this).parent().prev().find("textarea").attr('id').split('-')[2];
+					var content = $(this).parent().prev().find("textarea").val();
+					var s = $(this).parent().parent().prev().children(".comment").find("span");
+					$.ajax({
+						type: "GET",
+						url: "UserCommentServlet?type=answer_comment&answer_id=" + answer_id + "&content=" + content + "&user_id=" + "bfdshter4",
+						dataType: "text",
+						success: function(data) {
+							layer.msg('评论成功');
+							addNewComment(content, answer_id);
+							var comment_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
+							s.text(comment_num + "评论");
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+				});
+
+				$("body").on("click", ".answer-question-btn", function() {
+					var question_id = $($("body").children("div").get(0)).attr('id').split('-')[1];
+					var content = $(this).parent().parent().prev().find("textarea").val();
+					var s = $(this).parent().parent().prev().children(".comment").find("span");
+					$.ajax({
+						type: "GET",
+						url: "AnswerServlet?question_id=" + question_id + "&content=" + content + "&user_id=" + "bfdshter4",
+						dataType: "text",
+						success: function(data) {
+							if(data == 1) {
+								layer.msg('回答成功');
+							} else {
+								layer.msg(data);
+							}
+						},
+						error: function() {
+							alert(123);
+						}
+					});
+				});
+
 				$(".load-more").click(function() {
 					alert(1);
 					var odiv = '<div class="one-answer">' +
@@ -193,6 +705,68 @@
 
 					$(this).parent().prev().append(odiv);
 
+				});
+
+				$("body").on("click", ".user-follow", function() {
+
+					var to_user_id = $(this).attr('id').split('-')[3];
+					var s = $(this).find("span");
+					var this_temo = $(this);
+					var this_str = $(this).text();
+					if(this_str.indexOf("已关注") >= 0) {
+						layer.confirm('您已关注过，是否取消关注？', {
+							btn: ['不取消', '取消关注'] //按钮
+						}, function() {
+							layer.msg('', {
+								icon: 1,
+								time: 1,
+								isOutAnim: false
+							});
+						}, function() {
+							$.ajax({
+								async: false,
+								type: "GET",
+								url: "FollowUserServlet?type=delete&user_id=" + "bfdshter4" + "&to_user_id=" + to_user_id,
+								dataType: "text",
+								success: function(data_quxiao) {
+									if(data_quxiao == 1) {
+										layer.msg('取消成功', {
+											icon: 1
+										});
+										this_temo.text("+关注");
+									}
+									if(data_quxiao == 0) {
+										layer.msg('取消失败', {
+											icon: 1
+										});
+									}
+								},
+								error: function() {
+									alert(123);
+								}
+							});
+
+						});
+					}
+					if(this_str.indexOf("已关注") < 0) {
+						$.ajax({
+							async: false,
+							type: "GET",
+							url: "FollowUserServlet?type=add&user_id=" + "bfdshter4" + "&to_user_id=" + to_user_id,
+							dataType: "text",
+							success: function(data) {
+								if(data == 1) {
+									this_temo.text("已关注");
+									layer.msg('关注成功', {
+										icon: 1,
+									});
+								}
+							},
+							error: function() {
+								alert(123);
+							}
+						});
+					}
 				});
 
 				$("[value=GETsubmit]").click(function() {
@@ -216,7 +790,7 @@
 
 	<body>
 
-		<div>
+		<div id="question-1">
 			<div class="layui-header">
 				<jsp:include page="Navbar.jsp" flush="true" />
 			</div>
@@ -336,7 +910,7 @@
 										</div>
 										<div class="layui-form-item">
 											<div class="layui-input-block" style="margin-left:0px;margin-top:30px;">
-												<button class="layui-btn" lay-submit lay-filter="formDemo">回答</button>
+												<button class="layui-btn answer-question-btn">回答</button>
 												<button type="reset" class="layui-btn layui-btn-primary yq">重置</button>
 											</div>
 										</div>
@@ -348,266 +922,6 @@
 								<hr style="height:1px;border:none;border-top:1px solid darkolivegreen;" />
 							</div>
 							<div class="all-answers">
-								<div class="one-answer">
-
-									<div class="writer-info">
-										<img src="//t.cn/RCzsdCq" class="layui-nav-img">
-										<span>组织者组织&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-										<span>装BBBBBBBBBBBBBBBBBBBBB</span>
-										<button class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 170px;">&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>
-									</div>
-
-									<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;">
-										<p>如果你想叫农民满意那是办不到，农民懂得感恩吗？农民会满足吗？农民的需求是无止境的，朱之文给他们村做了那么多好事，最后的结局大家都看到了，村头碑砸了，还有人说每家给买辆小轿车，再给10000元我们才说他好，农民就是一群无法满足的无知懒蛋。</p>
-										<p>首先说明一下，我也是农民，地地道道的农民，我最看不惯我们农民的作风，我们村有个尿毒症患者，国家一分钱不要，看一次病还给他50元，从来没有说过国家好，天天骂骂咧咧，到处找事，总感觉没有人敢惹他，确实也是，我们当地乡民政都怕他，最后死了，不是我爸爸都没有人帮忙埋他，确实恶贯满盈。</p>
-										<p></p>
-										<p></p>
-									</div>
-
-									<div class="answer-date">
-										<p>最后编辑 2019-5-23</p>
-									</div>
-
-									<div class="answer-button" style="margin-top: 30px;">
-
-										<div class="upvote  div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>142赞</span>
-											</a>
-										</div>
-
-										<div class="downvote div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>12踩</span>
-											</a>
-										</div>
-
-										<div class="comment div-inline question-btn-padding-right">
-											<a class="see-comment" href="javascript:void(0)">
-												<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>45评论</span>
-											</a>
-										</div>
-
-										<div class="answer-share div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>分享</span>
-											</a>
-										</div>
-
-										<div class="answer-share-type div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-												<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>
-												<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
-											</a>
-										</div>
-
-									</div>
-
-									<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F0F0F0;">
-
-										<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">
-											<div class="input-comment" style="padding-top: 30px;">
-												<textarea name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 30px; overflow:hidden; width:540px; height:120px; "></textarea>
-											</div>
-										</div>
-
-										<div class="comment-submit" style="width: 510px;margin-left: 30px;
-	height: 38px;
-	background: #e2e2e2;">
-											<button class="layui-btn" style="margin-left: 440px;width: 100px;">发表</button>
-										</div>
-
-										<div class="all-comments" style="margin-top: 30px;margin-bottom: 30px;">
-											<div class="comment">
-												<div class="layui-row">
-													<div class="layui-col-md1">
-														<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">
-													</div>
-													<div class="layui-col-md11">
-														<ul class="comment-list">
-															<li class="comment-item">
-																<a>啊啊啊啊啊</a>
-																<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">
-																	是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是
-
-																</div>
-																<div class="comment-button">
-																	<p style="margin-bottom: 10px;">2019-5-23</p>
-																	<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">
-																		<a href="">
-																			<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>142赞</span>
-																		</a>
-																	</div>
-
-																	<div class="downvote div-inline question-btn-padding-right">
-																		<a href="">
-																			<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>12踩</span>
-																		</a>
-																	</div>
-
-																	<div class="comment div-inline question-btn-padding-right">
-																		<a href="">
-																			<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>评论</span>
-																		</a>
-																	</div>
-																</div>
-															</li>
-															<li class="comment-item">
-
-															</li>
-
-														</ul>
-														<div class="load-more" style="margin-top: 30px; height: 50px;text-align:center;line-height:50px;">
-															<a href="javascript:void(0)">点击加载更多</a>
-														</div>
-													</div>
-												</div>
-
-											</div>
-										</div>
-
-									</div>
-
-									<hr />
-								</div>
-								<div class="one-answer">
-
-									<div class="writer-info">
-										<img src="//t.cn/RCzsdCq" class="layui-nav-img">
-										<span>组织者组织&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-										<span>装BBBBBBBBBBBBBBBBBBBBB</span>
-										<button class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 170px;">&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>
-									</div>
-
-									<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;">
-										<p>如果你想叫农民满意那是办不到，农民懂得感恩吗？农民会满足吗？农民的需求是无止境的，朱之文给他们村做了那么多好事，最后的结局大家都看到了，村头碑砸了，还有人说每家给买辆小轿车，再给10000元我们才说他好，农民就是一群无法满足的无知懒蛋。</p>
-										<p>首先说明一下，我也是农民，地地道道的农民，我最看不惯我们农民的作风，我们村有个尿毒症患者，国家一分钱不要，看一次病还给他50元，从来没有说过国家好，天天骂骂咧咧，到处找事，总感觉没有人敢惹他，确实也是，我们当地乡民政都怕他，最后死了，不是我爸爸都没有人帮忙埋他，确实恶贯满盈。</p>
-										<p></p>
-										<p></p>
-									</div>
-
-									<div class="answer-date">
-										<p>最后编辑 2019-5-23</p>
-									</div>
-
-									<div class="answer-button" style="margin-top: 30px;">
-
-										<div class="upvote  div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>142赞</span>
-											</a>
-										</div>
-
-										<div class="downvote div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>12踩</span>
-											</a>
-										</div>
-
-										<div class="comment div-inline question-btn-padding-right">
-											<a class="see-comment" href="javascript:void(0)">
-												<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>45评论</span>
-											</a>
-										</div>
-
-										<div class="answer-share div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
-												<span>分享</span>
-											</a>
-										</div>
-
-										<div class="answer-share-type div-inline question-btn-padding-right">
-											<a href="">
-												<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-												<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>
-												<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
-											</a>
-										</div>
-
-									</div>
-
-									<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F0F0F0;">
-
-										<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">
-											<div class="input-comment" style="padding-top: 30px;">
-												<textarea name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 30px; overflow:hidden; width:540px; height:120px; "></textarea>
-											</div>
-										</div>
-
-										<div class="comment-submit" style="width: 510px;margin-left: 30px;
-	height: 38px;
-	background: #e2e2e2;">
-											<button class="layui-btn" style="margin-left: 440px;width: 100px;">发表</button>
-										</div>
-
-										<div class="all-comments" style="margin-top: 30px;margin-bottom: 30px;">
-											<div class="comment">
-												<div class="layui-row">
-													<div class="layui-col-md1">
-														<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">
-													</div>
-													<div class="layui-col-md11">
-														<ul class="comment-list">
-															<li class="comment-item">
-																<a>啊啊啊啊啊</a>
-																<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">
-																	是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是是
-
-																</div>
-																<div class="comment-button">
-																	<p style="margin-bottom: 10px;">2019-5-23</p>
-																	<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">
-																		<a href="">
-																			<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>142赞</span>
-																		</a>
-																	</div>
-
-																	<div class="downvote div-inline question-btn-padding-right">
-																		<a href="">
-																			<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>12踩</span>
-																		</a>
-																	</div>
-
-																	<div class="comment div-inline question-btn-padding-right">
-																		<a href="">
-																			<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>
-																			<span>评论</span>
-																		</a>
-																	</div>
-																</div>
-															</li>
-															<li class="comment-item">
-
-															</li>
-
-														</ul>
-
-													</div>
-												</div>
-												<div class="load-more" style="background: #e2e2e2;margin-top: 30px; height: 50px;text-align:center;line-height:50px;">
-													<span>点击加载更多</span>
-												</div>
-											</div>
-										</div>
-
-									</div>
-
-									<hr />
-								</div>
 
 							</div>
 

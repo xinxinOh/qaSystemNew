@@ -16,7 +16,16 @@ public class VoteServiceImpl implements VoteService{
 	 * @Override public int updateAnswerOrComment(int ID, int type) { // TODO
 	 * Auto-generated method stub return 0; }
 	 */
-
+	
+	public int SelectVote(String user_id, int id, int type, int category){
+		UserVote userVote = userVoteDaoImpl.SelectVote(user_id, id, type, category);
+		if(userVote.getUser_id()==null||userVote.getUser_id().equals("")) {
+			return 1;
+		}
+		
+		return 0;
+	}
+	
 	@Override
 	public int userVote(String user_id, int id, int type, int category) {//category 0代表回答 1代表评论  type　0踩 1赞 2取消踩 3取消赞
 		UserVote userVote=new UserVote(user_id, id, type, category);

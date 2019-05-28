@@ -81,7 +81,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 				c.setAnswer_id(rs.getInt(2));
 				c.setContent(rs.getString(3));
 				c.setComment_id(rs.getInt(1));
-				c.setDisscuss_date(rs.getDate(4));
+				c.setComment_date(rs.getDate(4));
 				c.setDownvote_num(rs.getInt(6));
 				c.setUpvote_num(rs.getInt(5));
 				c.setUser_id(rs.getString(7));
@@ -99,8 +99,8 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 	@Override
 	public int addComment(Comment c) {
 
-		Object[] params =new Object[]{c.getAnswer_id(),c.getContent(),c.getDisscuss_date(),c.getUpvote_num(),c.getDownvote_num(),c.getUser_id()};
-		int ret = super.executeIUD("insert comment (comment_id,answer_id,content,discuss_date,upvote_num,downvote_num,u_id) values (0,?,?,?,?,?,?);", params);
+		Object[] params =new Object[]{c.getAnswer_id(),c.getContent(),c.getComment_date(),c.getUpvote_num(),c.getDownvote_num(),c.getUser_id()};
+		int ret = super.executeIUD("insert comment (comment_id,answer_id,content,comment_date,upvote_num,downvote_num,u_id) values (0,?,?,?,?,?,?);", params);
 		return ret;
 		
 	}
@@ -108,8 +108,8 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 	@Override
 	public int updateComment(Comment c) {
 		
-		Object[] params =new Object[]{c.getContent(),c.getDisscuss_date(),c.getComment_id()};
-		int ret = super.executeIUD("UPDATE comment SET content=?,discuss_date=? WHERE comment_id = ?;", params);
+		Object[] params =new Object[]{c.getContent(),c.getComment_date(),c.getComment_id()};
+		int ret = super.executeIUD("UPDATE comment SET content=?,comment_date=? WHERE comment_id = ?;", params);
 		return ret;
 	}
 

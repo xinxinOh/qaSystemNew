@@ -16,6 +16,7 @@ public class UserCommentServiceImpl implements UserCommentService{
 		int i=commentDaoImpl.addComment(comment);
 		// TODO Auto-generated method stub
 		return i;
+		
 	}
 
 	@Override

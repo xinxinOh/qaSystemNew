@@ -12,8 +12,8 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 
 	@Override
 	public UserInfo SelectUser(String user_id) {
-		String sql = "SELECT * FROM user_info where u_id=? "; // 妫�绱㈣褰曡
-		//SELECT * FROM user_info LIMIT 5;妫�绱㈠墠浜旇璁板綍
+		String sql = "SELECT * FROM user_info where u_id=? "; // 濡拷缁便垼顔囪ぐ鏇☆攽
+		//SELECT * FROM user_info LIMIT 5;濡拷缁便垹澧犳禍鏃囶攽鐠佹澘缍�
 		Object[] param = new Object[]{user_id};
 		ResultSet rs = executeSelect(sql,param);
 		UserInfo userInfo=new UserInfo();
@@ -30,14 +30,14 @@ public class UserInfoDaoImpl extends BaseDao implements UserInfoDao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
-			super.closeAll(BaseDao.con, BaseDao.pst, rs);
+//			super.closeAll(BaseDao.con, BaseDao.pst, rs);
 		}
 		return userInfo;
 	}
 
 	@Override
 	public Integer addUser(UserInfo userInfo) {
-		String sql = "insert into user_info(u_id,password,nickname,birthdate,sex,age,introduction) values (?,?,?,?,?,?,?)";//insert into user_info(u_id,password,nickname,birthdate,sex,age,introduction) values (9,78,456,'2009-05-07','濂�',10,65235)
+		String sql = "insert into user_info(u_id,password,nickname,birthdate,sex,age,introduction) values (?,?,?,?,?,?,?)";//insert into user_info(u_id,password,nickname,birthdate,sex,age,introduction) values (9,78,456,'2009-05-07','婵傦拷',10,65235)
 		Object[] param = new Object[]{userInfo.getUser_id(),userInfo.getPassword(),userInfo.getNickname(),userInfo.getBirthdate(),userInfo.getSex(),userInfo.getAge(),userInfo.getIntroduction()};
 		return executeIUD(sql,param);
 

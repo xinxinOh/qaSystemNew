@@ -29,7 +29,6 @@ public class LoadCommentServiceImpl implements LoadCommentService{
 		}
 		return Comment_list;
 	}
-
 	@Override
 	public ArrayList<Comment> LoadSecondComment(int comment_id, int start, int end) {
 		ArrayList<Comment> Comment_list = new ArrayList<Comment>();
@@ -41,6 +40,9 @@ public class LoadCommentServiceImpl implements LoadCommentService{
 				str = str+rs_second_id.getInt(2)+" ";
 			}
 			rs_second_id.close();
+			if(str.length() ==0) {
+				return new ArrayList<Comment>();
+			}
 			str = str.substring(0,str.length() - 1);
 			String[] valueArr = str.split(" ");
             intArr = new int[valueArr.length];
