@@ -125,5 +125,5 @@ public class BaseDao {
 		BaseDao bb = new BaseDao();
 		bb.getCon();
 	}
-	
+
 }

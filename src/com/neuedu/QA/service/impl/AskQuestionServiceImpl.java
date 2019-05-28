@@ -65,6 +65,12 @@ public class AskQuestionServiceImpl implements AskQuestionService {
 		// TODO Auto-generated method stub
 		return questionDaoImpl.selectQuestion(question_id);
 	}
+
+	@Override
+	public int total(String param, Object value) {
+		// TODO Auto-generated method stub
+		return questionDaoImpl.total(param , value);
+	}
 	
 	/*≤‚ ‘*/
 	/*

@@ -62,7 +62,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int totall(String param, Object value) {
+	public int total(String param, Object value) {
 		// TODO Auto-generated method stub
 		return answerDaoImpl.total(param, value);
 	}

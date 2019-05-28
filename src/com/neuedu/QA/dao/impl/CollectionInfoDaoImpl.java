@@ -1,6 +1,7 @@
 package com.neuedu.QA.dao.impl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.neuedu.QA.dao.CollectionInfoDao;
 import com.neuedu.QA.dbutil.BaseDao;
@@ -44,6 +45,18 @@ public class CollectionInfoDaoImpl extends BaseDao implements CollectionInfoDao 
 		String sql = "select * from question where question_id in("+sql_1+") order by question_id desc LIMIT ?,?";
 		Object params[] = {user_id,start,end};
 		return executeSelect(sql, params);
+	}
+	
+	@Override
+	public int total(String param, Object value) {
+		Object[]params = new Object[] {value};
+		try {
+			return executeSelect("select count(u_id) from collect where "+param+" = ?", params).getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }

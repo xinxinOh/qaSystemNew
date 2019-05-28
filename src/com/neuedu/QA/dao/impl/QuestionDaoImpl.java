@@ -126,5 +126,17 @@ public class QuestionDaoImpl extends BaseDao implements QuestionDao {
 		int i=super.executeIUD("delete from question where question_id=?", params);
 		return i;
 	}
+	
+	@Override
+	public int total(String param, Object value) {
+		Object[]params = new Object[] {value};
+		try {
+			return executeSelect("select count(question_id) from question where "+param+" = ?", params).getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 }

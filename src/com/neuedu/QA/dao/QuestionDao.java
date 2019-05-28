@@ -13,4 +13,5 @@ public interface QuestionDao {
 	Integer addQuestion(Question question);
 	Integer updateQuestion(Question question);
 	Integer deleteQuestion(Integer questiom_id);
+	int total(String param, Object value);
 }

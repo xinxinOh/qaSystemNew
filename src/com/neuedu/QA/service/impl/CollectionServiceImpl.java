@@ -59,4 +59,10 @@ public class CollectionServiceImpl implements CollectionService {
 		//删除收藏
 		//分页查找收藏
 	}
+
+	@Override
+	public int total(String param, Object value) {
+		// TODO Auto-generated method stub
+		return collectionInfo.total(param,value);
+	}
 }

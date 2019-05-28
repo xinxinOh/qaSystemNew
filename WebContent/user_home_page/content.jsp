@@ -12,14 +12,15 @@ layui.use(['laypage', 'layer'], function(){
 		  //自定义首页、尾页、上一页、下一页文本
 		laypage.render({
 			elem: 'demo1'
-		    ,count: 100
+		    ,count: "${answers_num}"
+		    ,group:5
 		    ,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
 		    ,next: '<em>→</em>'
 		    
 		    ,jump:function(obj,first){
-		    	start1 = obj.curr;
+		    	start1 = obj.curr-1;
 		    	start2 = 0 ;
 		    	start3 = 0;
 		    }
@@ -27,14 +28,15 @@ layui.use(['laypage', 'layer'], function(){
 		  
 		laypage.render({	    
 			elem: 'demo2'
-		   	,count: 100
+		   	,count: "${collects_num}"
+		   	,group:5
 			,first: '首页'
 		    ,last: '尾页'
 		    ,prev: '<em>←</em>'
 		    ,next: '<em>→</em>'
 			    
 		    ,jump:function(obj,first){
-		    	start2 = obj.curr;
+		    	start2 = obj.curr-1;
 		    	start1 = 0 ;
 		    	start3 = 0;
 		    }
@@ -49,7 +51,7 @@ layui.use(['laypage', 'layer'], function(){
 		    ,next: '<em>→</em>'
 			    
 		    ,jump:function(obj,first){
-		    	start3 = obj.curr;
+		    	start3 = obj.curr-1;
 		    	start2 = 0 ;
 		    	start1 = 0;
 		    }
@@ -58,22 +60,26 @@ layui.use(['laypage', 'layer'], function(){
 
 $(function () {
 	$(".page_bar").click(function(){
-	alert("LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3);
 		$.ajax({
 			type:"GET",
-			url:"PageContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
+			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
 			dataType:"json",		
-			success: function(anSwers,anSwerQuestions,colleCtQuestions,quEstions) {
+			success: function(data) {
 				$(".content_box").remove();
-				alert("success!");
+				
 				var appendDiv = '<div class = "content_box">';
-				var answers = anSwers;
-				var answerQuestions = anSwerQuestions;
-				$.each(answers,function(index, answer){
-					alert(appendDiv);
+				
+				var answers = data[0];
+				//alert(appendDiv);
+				var answerQuestions = data[1];
+				
+				if(answers.length!=0){
+					
+				
+				$.each(test,function(index, answer){
+					//alert(appendDiv);
 					//var answer = answer[i];
-					//alert(answers);
-					alert(answerQuestions[i].title);
+					
 					appendDiv += '<div class="innerQuestion" id="innerAnswer'+answer.answer_id+'">'
 						+'<div class="layui-row ">&nbsp;</div>'
 						
@@ -84,7 +90,7 @@ $(function () {
 					+'	<div class="layui-row ">'
 					+'		<div class="layui-col-md8">'
 					+'			<div class="brief">'
-					+'				<a href="">'+answer.content'</a>'
+					+'				<a href="">'+answer.content+'</a>'
 					+'				<a href="" style="color: steelblue;">查看全文</a>'
 					+'				<a style="visibility: hidden;" name="questionID"></a>'
 					+'			</div>'
@@ -142,27 +148,32 @@ $(function () {
 					+'</div>   '		;
 				
 				});
+				}
 				appendDiv +='</div>';
 				$("#answer_content_box").append(appendDiv);			
 				
+				
 				appendDiv = '<div class = "content_box">';
-				var collectQuestions = colleCtQuestions;
+
+				
+				var collectQuestions = data[2];
+				if(collectQuestions.length!=0){
 				$.each(collectQuestions,function(index, question){
-					alert(appendDiv);
+					
 					//var answer = answer[i];
 					//alert(answers);
-					alert(question.title);
-					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id}'">'
+					//alert(question.title);
+					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id+'">'
 				+'	<div class="layui-row ">&nbsp;</div>'
 					
 				+'	<div class="title">'
-				+'		<a href="">'+question.title'</a>'
+				+'		<a href="">'+question.title+'</a>'
 				+'	</div>'
 					
 				+'	<div class="layui-row ">'
 				+'		<div class="layui-col-md8">'
 				+'			<div class="brief">'
-				+'				<a href="">+'question.content+'</a>'
+				+'				<a href="">'+question.content+'</a>'
 				+'				<a href="" style="color: steelblue;">查看全文</a>'
 				+'				<a style="visibility: hidden;" name ="questionID"></a>'
 				+'			</div>'
@@ -177,7 +188,7 @@ $(function () {
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
 				+'					<a href="">'
 				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
-				+'					<span>+'question.fever+'热度</span>'
+				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
 				+'				</div>'
 	
@@ -217,30 +228,32 @@ $(function () {
 				+'			<div class="layui-row ">'
 				+'				<span>&nbsp;</span>'
 				+'			</div>'
-				+'</div>;'
+				+'</div>'
 				
 				});
+				}
 				appendDiv +='</div>';
 				$("#collect_content_box").append(appendDiv);	
 				
 				appendDiv = '<div class = "content_box">';
-				var questions = quEstions;
+				var questions = data[3];
+				if(questions.length!=0){
 				$.each(questions,function(index, question){
-					alert(appendDiv);
+					//alert(appendDiv);
 					//var answer = answer[i];
 					//alert(answers);
 					alert(question.title);
-					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id}'">'
+					appendDiv += '<div class="innerQuestion" id="innerQuestion'+question.question_id+'">'
 				+'	<div class="layui-row ">&nbsp;</div>'
 					
 				+'	<div class="title">'
-				+'		<a href="">'+question.title'</a>'
+				+'		<a href="">'+question.title+'</a>'
 				+'	</div>'
 					
 				+'	<div class="layui-row ">'
 				+'		<div class="layui-col-md8">'
 				+'			<div class="brief">'
-				+'				<a href="">+'question.content+'</a>'
+				+'				<a href="">'+question.content+'</a>'
 				+'				<a href="" style="color: steelblue;">查看全文</a>'
 				+'				<a style="visibility: hidden;" name ="questionID"></a>'
 				+'			</div>'
@@ -255,7 +268,7 @@ $(function () {
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
 				+'					<a href="">'
 				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
-				+'					<span>+'question.fever+'热度</span>'
+				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
 				+'				</div>'
 	
@@ -295,19 +308,17 @@ $(function () {
 				+'			<div class="layui-row ">'
 				+'				<span>&nbsp;</span>'
 				+'			</div>'
-				+'</div>;'
+				+'</div>'
 				
 				});
+				}
 				appendDiv +='</div>';
 				$("#question_content_box").append(appendDiv);			
-			
 			}
-		
-		
 		});
-		
 	});
 });
+	
 /*
 
 

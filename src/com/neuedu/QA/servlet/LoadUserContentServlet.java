@@ -56,6 +56,7 @@ public class LoadUserContentServlet extends HttpServlet {
 		request.getSession().setAttribute("answers", answers);
 		
 		//求得回答总数
+		request.getSession().setAttribute("answers_num", answerService.total("u_id", user_id));
 		//回答的问题
 		AskQuestionService askQuestionService = new AskQuestionServiceImpl();
 		ArrayList<Question> answerQuestions = new ArrayList<Question>();
@@ -79,8 +80,12 @@ public class LoadUserContentServlet extends HttpServlet {
 		}
 		CollectionService collectionService = new CollectionServiceImpl();
 		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2+5);
+		request.getSession().setAttribute("collectQuestions", collectQuestions);
 		System.out.println("sherched "+collectQuestions.size());
 		System.out.println("questions");
+		
+		//设置收藏问题的个数
+		request.getSession().setAttribute("collects_num", collectionService.total("u_id", user_id));
 		//设置提问题
 		String start3_s = request.getParameter("start3");
 		int start3 = 0;
@@ -91,7 +96,33 @@ public class LoadUserContentServlet extends HttpServlet {
 		AskQuestionService questionService = new AskQuestionServiceImpl();
 		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3+5);
 		request.getSession().setAttribute("questions", questions);
+		PrintWriter out = response.getWriter();
+		/*
+		String anSwers = JSON.toJSONString(answers);
+		String anSwerQuestions = JSON.toJSONString(answerQuestions);
+		String colleCtQuestions = JSON.toJSONString(collectQuestions);
+		String quEstions = JSON.toJSONString(questions);
 		
+		ArrayList<String> data = new ArrayList<String>();
+		data.add(anSwers);
+		data.add(anSwerQuestions);
+		data.add(colleCtQuestions);
+		data.add(quEstions);*/
+		ArrayList<Object> data = new ArrayList<Object>();
+		data.add(answers);
+		data.add(answerQuestions);
+		data.add(collectQuestions);
+		data.add(questions);
+		String string = JSON.toJSONString(data);
+		System.out.println(string);
+		out.write(string);
+		
+		/*
+		out.write(anSwers);
+		out.write(anSwerQuestions);
+		out.write(colleCtQuestions);
+		out.write(quEstions);
+		*/System.out.println("success!");
 	}
 
 	/**
