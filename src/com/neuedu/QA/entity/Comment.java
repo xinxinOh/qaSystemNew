@@ -7,17 +7,17 @@ public class Comment {
 	private Integer answer_id;
 	private String user_id;
 	private String content;
-	private Date disscuss_date;
+	private Date comment_date;
 	private Integer upvote_num;
 	private Integer downvote_num;
-	public Comment(Integer comment_id, Integer answer_id,String user_id, String content, Date disscuss_date, Integer upvote_num,
+	public Comment(Integer comment_id, Integer answer_id,String user_id, String content, Date comment_date, Integer upvote_num,
 			Integer downvote_num) {
 		super();
 		this.comment_id = comment_id;
 		this.user_id = user_id;
 		this.answer_id = answer_id;
 		this.content = content;
-		this.disscuss_date = disscuss_date;
+		this.comment_date = comment_date;
 		this.upvote_num = upvote_num;
 		this.downvote_num = downvote_num;
 	}
@@ -39,11 +39,11 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getDisscuss_date() {
-		return disscuss_date;
+	public Date getComment_date() {
+		return comment_date;
 	}
-	public void setDisscuss_date(Date disscuss_date) {
-		this.disscuss_date = disscuss_date;
+	public void setComment_date(Date comment_date) {
+		this.comment_date = comment_date;
 	}
 	public Integer getUpvote_num() {
 		return upvote_num;

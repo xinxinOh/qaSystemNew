@@ -32,20 +32,20 @@ public class FollowServiceImpl implements FollowService {
 		return ret;
 		
 	}
-
+    
 	/* (non-Javadoc)
 	 * @see com.neuedu.QA.service.FollowService#ShowFollow(java.lang.String, int, int)
 	 */
+	
 	@Override
 	public ArrayList<UserFollow> ShowFollow(String user_id, int start, int end) {
 		ResultSet res = userFollowDaoImpl.SelectFollow(user_id,start,end);
-
+		
 		ArrayList<UserFollow> userFollows = new ArrayList<UserFollow>();
 		try {
 			while (res.next()) {
 				userFollows.add(new UserFollow(res.getString(1),res.getString(2)));
 			}
-			res.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +54,6 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	
-
 	/* (non-Javadoc)
 	 * @see com.neuedu.QA.service.FollowService#DeleteFollow(java.lang.String, int)
 	 */
