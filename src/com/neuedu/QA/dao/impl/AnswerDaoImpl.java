@@ -99,7 +99,7 @@ public class AnswerDaoImpl extends BaseDao implements AnswerDao{
 	@Override
 	public ResultSet SelectAllAnswer(String user_id, int start, int end) {
 		Object[] params =new Object[]{user_id,start,end};
-		ResultSet rs = executeSelect("select * from answer where u_id=? order by answer_date desc LIMIT ?,?", params);
+		ResultSet rs = executeSelect("select * from answer where u_id=? order by answer_id desc LIMIT ?,?", params);
 		//super.closeAll(BaseDao.con, BaseDao.pst, rs);
 		return rs;
 	}

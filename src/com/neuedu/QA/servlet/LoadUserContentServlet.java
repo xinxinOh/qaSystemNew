@@ -52,7 +52,7 @@ public class LoadUserContentServlet extends HttpServlet {
 			start1 = Integer.parseInt(request.getParameter("start1"));
 		}
 		AnswerService answerService = new AnswerServiceImpl();
-		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1*5, start1+5);
+		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1*5, start1*5+4);
 		request.getSession().setAttribute("answers", answers);
 		
 		//求得回答总数
@@ -81,7 +81,7 @@ public class LoadUserContentServlet extends HttpServlet {
 			start2 = Integer.parseInt(request.getParameter("start2"));
 		}
 		CollectionService collectionService = new CollectionServiceImpl();
-		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2+5);
+		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2*5+4);
 		request.getSession().setAttribute("collectQuestions", collectQuestions);
 		//System.out.println("sherched "+collectQuestions.size());
 		//System.out.println("questions");
@@ -98,13 +98,17 @@ public class LoadUserContentServlet extends HttpServlet {
 		}
 		//System.out.println(start3);
 		AskQuestionService questionService = new AskQuestionServiceImpl();
-		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3+5);
+		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3*5+4);
 		request.getSession().setAttribute("questions", questions);
 		
 		//设置提出问题个数
 		int questions_num =  questionService.total("u_id", user_id);
 		System.out.println(questions_num);
 		request.getSession().setAttribute("questions_num",questions_num);
+		
+		System.out.println(start1 + "     "+start2+"     "+start3);
+		System.out.println(answers.size() + "     "+collectQuestions.size()+"     "+questions.size());
+		
 		
 		
 		//写json
@@ -126,7 +130,7 @@ public class LoadUserContentServlet extends HttpServlet {
 		data.add(collectQuestions);
 		data.add(questions);
 		String string = JSON.toJSONString(data);
-		//System.out.println(string);
+		System.out.println(string);
 		out.write(string);
 		
 		/*
