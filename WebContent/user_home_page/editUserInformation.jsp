@@ -45,7 +45,7 @@ $("#user_content_return").click(function() {
   		</div>
   
   	<div class="layui-form-item">
-    	<label class="layui-form-label">单选框</label>
+    	<label class="layui-form-label">性别</label>
     	<div class="layui-input-block">
     	<c:if test='${user.sex=="男"}'>
     		<input type="radio" name="user_sex" value="男" title="男" checked>
