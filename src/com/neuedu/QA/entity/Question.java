@@ -1,8 +1,9 @@
 package com.neuedu.QA.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Question {
+public class Question implements Serializable{
 	
 	private Integer question_id;
 	private String user_id;

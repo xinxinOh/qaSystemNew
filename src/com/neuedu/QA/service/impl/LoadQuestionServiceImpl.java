@@ -23,9 +23,9 @@ public class LoadQuestionServiceImpl implements LoadQuestionService {
 	
 	private 	QuestionDaoImpl questionDaoImpl = new QuestionDaoImpl();
 	@Override
-	public ArrayList<Question> LoadPopularQuestion() {
+	public ArrayList<Question> LoadPopularQuestion(int start,int end) {
 		// TODO Auto-generated method stub
-		ResultSet resultSet = questionDaoImpl.SelectPopularQuestion();
+		ResultSet resultSet = questionDaoImpl.SelectPopularQuestion(start,end);
 		ArrayList<Question> questions = new ArrayList<Question>();
 		try {
 			while (resultSet.next()) {

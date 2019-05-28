@@ -38,21 +38,25 @@ public class LoadCategoryQuestionServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(111);
+		//System.out.println(111);
 		response.setContentType("application/text; charset=utf-8");
-        System.out.println(111);
+        //System.out.println(111);
         PrintWriter out = response.getWriter();
 
 	  LoadQuestionServiceImpl loadQuestionServiceImpl=new LoadQuestionServiceImpl(); 
 	  String a=request.getParameter("category"); 
 	  String start=request.getParameter("start"); 
 	  String end=request.getParameter("end"); 
+	
 	  System.out.println("category:"+a+"   start:"+start+"   end:"+end);
-	  ArrayList<Question> questions=loadQuestionServiceImpl.LoadCategoryQuestion(Integer.parseInt(a),Integer.parseInt(start),Integer.parseInt(end)); 
-	  String jsonString = JSON.toJSONString(questions);
-	  //request.getSession().setAttribute("questions", jsonString);
-	  out.write(jsonString);
-	  System.out.println(jsonString);
+
+	 
+		  ArrayList<Question> questions=loadQuestionServiceImpl.LoadCategoryQuestion(Integer.parseInt(a),Integer.parseInt(start),Integer.parseInt(end)); 
+		  String jsonString = JSON.toJSONString(questions);
+		  //request.getSession().setAttribute("questions", jsonString);
+		  out.write(jsonString);
+		  System.out.println(jsonString);
+	 
 
 	  //request.getRequestDispatcher("MainPage.jsp").forward(request, response);
 	  
