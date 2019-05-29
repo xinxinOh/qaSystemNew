@@ -16,6 +16,7 @@ public interface CommentDao {
         public ResultSet SelectSecondComment(int[] secondComment_id);
         public ResultSet SelectUserComment(String User_id);
         public Comment SelectOneComment(int comment_id);
+        public int SelectOne(String user_id,String content);
         public int addComment(Comment d);
         public int updateComment(Comment d);
         public int deleteComment(int Comment_id);

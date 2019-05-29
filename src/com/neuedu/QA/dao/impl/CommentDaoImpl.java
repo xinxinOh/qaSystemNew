@@ -70,7 +70,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 
 	@Override
 	public Comment SelectOneComment(int comment_id) {
-
+		
 		Object[] params =new Object[]{comment_id};
 		Comment c = new Comment(null,null,null,null,null,null,null);
 		try {
@@ -93,6 +93,33 @@ public class CommentDaoImpl extends BaseDao implements CommentDao{
 //			super.closeAll(BaseDao.con, BaseDao.pst, null);
 		}
 		return c;
+
+	}
+	
+       public int SelectOne(String user_id,String content) {
+		System.out.println(content);
+		Object[] params =new Object[]{};
+		Comment c = new Comment(null,null,null,null,null,null,null);
+		try {
+		
+			ResultSet rs = super.executeSelect("select * from comment where comment_id = ( select max(comment_id) from comment )",params);
+			
+			if(rs.next()) {
+				c.setAnswer_id(rs.getInt(2));
+				c.setContent(rs.getString(3));
+				c.setComment_id(rs.getInt(1));
+				c.setComment_date(rs.getDate(4));
+				c.setDownvote_num(rs.getInt(6));
+				c.setUpvote_num(rs.getInt(5));
+				c.setUser_id(rs.getString(7));
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+//			super.closeAll(BaseDao.con, BaseDao.pst, null);
+		}
+		return c.getComment_id();
 
 	}
 

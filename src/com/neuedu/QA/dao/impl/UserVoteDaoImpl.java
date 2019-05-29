@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 
 import com.neuedu.QA.dao.UserVoteDao;
 import com.neuedu.QA.dbutil.BaseDao;
-import com.neuedu.QA.entity.Question;
 import com.neuedu.QA.entity.UserVote;
 
 public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
@@ -48,6 +47,14 @@ public class UserVoteDaoImpl extends BaseDao implements UserVoteDao {
 		String sql  = "delete from user_vote where u_id=? and id=? and type=? and category=?";
 		Object[] param = new Object[]{UserVote.getUser_id(),UserVote.getVote_to_id(),UserVote.getVote_type()-2,UserVote.getCategory()};
 		return executeIUD(sql, param);
+	}
+	
+	public ResultSet getAllVote(String user_id, int type, int category) {
+		
+		Object[] params =new Object[]{user_id,type,category};
+		ResultSet rs = super.executeSelect("select * from user_vote where u_id=? and type =? and category=?", params);
+		return rs;
+		
 	}
 
 }

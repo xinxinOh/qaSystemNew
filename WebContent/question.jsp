@@ -13,8 +13,24 @@
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/Answer.css">
 		<script src="<%=request.getContextPath()%>/layui/layer/layer.js"></script>
+
 		<script type="text/javascript">
 			var Follow_user = load_user_follow("bfdshter4");
+			var UpVote_answer_id = load_user_vote_answer("bfdshter4", 1, 0);
+			var DownVote_answer_id = load_user_vote_answer("bfdshter4", 0, 0);
+			var UpVote_comment_id = load_user_vote_answer("bfdshter4", 1, 1);
+			var DownVote_comment_id = load_user_vote_answer("bfdshter4", 0, 1);
+
+			function timestampToTime(timestamp) {
+				var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear() + '-';
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				var D = date.getDate() + ' ';
+				var h = date.getHours() + ':';
+				var m = date.getMinutes() + ':';
+				var s = date.getSeconds();
+				return Y + M + D;
+			}
 
 			function load_user_follow(user_id) {
 				var Follow_userid = new Array()
@@ -36,15 +52,85 @@
 				return Follow_userid;
 			}
 
+			function load_user_vote_answer(user_id, up_or_down, answer_or_comment) {
+				var Vote_answerid = new Array()
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "VoteServlet?votetype=all&user_id=" + user_id + "&type=" + up_or_down + "&category=" + answer_or_comment,
+					dataType: "text",
+					success: function(data_vote) {
+
+						$.each($.parseJSON(data_vote), function(idx_vote, obj_vote) {
+							Vote_answerid[idx_vote] = obj_vote.vote_to_id;
+							console.log(Vote_answerid[idx_vote]);
+						})
+					},
+					error: function() {
+						alert(123);
+					}
+				});
+				return Vote_answerid;
+			}
+
+			function check_answer_upvote() {
+
+				var str = "answer-upvote-";
+				var answer_id = "";
+				for(x in UpVote_answer_id) {
+
+					answer_id = str + UpVote_answer_id[x];
+					$("a[id='" + answer_id + "'").children("i").css("color", "red");
+
+				}
+
+			}
+
+			function check_answer_downvote() {
+
+				var str = "answer-downvote-";
+				var answer_id = "";
+				for(x in DownVote_answer_id) {
+					answer_id = str + DownVote_answer_id[x];
+					$("a[id='" + answer_id + "'").children("i").css("color", "black");
+				}
+
+			}
+
+			function check_comment_upvote() {
+
+				var str = "comment-upvote-";
+				var comment_id = "";
+				for(x in UpVote_comment_id) {
+					comment_id = str + UpVote_comment_id[x];
+
+					$("a[id='" + comment_id + "'").children("i").css("color", "red");
+				}
+
+			}
+
+			function check_comment_downvote() {
+
+				var str = "comment-downvote-";
+				var comment_id = "";
+				for(x in DownVote_comment_id) {
+					comment_id = str + DownVote_comment_id[x];
+					$("a[id='" + comment_id + "'").children("i").css("color", "black");
+				}
+
+			}
+
 			function check_follow() {
+
 				var str = "follow-user-id-";
 				var follow_id = "";
-				alert(Follow_user[0]);
 				for(x in Follow_user) {
 
 					follow_id = str + Follow_user[x];
 					$("button[id='" + follow_id + "'").text("已关注");
+
 				}
+
 			}
 
 			function Search_user_name(user_id) {
@@ -63,6 +149,129 @@
 				});
 
 				return nickname;
+			}
+
+			function LoadComment(answer_id, nowNum) {
+
+				$.ajax({
+					async: false,
+					type: "GET",
+					url: "LoadCommentServlet?type=comment&answer_id=" + answer_id + "&start=" + nowNum + "&end=" + nowNum + 3,
+					dataType: "text",
+					success: function(data_comment) {
+						if($.parseJSON(data_comment) == "") {
+							layer.msg('已经到底啦！');
+						}
+						$.each($.parseJSON(data_comment), function(idx_comment, obj_comment) {
+							var comment_li =
+								'<li class="comment-item">' +
+								'<div class="layui-row" style="margin-top:20px;margin-left:15px;">' +
+								'<div class="layui-col-md1">' +
+								'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+								'</div>' +
+								'<div class="layui-col-md11">' +
+								'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name(obj_comment.user_id) + '</a>' +
+								'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;font-size:20px;">' +
+								obj_comment.content +
+								'</div>' +
+								'<div class="comment-button">' +
+								'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(obj_comment.comment_date) + '</p>' +
+								'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+								'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_comment.comment_id + '>' +
+								'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
+								'<span>' + obj_comment.upvote_num + '赞</span>' +
+								'</a>' +
+								'</div>' +
+								'<div class="downvote div-inline question-btn-padding-right">' +
+								'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_comment.comment_id + '>' +
+								'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
+								'<span>' + obj_comment.downvote_num + '踩</span>' +
+								'</a>' +
+								'</div>' +
+								'<div class="comment div-inline question-btn-padding-right">' +
+								'<a class ="comment-answer" href="javascript:void(0)" id=answer-user-id-' + obj_comment.user_id + ' >' +
+								'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
+								'<span>评论</span>' +
+								'</a>' +
+								'</div>' +
+								'</div>' +
+
+								'<ul class="second-comment" id=comment_' + obj_comment.comment_id + '>' +
+
+								'</ul>' +
+
+								'</div>' +
+								'</div>' +
+
+								'</li>';
+
+							var search_answer_id = "answer_" + answer_id;
+							$("ul[id='" + search_answer_id + "'").append(comment_li);
+
+							$.ajax({
+								async: false,
+								type: "GET",
+								url: "LoadCommentServlet?type=second_comment&comment_id=" + obj_comment.comment_id + "&start=" + "0" + "&end=" + "3",
+								dataType: "text",
+								success: function(data_second_comment) {
+
+									$.each($.parseJSON(data_second_comment), function(idx_second_comment, obj_second_comment) {
+										var seconde_comment_li = '<li class="second-comment-item">' +
+
+											'<div class="layui-row" style="margin-top:20px;padding:top:20px;">' +
+											'<div class="layui-col-md1">' +
+											'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+											'</div>' +
+											'<div class="layui-col-md11">' +
+
+											'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name(obj_second_comment.user_id) + '</a>' +
+											'<div class="comment-text" style="margin-top: 10px;margin-bottom: 10px;font-size:20px;">' +
+											obj_second_comment.content +
+											'</div>' +
+
+											'<div class="comment-button">' +
+											'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(obj_second_comment.comment_date) + '</p>' +
+											'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+											'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_second_comment.comment_id + '>' +
+											'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
+											'<span>' + obj_second_comment.upvote_num + '赞</span>' +
+											'</a>' +
+											'</div>' +
+											'<div class="downvote div-inline question-btn-padding-right">' +
+											'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_second_comment.comment_id + '>' +
+											'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
+											'<span>' + obj_second_comment.downvote_num + '踩</span>' +
+											'</a>' +
+											'</div>' +
+											'<div class="comment div-inline question-btn-padding-right">' +
+											'<a class ="second-comment-a" href="javascript:void(0)" id=comment-user-id-' + obj_second_comment.user_id + ' >' +
+											'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
+											'<span>评论</span>' +
+											'</a>' +
+											'</div>' +
+											'</div>' +
+
+											'</div>' +
+											'</div>' +
+
+											'</li>';
+
+										var search_comment_id = "comment_" + obj_comment.comment_id;
+										$("ul[id='" + search_comment_id + "'").append(seconde_comment_li);
+									})
+
+								},
+								error: function() {
+									alert(123);
+								}
+							});
+						})
+					},
+					error: function() {
+						alert(123);
+					}
+				});
+
 			}
 
 			function loadAnswer() {
@@ -85,61 +294,61 @@
 								dataType: "text",
 								success: function(data_user) {
 									var new_data = $.parseJSON(data_user);
-
 									var odiv = '<div class="one-answer">' +
 										'<div class="writer-info">' +
-										'<img src="//t.cn/RCzsdCq" class="layui-nav-img">' +
-										'<span>' + new_data.nickname + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + '</span>' +
-										'<span>' + new_data.introduction + '</span>' +
-										'<button class="layui-btn layui-btn-normal layui-btn-sm user-follow" style="float:right;" id=follow-user-id-' + new_data.user_id + ' >' + '&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>' +
+										'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="width:36px;height:36px;">' +
+										'<span style="font-size:18px;">' + new_data.nickname + '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;' + '</span>' +
+										'<span style="font-size:16px;color:#777777">' + new_data.introduction + '</span>' +
+										'<button class="layui-btn layui-btn-normal layui-btn-sm user-follow" style="float:right;background:darkseagreen;" id=follow-user-id-' + new_data.user_id + ' >' + '&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>' +
 										'</div>' +
-										'<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;">' +
+										'<div class="answer-content" style="margin-top: 30px;margin-bottom: 30px;font-size:18px;color:#18181B">' +
 										'<p>' + obj_answer.content + '</p>' +
 										'</div>' +
 										'<div class="answer-date">' +
-										'<p>最后编辑' + obj_answer.answer_date + '</p>' +
+
+										'<p style="font-size:16px;color:#18181B;">最后编辑      ' + timestampToTime(obj_answer.answer_date) + '</p>' +
 										'</div>' +
 										'<div class="answer-button" style="margin-top: 30px;">' +
 										'<div class="upvote  div-inline question-btn-padding-right">' +
 										'<a class="answer-upvote" href="javascript:void(0)" id=answer-upvote-' + obj_answer.answer_id + '>' +
-										'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
 										'<span>' + obj_answer.upvote_num + '赞</span>' +
 										'</a>' +
 										'</div>' +
 										'<div class="downvote div-inline question-btn-padding-right">' +
 										'<a class="answer-downvote" href="javascript:void(0)" id=answer-downvote-' + obj_answer.answer_id + '>' +
-										'<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: darkseagreen;"></i>' +
 										'<span>' + obj_answer.downvote_num + '踩</span>' +
 										'</a>' +
 										'</div>' +
 										'<div class="comment div-inline question-btn-padding-right">' +
 										'<a class="see-comment" href="javascript:void(0)">' +
-										'<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>' +
 										'<span>' + obj_answer.comment_num + '评论</span>' +
 										'</a>' +
 										'</div>' +
 										'<div class="answer-share div-inline question-btn-padding-right">' +
 										'<a href="">' +
-										'<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>' +
 										'<span>分享</span>' +
 										'</a>' +
 										'</div>' +
 										'<div class="answer-share-type div-inline question-btn-padding-right">' +
 										'<a href="">' +
-										'<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>' +
-										'<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>' +
-										'<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>' +
+										'<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>' +
+										'<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>' +
+										'<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>' +
 										'</a>' +
 										'</div>' +
 										'</div>' +
-										'<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F0F0F0;">' +
+										'<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F8F8F8;">' +
 										'<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">' +
 										'<div class="input-comment" style="padding-top: 30px;">' +
-										'<textarea id=textarea-answer-' + obj_answer.answer_id + ' name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 30px; width:540px; height:120px; "></textarea>' +
+										'<textarea id=textarea-answer-' + obj_answer.answer_id + ' name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 70px; width:540px; height:120px; "></textarea>' +
 										'</div>' +
 										'</div>' +
-										'<div class="comment-submit" style="width: 510px;margin-left: 30px;height: 38px;">' +
-										'<button class="layui-btn comment-submit-btn" style="margin-left: 440px;width: 100px;">发表</button>' +
+										'<div class="comment-submit" style="width: 480px;margin-left: 70px;height: 38px;">' +
+										'<button class="layui-btn comment-submit-btn" style="margin-left: 440px;width: 100px;background:darkseagreen;">发表</button>' +
 										'</div>' +
 										'<div class="all-comments" style="margin-top: 30px;margin-bottom: 30px;">' +
 
@@ -167,41 +376,39 @@
 							$.ajax({
 								async: false,
 								type: "GET",
-								url: "LoadAnswerServlet?type=comment&answer_id=" + answer_id + "&start=" + "1" + "&end=" + "4",
+								url: "LoadCommentServlet?type=comment&answer_id=" + answer_id + "&start=" + "0" + "&end=" + "3",
 								dataType: "text",
 								success: function(data_comment) {
 
 									$.each($.parseJSON(data_comment), function(idx_comment, obj_comment) {
 										var comment_li =
 											'<li class="comment-item">' +
-											'<div class="layui-row">' +
+											'<div class="layui-row" style="margin-top:20px;margin-left:15px;">' +
 											'<div class="layui-col-md1">' +
 											'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
 											'</div>' +
 											'<div class="layui-col-md11">' +
-
-											'<a>' + Search_user_name(obj_comment.user_id) + '</a>' +
-											'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+											'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name(obj_comment.user_id) + '</a>' +
+											'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;font-size:20px;">' +
 											obj_comment.content +
 											'</div>' +
-
 											'<div class="comment-button">' +
-											'<p style="margin-bottom: 10px;">' + obj_comment.comment_date + '</p>' +
+											'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(obj_comment.comment_date) + '</p>' +
 											'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
 											'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_comment.comment_id + '>' +
-											'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
 											'<span>' + obj_comment.upvote_num + '赞</span>' +
 											'</a>' +
 											'</div>' +
 											'<div class="downvote div-inline question-btn-padding-right">' +
 											'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_comment.comment_id + '>' +
-											'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
 											'<span>' + obj_comment.downvote_num + '踩</span>' +
 											'</a>' +
 											'</div>' +
 											'<div class="comment div-inline question-btn-padding-right">' +
 											'<a class ="comment-answer" href="javascript:void(0)" id=answer-user-id-' + obj_comment.user_id + ' >' +
-											'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+											'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
 											'<span>评论</span>' +
 											'</a>' +
 											'</div>' +
@@ -222,41 +429,41 @@
 										$.ajax({
 											async: false,
 											type: "GET",
-											url: "LoadAnswerServlet?type=second_comment&comment_id=" + obj_comment.comment_id + "&start=" + "1" + "&end=" + "3",
+											url: "LoadCommentServlet?type=second_comment&comment_id=" + obj_comment.comment_id + "&start=" + "0" + "&end=" + "3",
 											dataType: "text",
 											success: function(data_second_comment) {
 
 												$.each($.parseJSON(data_second_comment), function(idx_second_comment, obj_second_comment) {
 													var seconde_comment_li = '<li class="second-comment-item">' +
 
-														'<div class="layui-row">' +
+														'<div class="layui-row" style="margin-top:20px;padding:top:20px;">' +
 														'<div class="layui-col-md1">' +
 														'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
 														'</div>' +
 														'<div class="layui-col-md11">' +
 
-														'<a>' + Search_user_name(obj_second_comment.user_id) + '</a>' +
-														'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+														'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name(obj_second_comment.user_id) + '</a>' +
+														'<div class="comment-text" style="margin-top: 10px;margin-bottom: 10px;font-size:20px;">' +
 														obj_second_comment.content +
 														'</div>' +
 
 														'<div class="comment-button">' +
-														'<p style="margin-bottom: 10px;">' + obj_second_comment.comment_date + '</p>' +
+														'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(obj_second_comment.comment_date) + '</p>' +
 														'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
 														'<a class="comment-upvote" href="javascript:void(0)" id=comment-upvote-' + obj_second_comment.comment_id + '>' +
-														'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
 														'<span>' + obj_second_comment.upvote_num + '赞</span>' +
 														'</a>' +
 														'</div>' +
 														'<div class="downvote div-inline question-btn-padding-right">' +
 														'<a class="comment-downvote" href="javascript:void(0)" id=comment-downvote-' + obj_second_comment.comment_id + '>' +
-														'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
 														'<span>' + obj_second_comment.downvote_num + '踩</span>' +
 														'</a>' +
 														'</div>' +
 														'<div class="comment div-inline question-btn-padding-right">' +
-														'<a class ="second-comment" href="javascript:void(0)" id=comment-user-id-' + obj_second_comment.user_id + ' >' +
-														'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+														'<a class ="second-comment-a" href="javascript:void(0)" id=comment-user-id-' + obj_second_comment.user_id + ' >' +
+														'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
 														'<span>评论</span>' +
 														'</a>' +
 														'</div>' +
@@ -282,6 +489,7 @@
 									alert(123);
 								}
 							});
+
 						})
 
 					},
@@ -289,41 +497,43 @@
 						alert(123);
 					}
 				});
-
+				check_follow();
+				check_answer_upvote();
+				check_answer_downvote();
+				check_comment_upvote();
+				check_comment_downvote();
 			}
 
-			function addNewComment(content) {
+			function addNewComment(content, answer_id) {
 
 				var comment_li =
 					'<li class="comment-item">' +
-					'<div class="layui-row">' +
+					'<div class="layui-row" style="margin-top:20px;margin-left:15px;">' +
 					'<div class="layui-col-md1">' +
 					'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
 					'</div>' +
 					'<div class="layui-col-md11">' +
-
-					'<a>' + Search_user_name("bfdshter4") + '</a>' +
-					'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;">' +
+					'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name("bfdshter4") + '</a>' +
+					'<div class="comment-text" style="margin-top: 5px;margin-bottom: 10px;font-size:20px;">' +
 					content +
 					'</div>' +
-
 					'<div class="comment-button">' +
-					'<p style="margin-bottom: 10px;">' + new Date() + '</p>' +
+					'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(new Date()) + '</p>' +
 					'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
 					'<a class="comment-upvote" href="javascript:void(0)">' +
-					'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
 					'<span>0赞</span>' +
 					'</a>' +
 					'</div>' +
 					'<div class="downvote div-inline question-btn-padding-right">' +
 					'<a class="comment-downvote" href="javascript:void(0)" >' +
-					'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
 					'<span>0踩</span>' +
 					'</a>' +
 					'</div>' +
 					'<div class="comment div-inline question-btn-padding-right">' +
 					'<a class ="comment-answer" href="javascript:void(0)">' +
-					'<i class="layui-icon layui-icon-reply-fill " style="font-size: 20px; color: #1E9FFF;"></i>' +
+					'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
 					'<span>评论</span>' +
 					'</a>' +
 					'</div>' +
@@ -342,9 +552,55 @@
 				$("ul[id='" + search_answer_id + "'").append(comment_li);
 			}
 
+			function addNewSecondComment(content, comment_id) {
+				var seconde_comment_li = '<li class="second-comment-item">' +
+
+					'<div class="layui-row" style="margin-top:20px;padding:top:20px;">' +
+					'<div class="layui-col-md1">' +
+					'<img src="//t.cn/RCzsdCq" class="layui-nav-img" style="margin-left: 0px;width:40px;height:40px;">' +
+					'</div>' +
+					'<div class="layui-col-md11">' +
+
+					'<a style="font-size:15px;color:#3F6CAF;">' + Search_user_name("bfdshter4") + '</a>' +
+					'<div class="comment-text" style="margin-top: 10px;margin-bottom: 10px;font-size:20px;">' +
+					content +
+					'</div>' +
+
+					'<div class="comment-button">' +
+					'<p style="margin-bottom: 10px;font-size:15px;">' + timestampToTime(new Date()) + '</p>' +
+					'<div class="upvote  div-inline question-btn-padding-right" style="margin-top: 5px;">' +
+					'<a class="comment-upvote" href="javascript:void(0)">' +
+					'<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>' +
+					'<span>0赞</span>' +
+					'</a>' +
+					'</div>' +
+					'<div class="downvote div-inline question-btn-padding-right">' +
+					'<a class="comment-downvote" href="javascript:void(0)">' +
+					'<i class="layui-icon layui-icon-tread " style="font-size: 20px; color: darkseagreen;"></i>' +
+					'<span>0踩</span>' +
+					'</a>' +
+					'</div>' +
+					'<div class="comment div-inline question-btn-padding-right">' +
+					'<a class ="second-comment-a" href="javascript:void(0)">' +
+					'<i class="layui-icon layui-icon-dialogue " style="font-size: 20px; color: darkseagreen;"></i>' +
+					'<span>评论</span>' +
+					'</a>' +
+					'</div>' +
+					'</div>' +
+
+					'</div>' +
+					'</div>' +
+
+					'</li>';
+
+				var search_comment_id = "comment_" + comment_id;
+				$("ul[id='" + search_comment_id + "'").append(seconde_comment_li);
+			}
+
 			$(document).ready(function() {
+
 				loadAnswer();
-				check_follow();
+
 				$(".see-comment").parent().parent().next().hide();
 				$(document).scroll(function() {
 					//滚动条滑动的时候获取滚动条距离顶部的距离
@@ -390,15 +646,21 @@
 				$("body").on("click", ".comment-answer", function() {
 
 					var user_id = $(this).attr('id').split('-')[3];
+					var comment_id = $(this).parent().prev().children("a").attr('id').split('-')[2];
+
 					var nickname = Search_user_name(user_id);
 					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").val("//@" + nickname + " ");
+					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").attr('name', user_id + '-' + comment_id + '-' + nickname);
+
 				});
 
-				$("body").on("click", ".second-comment", function() {
+				$("body").on("click", ".second-comment-a", function() {
 
 					var user_id = $(this).attr('id').split('-')[3];
+					var comment_id = $(this).parent().prev().children("a").attr('id').split('-')[2];
 					var nickname = Search_user_name(user_id);
 					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").val("//@" + nickname + " ");
+					$("textarea[id='" + "textarea-answer-" + $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id').split('_')[1] + "'").attr('name', user_id + '-' + comment_id + '-' + nickname);
 
 				});
 
@@ -406,18 +668,18 @@
 
 					var answer_id = $(this).attr('id').split('-')[2];
 					var s = $(this).find("span");
-
+					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "0",
+						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "0",
 						dataType: "text",
 						success: function(data) {
 							if(data == 1) {
 								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
 								s.html(upvote_num + "赞");
 								s.text(upvote_num + "赞");
+								this_temp.children("i").css("color", "red");
 							}
-
 							if(data == 0) {
 
 								layer.confirm('您已赞过该回答，是否取消赞？', {
@@ -431,7 +693,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "0",
+										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "0",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -439,7 +701,7 @@
 												var upvote_num = parseInt(s.text().replace("赞", "")) - 1; //截取数字
 												s.html(upvote_num + "赞");
 												s.text(upvote_num + "赞");
-
+												this_temp.children("i").css("color", "darkseagreen");
 												layer.msg('取消赞成功', {
 													icon: 1
 												});
@@ -469,16 +731,17 @@
 
 					var answer_id = $(this).attr('id').split('-')[2];
 					var s = $(this).find("span");
-
+					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "0",
+						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "0",
 						dataType: "text",
 						success: function(data) {
 							if(data == 1) {
 								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
 								s.html(downvote_num + "踩");
 								s.text(downvote_num + "踩");
+								this_temp.children("i").css("color", "black");
 							}
 							if(data == 0) {
 
@@ -493,7 +756,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "0",
+										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "0",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -501,7 +764,7 @@
 												var downvote_num = parseInt(s.text().replace("踩", "")) - 1; //截取数字
 												s.html(downvote_num + "踩");
 												s.text(downvote_num + "踩");
-
+												this_temp.children("i").css("color", "darkseagreen");
 												layer.msg('取消踩成功', {
 													icon: 1
 												});
@@ -531,16 +794,17 @@
 
 					var answer_id = $(this).attr('id').split('-')[2];
 					var s = $(this).find("span");
-
+					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "1",
+						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "1",
 						dataType: "text",
 						success: function(data) {
 							if(data == 1) {
 								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
 								s.html(upvote_num + "赞");
 								s.text(upvote_num + "赞");
+								this_temp.children("i").css("color", "red");
 							}
 
 							if(data == 0) {
@@ -556,7 +820,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "1",
+										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "1",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -564,7 +828,7 @@
 												var upvote_num = parseInt(s.text().replace("赞", "")) - 1; //截取数字
 												s.html(upvote_num + "赞");
 												s.text(upvote_num + "赞");
-
+												this_temp.children("i").css("color", "darkseagreen");
 												layer.msg('取消赞成功', {
 													icon: 1
 												});
@@ -594,16 +858,17 @@
 
 					var answer_id = $(this).attr('id').split('-')[2];
 					var s = $(this).find("span");
-
+					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "1",
+						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "1",
 						dataType: "text",
 						success: function(data) {
 							if(data == 1) {
 								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
 								s.html(downvote_num + "踩");
 								s.text(downvote_num + "踩");
+								this_temp.children("i").css("color", "black");
 							}
 							if(data == 0) {
 
@@ -618,7 +883,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "1",
+										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "1",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -626,7 +891,7 @@
 												var downvote_num = parseInt(s.text().replace("踩", "")) - 1; //截取数字
 												s.html(downvote_num + "踩");
 												s.text(downvote_num + "踩");
-
+												this_temp.children("i").css("color", "darkseagreen");
 												layer.msg('取消踩成功', {
 													icon: 1
 												});
@@ -656,20 +921,72 @@
 					var answer_id = $(this).parent().prev().find("textarea").attr('id').split('-')[2];
 					var content = $(this).parent().prev().find("textarea").val();
 					var s = $(this).parent().parent().prev().children(".comment").find("span");
-					$.ajax({
-						type: "GET",
-						url: "UserCommentServlet?type=answer_comment&answer_id=" + answer_id + "&content=" + content + "&user_id=" + "bfdshter4",
-						dataType: "text",
-						success: function(data) {
-							layer.msg('评论成功');
-							addNewComment(content, answer_id);
-							var comment_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
-							s.text(comment_num + "评论");
-						},
-						error: function() {
-							alert(123);
+					var name = $(this).parent().prev().find("textarea").attr('name');
+					
+					if(name.indexOf("-") >= 0) {
+						
+						
+						if(content.substr(0,3) == "//@"){
+							
+						if(content.indexOf(" ") < 0){
+							layer.msg('请勿修改头部内容！');
+							return;
 						}
-					});
+						var split = content.split("@")[1].split(" ");
+						var user_id = $(this).parent().prev().find("textarea").attr('name').split('-')[0];
+						var comment_id = $(this).parent().prev().find("textarea").attr('name').split('-')[1];
+						var nickname = $(this).parent().prev().find("textarea").attr('name').split('-')[2];
+						var str = "";
+						console.log(nickname);
+						for(var i = 1; i < split.length; i++) {
+							str = str + split[i];
+						}
+						
+						if(str == ""){
+							layer.msg('请输入评论内容！');
+							return;
+						}
+						
+						if(split[0] != nickname){
+							layer.msg('请勿修改头部内容！');
+							return;
+						}
+						
+						$.ajax({
+							type: "GET",
+							url: "UserCommentServlet?type=comment_comment&comment_id=" + comment_id + "&content=" + str + "&user_id=" + "bfdshter4",
+							dataType: "text",
+							success: function(data) {
+								layer.msg('二级评论成功');
+								addNewSecondComment(str, comment_id);
+							},
+							error: function() {
+								alert(123);
+							}
+						});
+						
+}
+						
+						if(content.substr(0,3) != "//@"){
+							layer.msg('请勿修改头部内容！');
+						}
+					}
+					if(name.indexOf("-") < 0) {
+						$.ajax({
+							type: "GET",
+							url: "UserCommentServlet?type=answer_comment&answer_id=" + answer_id + "&content=" + content + "&user_id=" + "bfdshter4",
+							dataType: "text",
+							success: function(data) {
+								layer.msg('评论成功');
+								addNewComment(content, answer_id);
+								var comment_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
+								s.text(comment_num + "评论");
+							},
+							error: function() {
+								alert(123);
+							}
+						});
+					}
 				});
 
 				$("body").on("click", ".answer-question-btn", function() {
@@ -693,17 +1010,11 @@
 					});
 				});
 
-				$(".load-more").click(function() {
-					alert(1);
-					var odiv = '<div class="one-answer">' +
-						'<div class="writer-info">' +
-						'<img src="//t.cn/RCzsdCq" class="layui-nav-img">' +
-						'<span>' + "nickname" + '</span>' +
-						'<span>' + "intro" + '</span>' +
-						'<button class="layui-btn layui-btn-normal layui-btn-sm" style="margin-left: 170px;">&nbsp;&nbsp;&nbsp;+&nbsp;关注&nbsp;&nbsp;&nbsp;</button>' +
-						'</div>' + '</div>';
-
-					$(this).parent().prev().append(odiv);
+				$("body").on("click", ".load-more", function() {
+					var nowNum = $(this).prev().children().length;
+					console.log($(this).prev().attr('id'));
+					var answer_id = $(this).prev().attr('id').split('_')[1];
+					LoadComment(answer_id, nowNum);
 
 				});
 
@@ -769,20 +1080,6 @@
 					}
 				});
 
-				$("[value=GETsubmit]").click(function() {
-					$.ajax({
-						type: "GET",
-						url: "LoadAnswerServlet?question_id=" + "1" + "&start=" + "1" + "&end=" + "4",
-						dataType: "text",
-						success: function(data) {
-							alert(data);
-						},
-						error: function() {
-							alert(123);
-						}
-					});
-				});
-
 			});
 		</script>
 
@@ -797,48 +1094,10 @@
 
 			<div class="layui-container" style="margin-top:50px;">
 				<div class="layui-row">
-					<div class="layui-col-md2">
-						<div>
-							<ul class="layui-nav layui-nav-tree" lay-filter="test">
-								<!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
-								<li class="layui-nav-item layui-nav-itemed">
-									<a href="javascript:;">默认展开</a>
-									<dl class="layui-nav-child">
-										<dd>
-											<a href="javascript:;">选项1</a>
-										</dd>
-										<dd>
-											<a href="javascript:;">选项2</a>
-										</dd>
-										<dd>
-											<a href="">跳转</a>
-										</dd>
-									</dl>
-								</li>
-								<li class="layui-nav-item">
-									<a href="javascript:;">解决方案</a>
-									<dl class="layui-nav-child">
-										<dd>
-											<a href="">移动模块</a>
-										</dd>
-										<dd>
-											<a href="">后台模版</a>
-										</dd>
-										<dd>
-											<a href="">电商平台</a>
-										</dd>
-									</dl>
-								</li>
-								<li class="layui-nav-item">
-									<a href="" class="yq">产品</a>
-								</li>
-								<li class="layui-nav-item">
-									<a href="">大数据</a>
-								</li>
-							</ul>
-						</div>
+					<div class="layui-col-md1">
+
 					</div>
-					<div class="layui-col-md7 question-padding-left">
+					<div class="layui-col-md8 question-padding-left">
 						<div class="question-answer">
 						</div>
 
@@ -856,29 +1115,29 @@
 
 								<div class="collect-question div-inline question-btn-padding-right">
 									<a href="">
-										<i class="layui-icon layui-icon-star" style="font-size: 20px; color: #1E9FFF;"></i>
+										<i class="layui-icon layui-icon-star" style="font-size: 20px; color: darkseagreen;"></i>
 										<span>收藏问题</span>
 									</a>
 								</div>
 
 								<div class="invite-answer div-inline question-btn-padding-right">
 									<a href="">
-										<i class="layui-icon layui-icon-friends" style="font-size: 20px; color: #1E9FFF;"></i>
+										<i class="layui-icon layui-icon-friends" style="font-size: 20px; color: darkseagreen;"></i>
 										<span class="yq">邀请回答</span>
 									</a>
 								</div>
 								<div class="question-share-question div-inline question-btn-padding-right">
 									<a href="">
-										<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
+										<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>
 										<span>分享</span>
 									</a>
 								</div>
 
 								<div class="question-share-type div-inline question-btn-padding-right">
 									<a href="">
-										<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-										<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>
-										<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
+										<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
+										<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>
+										<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
 									</a>
 								</div>
 
@@ -910,7 +1169,7 @@
 										</div>
 										<div class="layui-form-item">
 											<div class="layui-input-block" style="margin-left:0px;margin-top:30px;">
-												<button class="layui-btn answer-question-btn">回答</button>
+												<button class="layui-btn answer-question-btn" style="background:darkseagreen;">回答</button>
 												<button type="reset" class="layui-btn layui-btn-primary yq">重置</button>
 											</div>
 										</div>
@@ -919,7 +1178,7 @@
 							</div>
 							<div class="answer-num" style="margin-bottom: 20px;">
 								<h3>129个回答</h3>
-								<hr style="height:1px;border:none;border-top:1px solid darkolivegreen;" />
+								<hr style="height:1px;border:none;border-top:1px solid darkseagreen;" />
 							</div>
 							<div class="all-answers">
 
