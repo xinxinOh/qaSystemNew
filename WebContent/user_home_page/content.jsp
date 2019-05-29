@@ -93,14 +93,14 @@ $(function () {
 						+'<div class="layui-row ">&nbsp;</div>'
 						
 						+'<div class="title">'
-					+'		<a href="">'+answerQuestions[index].title+'</a>'
+					+'		<a id="title_'+answerQuestions[index].question_id+'" href="question.jsp?question_id='+answerQuestions[index].question_id+'&title='+answerQuestions[index].title+'">'+answerQuestions[index].title+'</a>'
 					+'	</div>'
 						
 					+'	<div class="layui-row ">'
 					+'		<div class="layui-col-md8">'
 					+'			<div class="brief">'
-					+'				<a href="">'+answer.content+'</a>'
-					+'				<a href="" style="color: steelblue;">查看全文</a>'
+					+'				<a id="title_'+answerQuestions[index].question_id+'" href="question.jsp?question_id='+answerQuestions[index].question_id+'&title='+answerQuestions[index].title+'">'+answer.content+'</a>'
+					+'				<a id="title_'+answerQuestions[index].question_id+'" href="question.jsp?question_id='+answerQuestions[index].question_id+'&title='+answerQuestions[index].title+'" style="color: steelblue;">查看全文</a>'
 					+'				<a style="visibility: hidden;" name="questionID"></a>'
 					+'			</div>'
 					+'		</div>'
@@ -126,7 +126,7 @@ $(function () {
 					+'			</div>'
 
 					+'			<div class="comment div-inline question-btn-padding-right">'
-					+'				<a href="">'
+					+'				<a id="title_'+answerQuestions[index].question_id+'" href="question.jsp?question_id='+answerQuestions[index].question_id+'&title='+answerQuestions[index].title+'">'
 					+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: darkseagreen;"></i>'					
 					+'					<span>'+answer.comment_num+'评论</span>'
 					+'				</a>'
@@ -184,8 +184,8 @@ $(function () {
 				+'	<div class="layui-row ">'
 				+'		<div class="layui-col-md8">'
 				+'			<div class="brief">'
-				+'				<a href="">'+question.content+'</a>'
-				+'				<a href="" style="color: steelblue;">查看全文</a>'
+				+'				<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'+question.content+'</a>'
+				+'				<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+' style="color: steelblue;">查看全文</a>'
 				+'				<a style="visibility: hidden;" name ="questionID"></a>'
 				+'			</div>'
 				+'		</div>'
@@ -197,7 +197,7 @@ $(function () {
 				+'		<div class="status">'
 				+'			<div class="answer-button" style="margin-top: 20px;">'
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
-				+'					<a href="">'
+				+'					<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'
 				+'					<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
@@ -211,14 +211,14 @@ $(function () {
 				+'			</div>'
 
 				+'			<div class="comment div-inline question-btn-padding-right">'
-				+'				<a href="">'
+				+'				<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'
 				+'					<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>'					
 				+'					<span>'+question.answer_num+'评论</span>'
 				+'				</a>'
 				+'			</div>'
 							
 				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
-				+'				<a href="">'
+				+'				<a >'
 				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>		'							
 				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>'
@@ -226,7 +226,7 @@ $(function () {
 				+'			</div>'
 				
 				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
-				+'				<a href="">'
+				+'				<a >'
 				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>分享</span>								'
 				+'				</a>'
@@ -260,13 +260,13 @@ $(function () {
 				+'	<div class="layui-row ">&nbsp;</div>'
 					
 				+'	<div class="title">'
-				+'		<a href="">'+question.title+'</a>'
+				+'		<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'+question.title+'</a>'
 				+'	</div>'
 					
 				+'	<div class="layui-row ">'
 				+'		<div class="layui-col-md8">'
 				+'			<div class="brief">'
-				+'				<a href="">'+question.content+'</a>'
+				+'				<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'+question.content+'</a>'
 				+'				<a href="" style="color: steelblue;">查看全文</a>'
 				+'				<a style="visibility: hidden;" name ="questionID"></a>'
 				+'			</div>'
@@ -279,28 +279,28 @@ $(function () {
 				+'		<div class="status">'
 				+'			<div class="answer-button" style="margin-top: 20px;">'
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
-				+'					<a href="">'
+				+'					<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'
 				+'					<i class="layui-icon layui-icon-fire " style="font-size: 20px; color:darkseagreen;"></i>'
 				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
 				+'				</div>'
 	
 				+'			<div class="downvote div-inline question-btn-padding-right">'
-				+'				<a href="">'
+				+'				<a>'
 				+'				<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color:darkseagreen;"></i>'
 				+'				<span>'+question.collect_num+'收藏</span>'									
 				+'				</a>'
 				+'			</div>'
 
 				+'			<div class="comment div-inline question-btn-padding-right">'
-				+'				<a href="">'
+				+'				<a id="title_'+question.question_id+'" href="question.jsp?question_id='+question.question_id+'&title='+question.title+'">'
 				+'					<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>'					
 				+'					<span>'+question.answer_num+'评论</span>'
 				+'				</a>'
 				+'			</div>'
 							
 				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
-				+'				<a href="">'
+				+'				<a>'
 				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>		'							
 				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>'
@@ -308,7 +308,7 @@ $(function () {
 				+'			</div>'
 				
 				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
-				+'				<a href="">'
+				+'				<a>'
 				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>分享</span>								'
 				+'				</a>'
@@ -388,14 +388,14 @@ function remove_collect(obj){
 				<div class="layui-row ">&nbsp;</div>
 				
 				<div class="title">
-					<a href="">"${answerQuestions.get(status.count).title}"</a>
+					<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}">"${answerQuestions.get(status.count).title}"</a>
 				</div>
 				
 				<div class="layui-row ">
 					<div class="layui-col-md8">
 						<div class="brief">
 							<a href="">${answer.content}</a>
-							<a href="" style="color: steelblue;">查看全文</a>
+							<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}" style="color: steelblue;">查看全文</a>
 							<a style="visibility: hidden;" name="questionID"></a>
 						</div>
 					</div>
@@ -407,28 +407,28 @@ function remove_collect(obj){
 					<div class="status">
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
-								<a href="">
+								<a >
 								<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${answer.upvote_num}赞</span>
 								</a>
 							</div>
 
 						<div class="downvote div-inline question-btn-padding-right">
-							<a href="">
+							<a >
 							<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: darkseagreen;"></i>
 							<span>${answer.downvote_num}踩</span>									
 							</a>
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
-							<a href="" >
+							<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}">
 								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${answer.comment_num}评论</span>
 							</a>
 						</div>
 						
 						<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">
-							<a href="">
+							<a >
 								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
 								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>									
 								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
@@ -465,14 +465,14 @@ function remove_collect(obj){
 				<div class="layui-row ">&nbsp;</div>
 				
 				<div class="title">
-					<a href="">${question.title}</a>
+					<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}">${question.title}</a>
 				</div>
 				
 				<div class="layui-row">
 					<div class="layui-col-md8">
 						<div class="brief">
-							<a href="">${question.content}</a>
-							<a href="" style="color: steelblue;">查看全文</a>
+							<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}">${question.content}</a>
+							<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}" style="color: steelblue;">查看全文</a>
 							<a style="visibility: hidden;" name="questionID"></a>
 						</div>
 					</div>
@@ -484,7 +484,7 @@ function remove_collect(obj){
 					<div class="status">
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
-								<a href="">
+								<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}">
 								<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${question.fever}热度</span>
 								</a>
@@ -498,14 +498,14 @@ function remove_collect(obj){
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
-							<a href="">
+							<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}">
 								<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${question.answer_num}评论</span>
 							</a>
 						</div>
 						
 						<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">
-							<a href="">
+							<a>
 								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
 								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>									
 								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
@@ -542,14 +542,14 @@ function remove_collect(obj){
 				<div class="layui-row ">&nbsp;</div>
 				
 				<div class="title">
-					<a href="">${question.title}</a>
+					<a>${question.title}</a>
 				</div>
 				
 				<div class="layui-row">
 					<div class="layui-col-md8">
 						<div class="brief">
 							<a href="">${question.content}</a>
-							<a href="" style="color: steelblue;">查看全文</a>
+							<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}" style="color: steelblue;">查看全文</a>
 							<a style="visibility: hidden;" name="questionID"></a>
 						</div>
 					</div>
@@ -561,14 +561,14 @@ function remove_collect(obj){
 					<div class="status">
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
-								<a href="">
+								<a>
 								<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${question.fever}热度</span>
 								</a>
 							</div>
 
 						<div class="downvote div-inline question-btn-padding-right">
-							<a href="">
+							<a>
 							<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color: darkseagreen;"></i>
 							<span>${question.collect_num}收藏</span>									
 							</a>
