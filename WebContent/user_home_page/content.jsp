@@ -12,7 +12,7 @@ layui.use(['laypage', 'layer'], function(){
 		  //自定义首页、尾页、上一页、下一页文本
 		laypage.render({
 			elem: 'demo1'
-		    ,count: "${answers_num}"-4
+		    ,count: "${answers_num}"
 		    ,limit:4
 		    ,first: '首页'
 		    ,last: '尾页'
