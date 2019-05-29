@@ -16,6 +16,11 @@ layui.use('form', function(){
   });
 });
 
+var birth_year = "${user.birthdate.year}";
+if (birth_year < 1900) {
+	birth_year = "${user.birthdate.year+2018-118}";
+	//alert(birth_year);
+}
 
 layui.use('laydate', function(){
   var laydate = layui.laydate;
@@ -24,19 +29,19 @@ layui.use('laydate', function(){
   laydate.render({
     elem: '#birthdate' ,//指定元素
     isInitValue: false,
-    value:"${user.birthdate.year+2018-0118}"+"-"+"${user.birthdate.month}"+"-"+"${user.birthdate.day}"
+    value: birth_year+"-"+"${user.birthdate.month}"+"-"+"${user.birthdate.day}"
   });
   
 
 
 });
 $("#user_content_return").click(function() {
-	$("#content").load("/qaSystem/user_home_page/content.jsp");
+	$("#content").load("<%=request.getContextPath()%>/user_home_page/content.jsp");
 });
 </script>
 
 <div class = "user_edit_box">
-	<form class="layui-form" action= "/qaSystem/EditUserInfoServlet" method="post">
+	<form class="layui-form" action= "<%=request.getContextPath()%>/EditUserInfoServlet" method="post">
 		<div class="layui-form-item">
     		<label class="layui-form-label">芥末名：</label>
     		<div class="layui-input-block">

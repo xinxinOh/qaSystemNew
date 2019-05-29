@@ -8,10 +8,10 @@
 <%@include file="/header.jsp" %>
 <script>
 $(function () {
-	$("#content").load("/qaSystem/user_home_page/content.jsp");
+	$("#content").load("<%=request.getContextPath()%>/user_home_page/content.jsp");
 	
 	$("#edit_user_information").click(function() {
-		$("#content").load("/qaSystem/user_home_page/editUserInformation.jsp");
+		$("#content").load("<%=request.getContextPath()%>/user_home_page/editUserInformation.jsp");
 		
 	});
 });
@@ -35,7 +35,7 @@ function changeUserAccount() {
 		  var uploadInst = upload.render({
 		    elem: '#test1' //绑定元素
 		    ,data:{name:"picture"}
-		    ,url: '/qaSystem/UserAccountPictureServlet?servletType = batchInFiles' //上传接口
+		    ,url: '<%=request.getContextPath()%>/UserAccountPictureServlet?servletType = batchInFiles' //上传接口
 		    ,accept:'images'
 		    ,done: function(){
 		    	layer.open({

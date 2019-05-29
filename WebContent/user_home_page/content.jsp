@@ -65,7 +65,7 @@ $(function () {
 		//alert("LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3);
 		$.ajax({
 			type:"GET",
-			url:"LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
+			url:"<%=request.getContextPath()%>/LoadUserContentServlet?start1="+start1+"&start2="+start2+"&start3="+start3,
 			dataType:"json",		
 			success: function(data) {
 				//alert(data[0]);
@@ -113,36 +113,36 @@ $(function () {
 					+'			<div class="answer-button" style="margin-top: 20px;">'
 					+'				<div class="upvote  div-inline question-btn-padding-right">'
 					+'					<a href="">'
-					+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color:darkseagreen;"></i>'
 					+'					<span>'+answer.upvote_num+'赞</span>'
 					+'					</a>'
 					+'				</div>'
 
 					+'			<div class="downvote div-inline question-btn-padding-right">'
 					+'				<a href="">'
-					+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: darkseagreen;"></i>'
 					+'				<span>'+answer.downvote_num+'踩</span>'									
 					+'				</a>'
 					+'			</div>'
 
 					+'			<div class="comment div-inline question-btn-padding-right">'
 					+'				<a href="">'
-					+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+					+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: darkseagreen;"></i>'					
 					+'					<span>'+answer.comment_num+'评论</span>'
 					+'				</a>'
 					+'			</div>'
 								
 					+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
 					+'				<a href="">'
-					+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
-					+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>	'								
-					+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>'
+					+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>	'								
+					+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>'
 					+'				</a>'
 					+'			</div>'
 					
 					+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
 					+'				<a href="">'
-					+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+					+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color:darkseagreen;"></i>'
 					+'					<span>分享</span>								'
 					+'				</a>'
 					+'			</div>'
@@ -198,36 +198,36 @@ $(function () {
 				+'			<div class="answer-button" style="margin-top: 20px;">'
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
 				+'					<a href="">'
-				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
 				+'				</div>'
 	
 				+'			<div class="downvote div-inline question-btn-padding-right">'
-				+'				<a href="">'
-				+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				<a id ="collect_remove_'+question.question_id+'" onclick="remove_collect($(this))">'
+				+'				<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'				<span>'+question.collect_num+'收藏</span>'									
 				+'				</a>'
 				+'			</div>'
 
 				+'			<div class="comment div-inline question-btn-padding-right">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+				+'					<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>'					
 				+'					<span>'+question.answer_num+'评论</span>'
 				+'				</a>'
 				+'			</div>'
 							
 				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
-				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>		'							
-				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>'
+				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>		'							
+				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'				</a>'
 				+'			</div>'
 				
 				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>分享</span>								'
 				+'				</a>'
 				+'			</div>'
@@ -280,36 +280,36 @@ $(function () {
 				+'			<div class="answer-button" style="margin-top: 20px;">'
 				+'				<div class="upvote  div-inline question-btn-padding-right">'
 				+'					<a href="">'
-				+'					<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-fire " style="font-size: 20px; color:darkseagreen;"></i>'
 				+'					<span>'+question.fever+'热度</span>'
 				+'					</a>'
 				+'				</div>'
 	
 				+'			<div class="downvote div-inline question-btn-padding-right">'
 				+'				<a href="">'
-				+'				<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'				<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color:darkseagreen;"></i>'
 				+'				<span>'+question.collect_num+'收藏</span>'									
 				+'				</a>'
 				+'			</div>'
 
 				+'			<div class="comment div-inline question-btn-padding-right">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>'					
+				+'					<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>'					
 				+'					<span>'+question.answer_num+'评论</span>'
 				+'				</a>'
 				+'			</div>'
 							
 				+'			<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>'
-				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>		'							
-				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>'
+				+'					<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>		'							
+				+'					<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'				</a>'
 				+'			</div>'
 				
 				+'			<div class="answer-share div-inline question-btn-padding-right" style="float: right;">'
 				+'				<a href="">'
-				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>'
+				+'					<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>'
 				+'					<span>分享</span>								'
 				+'				</a>'
 				+'			</div>'
@@ -330,8 +330,38 @@ $(function () {
 			}
 		});
 	});
-});
 	
+	
+});
+
+function remove_collect(obj){
+	var id=obj.attr('id');
+	var Qid = id.split("_");//collect_remove_$(question.question_id)
+	var question_id = Qid[2];
+	
+	alert(id);
+	alert(question_id)
+	
+	$.ajax({
+		async:false,
+		type: "GET",
+		url: "<%=request.getContextPath()%>/DeleteUserCollectServlet?questionID="+question_id,
+		dataType: "json",
+		success: function(data) {
+			console.log(data);
+			if(data=="1"){
+				alert('取消收藏成功');
+				window.location.reload();
+			}
+			//if(data=="0"){
+			//	layer.msg('您已收藏过该问题');			
+			//}	
+		},
+		error: function() {
+			alert(1231231)
+		}
+	});
+}
 /*
 
 
@@ -378,36 +408,36 @@ $(function () {
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
 								<a href="">
-								<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${answer.upvote_num}赞</span>
 								</a>
 							</div>
 
 						<div class="downvote div-inline question-btn-padding-right">
 							<a href="">
-							<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
+							<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: darkseagreen;"></i>
 							<span>${answer.downvote_num}踩</span>									
 							</a>
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
-							<a href="">
-								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>					
+							<a href="" >
+								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${answer.comment_num}评论</span>
 							</a>
 						</div>
 						
 						<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>									
-								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
+								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>									
+								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
 							</a>
 						</div>
 			
 						<div class="answer-share div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>
 								<span>分享</span>								
 							</a>
 						</div>
@@ -438,12 +468,12 @@ $(function () {
 					<a href="">${question.title}</a>
 				</div>
 				
-				<div class="layui-row ">
+				<div class="layui-row">
 					<div class="layui-col-md8">
 						<div class="brief">
 							<a href="">${question.content}</a>
 							<a href="" style="color: steelblue;">查看全文</a>
-							<a style="visibility: hidden;" name ="questionID"></a>
+							<a style="visibility: hidden;" name="questionID"></a>
 						</div>
 					</div>
 					<div class="layui-col-md1"><span>&nbsp;</span></div>
@@ -455,36 +485,36 @@ $(function () {
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
 								<a href="">
-								<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${question.fever}热度</span>
 								</a>
 							</div>
 
 						<div class="downvote div-inline question-btn-padding-right">
-							<a href="">
-							<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
+							<a id ="collect_remove_${question.question_id}" onclick="remove_collect($(this))">
+							<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color: darkseagreen;"></i>
 							<span>${question.collect_num}收藏</span>									
 							</a>
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
 							<a href="">
-								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>					
+								<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${question.answer_num}评论</span>
 							</a>
 						</div>
 						
 						<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>									
-								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
+								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>									
+								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
 							</a>
 						</div>
 			
 						<div class="answer-share div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>
 								<span>分享</span>								
 							</a>
 						</div>
@@ -515,7 +545,7 @@ $(function () {
 					<a href="">${question.title}</a>
 				</div>
 				
-				<div class="layui-row ">
+				<div class="layui-row">
 					<div class="layui-col-md8">
 						<div class="brief">
 							<a href="">${question.content}</a>
@@ -532,36 +562,36 @@ $(function () {
 						<div class="answer-button" style="margin-top: 20px;">
 							<div class="upvote  div-inline question-btn-padding-right">
 								<a href="">
-								<i class="layui-icon layui-icon-praise " style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-fire " style="font-size: 20px; color: darkseagreen;"></i>
 								<span>${question.fever}热度</span>
 								</a>
 							</div>
 
 						<div class="downvote div-inline question-btn-padding-right">
 							<a href="">
-							<i class="layui-icon layui-icon-tread" style="font-size: 20px; color: #1E9FFF;"></i>
+							<i class="layui-icon layui-icon-star-fill" style="font-size: 20px; color: darkseagreen;"></i>
 							<span>${question.collect_num}收藏</span>									
 							</a>
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
 							<a href="">
-								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: #1E9FFF;"></i>					
+								<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${question.answer_num}评论</span>
 							</a>
 						</div>
 						
 						<div class="answer-share-type div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: #1E9FFF;"></i>
-								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: #1E9FFF;"></i>									
-								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-login-wechat" style="font-size: 20px; color: darkseagreen;"></i>
+								<i class="layui-icon layui-icon-login-qq" style="font-size: 20px; color: darkseagreen;"></i>									
+								<i class="layui-icon layui-icon-login-weibo" style="font-size: 20px; color: darkseagreen;"></i>
 							</a>
 						</div>
 			
 						<div class="answer-share div-inline question-btn-padding-right" style="float: right;">
 							<a href="">
-								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: #1E9FFF;"></i>
+								<i class="layui-icon layui-icon-release" style="font-size: 20px; color: darkseagreen;"></i>
 								<span>分享</span>								
 							</a>
 						</div>

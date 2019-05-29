@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="/qaSystem/testServlet">测试测试</a>
+<a href="<%=request.getContextPath()%>/testServlet">测试测试</a>
 </body>
 </html>
