@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 
  * @author 25001
- *µÇÂ¼À¹½ØÆ÷
+ * µÇÂ¼¹ıÂË
  */
 
 @WebFilter(filterName = "/jspFilter2_Login", urlPatterns="*.jsp", dispatcherTypes= {DispatcherType.FORWARD,DispatcherType.REQUEST})
@@ -47,7 +47,6 @@ public class jspFilter2_Login implements Filter {
 		}
 		
 		//·ñÔòÌø×ªµ½µÇÂ¼Ò³Ãæ
-		request.setAttribute("erroMessage", "please login first!");
 		request.getRequestDispatcher("//login.jsp").forward(request, response);
 		return;
 	}

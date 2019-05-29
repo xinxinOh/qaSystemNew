@@ -32,7 +32,7 @@
             </form>
             <div class="info">没有账号？点击<a href="register.jsp"><span>注册</span></a></div>
         </div>
-
+</div>
 </body>
 </html>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
@@ -63,5 +63,11 @@
    
 })    
 
+$(document).keydown(function (event) {
+    if (event.keyCode == "13") {
+        alert("确认要提交么？");//没有弹出提示框，但是回车提交了，而且提交成功了
+        
+    }
+});
 </script>
 
