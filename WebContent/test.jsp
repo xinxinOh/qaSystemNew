@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<button class="layui-btn">一个标准的按钮</button>
-<a href="http://www.layui.com" class="layui-btn">一个可跳转的按钮</a>
-
+<a href="/qaSystem/testServlet">测试测试</a>
 </body>
 </html>

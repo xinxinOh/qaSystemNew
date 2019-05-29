@@ -10,15 +10,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 /**
- * Servlet Filter implementation class EncodingFilter
+ * Servlet Filter implementation class jspFilter1_encoding
  */
-@WebFilter(filterName = "/EncodingFilter" , urlPatterns = "/*")
-public class EncodingFilter implements Filter {
+@WebFilter(filterName = "/jspFilter1_encoding" , urlPatterns = "/*")
+public class jspFilter1_encoding implements Filter {
 
     /**
      * Default constructor. 
      */
-    public EncodingFilter() {
+    public jspFilter1_encoding() {
         // TODO Auto-generated constructor stub
     }
 

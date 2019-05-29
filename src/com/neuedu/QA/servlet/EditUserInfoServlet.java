@@ -70,6 +70,8 @@ public class EditUserInfoServlet extends HttpServlet {
 		
 		userService.modifyInfo(user);
 		request.getSession().setAttribute("user", user);
+		
+		request.getRequestDispatcher("//user_home_page/userPage.jsp").forward(request, response);
 	}
 
 	/**

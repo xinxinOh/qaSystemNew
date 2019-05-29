@@ -13,6 +13,7 @@
 		
 		<div class = "user_information_detail">
 			<p class = "weight_font_color">${user.nickname}</p>
+			<p class = "light_font_color" style="font-size: 18px;">芥末id: ${user.user_id}</p>
 			<p class = "user_introduction light_font_color">${user.introduction}</p>
 			<a class="layui-icon layui-icon-edit" style="font-size: 18px; color: darkolivegreen;" id="edit_user_information">编辑个人信息</a>
 		</div>

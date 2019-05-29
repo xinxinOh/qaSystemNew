@@ -43,29 +43,36 @@ public class AskQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserInfo user=(UserInfo)request.getSession().getAttribute("user");
-		String user_id = user.getUser_id();
-		String title = request.getParameter("title");  
-		String category = request.getParameter("category");  
-		String dsec = request.getParameter("desc");  
-
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
-		Date date=new Date();
-		String dateStr = sdf.format(date);
-		Date mydate=null;
-		try {
-			mydate = sdf.parse(dateStr);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (user==null) {
+			request.setAttribute("message", "请先登录！");
+			request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
 		}
+		else {
+			String user_id = user.getUser_id();
+			String title = request.getParameter("title");  
+			String category = request.getParameter("category");  
+			String dsec = request.getParameter("desc");  
 
-		System.out.println(user_id+" "+title+"  "+category+" "+dsec);
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+			Date date=new Date();
+			String dateStr = sdf.format(date);
+			Date mydate=null;
+			try {
+				mydate = sdf.parse(dateStr);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println(user_id+" "+title+"  "+category+" "+dsec);
+			
+			AskQuestionServiceImpl askQuestionServiceImpl=new AskQuestionServiceImpl();
+			askQuestionServiceImpl.askQuestion(new Question(user_id, title, dsec, mydate, Integer.parseInt(category)), user_id);
+			
+			request.setAttribute("message", "发布成功！");
+			request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
+		}
 		
-		AskQuestionServiceImpl askQuestionServiceImpl=new AskQuestionServiceImpl();
-		askQuestionServiceImpl.askQuestion(new Question(user_id, title, dsec, mydate, Integer.parseInt(category)), user_id);
-		
-		request.setAttribute("message", "发布成功！");
-		request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
 	}
 
 }

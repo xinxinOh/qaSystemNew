@@ -116,6 +116,10 @@ a:active {
 
 .personalInfo {
 	background-color: white;
+	border: 1px solid #ccc;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
 }
 
 .right {}
