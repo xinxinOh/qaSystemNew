@@ -42,13 +42,14 @@ public class AskQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserInfo user=(UserInfo)request.getSession().getAttribute("user");
-		if (user==null) {
+		//UserInfo user=(UserInfo)request.getSession().getAttribute("user");
+		/*if (user==null) {
 			request.setAttribute("message", "请先登录！");
 			request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
 		}
-		else {
-			String user_id = user.getUser_id();
+		else {*/
+			//String user_id = user.getUser_id();
+	     	String user_id = "test";
 			String title = request.getParameter("title");  
 			String category = request.getParameter("category");  
 			String dsec = request.getParameter("desc");  
@@ -71,7 +72,7 @@ public class AskQuestionServlet extends HttpServlet {
 			
 			request.setAttribute("message", "发布成功！");
 			request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
-		}
+		//}
 		
 	}
 
