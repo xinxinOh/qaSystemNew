@@ -33,8 +33,14 @@ public class DeleteUserCollectServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
-        UserInfo user=(UserInfo)request.getSession().getAttribute("user");
-        String user_id = user.getUser_id();
+        //UserInfo user=(UserInfo)request.getSession().getAttribute("user");
+		/*
+		 * if (user==null) { request.setAttribute("message", "ÇëÏÈµÇÂ¼£¡");
+		 * request.getRequestDispatcher("//MainPage.jsp").forward(request, response); }
+		 * else {
+		 */
+        //String user_id = user.getUser_id();
+        String user_id ="test";
         String q_id=request.getParameter("questionID"); 
   	    System.out.println("delete collect servlet question_id:"+q_id);
   	    CollectionServiceImpl collectionServiceImpl=new CollectionServiceImpl();
@@ -44,6 +50,7 @@ public class DeleteUserCollectServlet extends HttpServlet {
 		  //request.getSession().setAttribute("questions", jsonString);
 		out.write(string);
 		System.out.println("delete collection servlet run lines:"+string);
+       // }
 	}
 
 	/**
