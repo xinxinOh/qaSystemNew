@@ -6,7 +6,7 @@ window.onload = function() {
 
 		$.ajax({
 		type: "GET",
-		url: "/qaSystemNew/LoadQuestionServlet?start="+0+"&end="+4,
+		url: "LoadQuestionServlet?start="+0+"&end="+4,
 		dataType: "json",
 		success: function(result) {
 			$(".innerQuestion").remove();
