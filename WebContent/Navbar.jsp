@@ -28,7 +28,7 @@
       </li>
       
       <li class="layui-nav-item" style="float: right;">
-        <a href="">回到首页</a>
+        <a href="MainPage.jsp">回到首页</a>
       </li>
       
        <li class="layui-nav-item" style="float: right;">
