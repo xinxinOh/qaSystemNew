@@ -38,7 +38,7 @@
             </form>	
             <div class="info">已有账号？点击<a href="login.jsp"><span>登录</span></a></div>
         </div>
-	
+	</div>
 </body>
 </html>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
