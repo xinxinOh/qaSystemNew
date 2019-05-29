@@ -6,7 +6,7 @@
 
 <div class="user_infomation_box">
 	<div class = "user_head"> 
-		<div class = "acount_picture_class">
+		<div class = "acount_picture_class" onclick = "changeUserAccount()">
 			<img class="layui-nav-img" src="Reaources/UserAccountPicture/${session.user.u_id}.jpg" style="width:100px;height:100px;z-index:3;position:absolute;"/>
 			<img class="layui-nav-img" src="//t.cn/RCzsdCq" style="width:100px;height:100px;z-index:2;position:relative;"/>
 		</div>

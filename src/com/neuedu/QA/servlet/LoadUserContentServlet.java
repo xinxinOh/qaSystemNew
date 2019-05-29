@@ -49,10 +49,10 @@ public class LoadUserContentServlet extends HttpServlet {
 		String start1_s = request.getParameter("start1");
 		int start1 = 0;
 		if (start1_s != null && !start1_s.equals("")) {
-			start1 = Integer.parseInt(request.getParameter("start1"));
+			start1 = (Integer.parseInt(request.getParameter("start1")))*5;
 		}
 		AnswerService answerService = new AnswerServiceImpl();
-		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1*5, start1*5+4);
+		ArrayList<Answer> answers = answerService.showUserAnswer(user_id,start1, 4);
 		request.getSession().setAttribute("answers", answers);
 		
 		//求得回答总数
@@ -78,10 +78,10 @@ public class LoadUserContentServlet extends HttpServlet {
 		String start2_s = request.getParameter("start2");
 		int start2 = 0;
 		if (start2_s != null && !start2_s.equals("")) {
-			start2 = Integer.parseInt(request.getParameter("start2"));
+			start2 = (Integer.parseInt(request.getParameter("start2")))*5;
 		}
 		CollectionService collectionService = new CollectionServiceImpl();
-		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2*5, start2*5+4);
+		ArrayList<Question> collectQuestions = collectionService.showCollection(user_id, start2, 4);
 		request.getSession().setAttribute("collectQuestions", collectQuestions);
 		//System.out.println("sherched "+collectQuestions.size());
 		//System.out.println("questions");
@@ -94,11 +94,11 @@ public class LoadUserContentServlet extends HttpServlet {
 		String start3_s = request.getParameter("start3");
 		int start3 = 0;
 		if (start3_s != null && !start3_s.equals("")) {
-			start3 = Integer.parseInt(request.getParameter("start3"));
+			start3 = (Integer.parseInt(request.getParameter("start3")))*5;
 		}
 		//System.out.println(start3);
 		AskQuestionService questionService = new AskQuestionServiceImpl();
-		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3*5, start3*5+4);
+		ArrayList<Question> questions = questionService.ShowUserQuestion(user_id, start3, 4);
 		request.getSession().setAttribute("questions", questions);
 		
 		//设置提出问题个数
