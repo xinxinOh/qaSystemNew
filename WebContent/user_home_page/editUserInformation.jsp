@@ -24,7 +24,7 @@ layui.use('laydate', function(){
   laydate.render({
     elem: '#birthdate' ,//指定元素
     isInitValue: false,
-    value:"${user.birthdate.year}"+"-"+"${user.birthdate.month}"+"-"+"${user.birthdate.day}"
+    value:"${user.birthdate.year+2018-0118}"+"-"+"${user.birthdate.month}"+"-"+"${user.birthdate.day}"
   });
   
 
