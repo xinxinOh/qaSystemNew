@@ -25,7 +25,6 @@
 	</head>
 
 	<body>
-
 		<div class="layui-row ">
 			<div class=" layui-col-md12">
 				<div class="navbar ">
@@ -103,13 +102,13 @@
 								&nbsp;
 							</div>
 							<div class="title">
-								<a id="title_${question.question_id}" href="">&nbsp;</a>
+								<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}">&nbsp;</a>
 							</div>
 							<div class="layui-row ">
 								<div class="layui-col-md8">
-									<div class="brief">
-										<a id="brief_${question.question_id}" href="">&nbsp;</a>
-										<a href="" style="color: steelblue;">查看全文</a>
+									<div class="brief" >
+										<a href="question.jsp?question_id=${question.question_id}" id="brief_${question.question_id}" >&nbsp;</a>
+										<a href="question.jsp?question_id=${question.question_id}" style="color: steelblue;">查看全文</a>
 										<a style="visibility: hidden;" name="questionID"></a>
 									</div>
 								</div>
@@ -117,8 +116,10 @@
 									<span>&nbsp;</span>
 								</div>
 								<div class="layui-col-md3">
-									<div class="picture">
+									<div class="picture" >
+										<a href="question.jsp?question_id=${question.question_id}">
 										<img src="Resource/webSite/test1.jpg" />
+										</a>
 									</div>
 								</div>
 							</div>
@@ -126,7 +127,7 @@
 								<div class="answer-button" style="margin-top: 20px;">
 
 									<div class="upvote  div-inline question-btn-padding-right">
-										<a href="">
+										<a href="question.jsp?question_id=${question.question_id}">
 											<i class="layui-icon layui-icon-fire " style="font-size: 20px; color:darkseagreen;"></i>
 											<span id="hot_${question.question_id}">&nbsp;热度</span>
 										</a>
@@ -140,7 +141,7 @@
 									</div>
 
 									<div class="comment div-inline question-btn-padding-right">
-										<a href="">
+										<a href="question.jsp?question_id=${question.question_id}">
 											<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color:darkseagreen;"></i>
 											<span id="comment_${question.question_id}">&nbsp;评论</span>
 										</a>
@@ -247,12 +248,14 @@
 
 					</div>
 					</div>
-					<div class=" layui-col-md1">
+					
+				</div>
+				<div class=" layui-col-md1">
 						<div class="right">
 
 						</div>
 					</div>
-				</div>
+					</div>
 				<%
 String errorInfo = (String)request.getAttribute("message");         // 获取错误属性
 if(errorInfo != null) {
