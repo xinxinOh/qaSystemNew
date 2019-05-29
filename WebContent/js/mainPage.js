@@ -23,13 +23,13 @@ window.onload = function() {
 					"&nbsp;"+
 				"</div>"+
 				"<div class='title' >"+
-					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"'>"+s2+"</a>"+
+					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"&title="+s2+"'>"+s2+"</a>"+
 				"</div>"+
 				"<div class='layui-row'>"+
 					"<div class='layui-col-md8'>"+
 						"<div class='brief'>"+
-							"<a href='question.jsp?question_id="+s1+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
-							"<a href='question.jsp?question_id="+s1+"'"+"style='color: steelblue;'>查看全文</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" style='color: steelblue;'>查看全文</a>"+
 							"<a style=''visibility: hidden;' name='questionID'></a>"+
 						"</div>"+
 					"</div>"+
@@ -38,7 +38,7 @@ window.onload = function() {
 					"</div>"+
 					"<div class='layui-col-md3'>"+
 						"<div class='picture'>"+
-						   "<a href='question.jsp?question_id="+s1+"'>"+
+						   "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 						       "<img src='Resource/webSite/test1.jpg' />"+
 						   "</a>"+
 						"</div>"+
@@ -48,7 +48,7 @@ window.onload = function() {
 					"<div class='answer-button' style='margin-top: 20px;'>"+
 
 						"<div class='upvote  div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 								"<i class='layui-icon layui-icon-fire ' style='font-size: 20px; color:darkseagreen;'></i>"+
 								"<span id='hot_"+s1+"'>"+s4+"热度</span>"+
 							"</a>"+
@@ -61,7 +61,7 @@ window.onload = function() {
 						"	</a>"+
 						"</div>"+
 						"<div class='comment div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 							"	<i class='layui-icon layui-icon-dialogue' style='font-size: 20px; color:darkseagreen;'></i>"+
 							"<span id='comment_"+s1+"'>"+s5+"评论</span>"+	
 							"</a>"+
@@ -162,13 +162,13 @@ function getCategory(category) {
 					"&nbsp;"+
 				"</div>"+
 				"<div class='title' >"+
-					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"'>"+    s2+"</a>"+
+					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"&title="+s2+"'>"+s2+"</a>"+
 				"</div>"+
 				"<div class='layui-row'>"+
 					"<div class='layui-col-md8'>"+
 						"<div class='brief'>"+
-							"<a href='question.jsp?question_id="+s1+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
-							"<a href='question.jsp?question_id="+s1+"'"+"style='color: steelblue;'>查看全文</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" style='color: steelblue;'>查看全文</a>"+
 							"<a style=''visibility: hidden;' name='questionID'></a>"+
 						"</div>"+
 					"</div>"+
@@ -177,7 +177,7 @@ function getCategory(category) {
 					"</div>"+
 					"<div class='layui-col-md3'>"+
 						"<div class='picture'>"+
-						   "<a href='question.jsp?question_id="+s1+"'>"+
+						   "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 						       "<img src='Resource/webSite/test1.jpg' />"+
 						   "</a>"+
 						"</div>"+
@@ -187,7 +187,7 @@ function getCategory(category) {
 					"<div class='answer-button' style='margin-top: 20px;'>"+
 
 						"<div class='upvote  div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 								"<i class='layui-icon layui-icon-fire ' style='font-size: 20px; color:darkseagreen;'></i>"+
 								"<span id='hot_"+s1+"'>"+s4+"热度</span>"+
 							"</a>"+
@@ -200,7 +200,7 @@ function getCategory(category) {
 						"	</a>"+
 						"</div>"+
 						"<div class='comment div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 							"	<i class='layui-icon layui-icon-dialogue' style='font-size: 20px; color:darkseagreen;'></i>"+
 							"<span id='comment_"+s1+"'>"+s5+"评论</span>"+	
 							"</a>"+
@@ -253,7 +253,7 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
     	var end=start+3;
  
     	if(cate=="100")//在热门页面
-    		var Surl="/qaSystemNew/LoadQuestionServlet?start="+start+"&end="+end;
+    		var Surl="LoadQuestionServlet?start="+start+"&end="+end;
     	else
     		var Surl="LoadCategoryQuestionServlet?category="+cate+"&start="+start+"&end="+end;
     	collectQuestionID=load_user_collect();
@@ -286,13 +286,13 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
 					"&nbsp;"+
 				"</div>"+
 				"<div class='title' >"+
-					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"'>"+    s2+"</a>"+
+					"<a id=title_"+s1+" href='question.jsp?question_id="+s1+"&title="+s2+"'>"+s2+"</a>"+
 				"</div>"+
 				"<div class='layui-row'>"+
 					"<div class='layui-col-md8'>"+
 						"<div class='brief'>"+
-							"<a href='question.jsp?question_id="+s1+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
-							"<a href='question.jsp?question_id="+s1+"'"+"style='color: steelblue;'>查看全文</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" id=brief_"+s1+" >"+s3+"</a>"+
+							"<a href='question.jsp?question_id="+s1+"&title="+s2+"'"+" style='color: steelblue;'>查看全文</a>"+
 							"<a style=''visibility: hidden;' name='questionID'></a>"+
 						"</div>"+
 					"</div>"+
@@ -301,7 +301,7 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
 					"</div>"+
 					"<div class='layui-col-md3'>"+
 						"<div class='picture'>"+
-						   "<a href='question.jsp?question_id="+s1+"'>"+
+						   "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 						       "<img src='Resource/webSite/test1.jpg' />"+
 						   "</a>"+
 						"</div>"+
@@ -311,7 +311,7 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
 					"<div class='answer-button' style='margin-top: 20px;'>"+
 
 						"<div class='upvote  div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 								"<i class='layui-icon layui-icon-fire ' style='font-size: 20px; color:darkseagreen;'></i>"+
 								"<span id='hot_"+s1+"'>"+s4+"热度</span>"+
 							"</a>"+
@@ -324,7 +324,7 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
 						"	</a>"+
 						"</div>"+
 						"<div class='comment div-inline question-btn-padding-right'>"+
-						 "<a href='question.jsp?question_id="+s1+"'>"+
+						 "<a href='question.jsp?question_id="+s1+"&title="+s2+"'>"+
 							"	<i class='layui-icon layui-icon-dialogue' style='font-size: 20px; color:darkseagreen;'></i>"+
 							"<span id='comment_"+s1+"'>"+s5+"评论</span>"+	
 							"</a>"+

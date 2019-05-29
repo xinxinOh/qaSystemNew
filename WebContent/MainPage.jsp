@@ -102,13 +102,13 @@
 								&nbsp;
 							</div>
 							<div class="title">
-								<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}">&nbsp;</a>
+								<a id="title_${question.question_id}" href="question.jsp?question_id=${question.question_id}&title=${question.title}">&nbsp;</a>                         
 							</div>
 							<div class="layui-row ">
 								<div class="layui-col-md8">
 									<div class="brief" >
-										<a href="question.jsp?question_id=${question.question_id}" id="brief_${question.question_id}" >&nbsp;</a>
-										<a href="question.jsp?question_id=${question.question_id}" style="color: steelblue;">查看全文</a>
+										<a href="question.jsp?question_id=${question.question_id}&title=${question.title}" id="brief_${question.question_id}" >&nbsp;</a>
+										<a href="question.jsp?question_id=${question.question_id}&title=${question.title}" style="color: steelblue;">查看全文</a>
 										<a style="visibility: hidden;" name="questionID"></a>
 									</div>
 								</div>
@@ -117,7 +117,7 @@
 								</div>
 								<div class="layui-col-md3">
 									<div class="picture" >
-										<a href="question.jsp?question_id=${question.question_id}">
+										<a href="question.jsp?question_id=${question.question_id}&title=${question.title}">
 										<img src="Resource/webSite/test1.jpg" />
 										</a>
 									</div>
@@ -127,7 +127,7 @@
 								<div class="answer-button" style="margin-top: 20px;">
 
 									<div class="upvote  div-inline question-btn-padding-right">
-										<a href="question.jsp?question_id=${question.question_id}">
+										<a href="question.jsp?question_id=${question.question_id}&title=${question.title}">
 											<i class="layui-icon layui-icon-fire " style="font-size: 20px; color:darkseagreen;"></i>
 											<span id="hot_${question.question_id}">&nbsp;热度</span>
 										</a>
@@ -141,7 +141,7 @@
 									</div>
 
 									<div class="comment div-inline question-btn-padding-right">
-										<a href="question.jsp?question_id=${question.question_id}">
+										<a href="question.jsp?question_id=${question.question_id}&title=${question.title}">
 											<i class="layui-icon layui-icon-dialogue" style="font-size: 20px; color:darkseagreen;"></i>
 											<span id="comment_${question.question_id}">&nbsp;评论</span>
 										</a>
