@@ -2,6 +2,7 @@ package com.neuedu.QA.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,7 +52,7 @@ public class RegisterServlet extends HttpServlet {
 		request.getSession().removeAttribute("p3");
 
 		if ( (p3 !=null) && (p4.equals(p3))) {
-			UserInfo temp = new UserInfo(p1, p2, p1, null, null, 0, null);
+			UserInfo temp = new UserInfo(p1, p2, p1, new Date(), "男", 0, null);
 			String i = impl.Register(temp);
 			System.out.println(i);
 			if (i != null) {
