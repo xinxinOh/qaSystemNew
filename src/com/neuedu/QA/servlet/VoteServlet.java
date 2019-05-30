@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
+import com.neuedu.QA.entity.UserInfo;
 import com.neuedu.QA.entity.UserVote;
 import com.neuedu.QA.service.impl.VoteServiceImpl;
 
@@ -38,12 +39,17 @@ public class VoteServlet extends HttpServlet {
 		
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
+UserInfo user=(UserInfo)request.getSession().getAttribute("user");
         
+        if (user==null){ 
+			out.write("2");
+			System.out.println("Ê§°Ü ÇëÏÈµÇÂ¼");
+			return;
+		}
         if(request.getParameter("votetype").equals("all"))	{
-            String user_id = request.getParameter("user_id");
             String type = request.getParameter("type");
             String category = request.getParameter("category");
-            ArrayList<UserVote> UserVote_list = voteServiceImpl.getAllVote(user_id , Integer.parseInt(type), Integer.parseInt(category));
+            ArrayList<UserVote> UserVote_list = voteServiceImpl.getAllVote(user.getUser_id() , Integer.parseInt(type), Integer.parseInt(category));
             String jsonString_UserVote = JSON.toJSONString(UserVote_list);
             
             out.write(jsonString_UserVote);
@@ -54,18 +60,17 @@ public class VoteServlet extends HttpServlet {
         }
         
         if(request.getParameter("type").equals("0") || request.getParameter("type").equals("1"))	{
-        String user_id = request.getParameter("user_id");
         String to_id = request.getParameter("to_id");
         String type = request.getParameter("type");
         String category = request.getParameter("category");
-        int ret = voteServiceImpl.SelectVote(user_id, Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
+        int ret = voteServiceImpl.SelectVote(user.getUser_id(), Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
         
         if(ret==0) {
         	out.write("0");
         }
         
         if(ret==1) {
-        	ret = voteServiceImpl.userVote(user_id, Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
+        	ret = voteServiceImpl.userVote(user.getUser_id(), Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
         	out.write("1");
         }
         
@@ -74,14 +79,13 @@ public class VoteServlet extends HttpServlet {
         
         
         if(request.getParameter("type").equals("2") || request.getParameter("type").equals("3"))	{
-        String user_id = request.getParameter("user_id");
         String to_id = request.getParameter("to_id");
         String type = request.getParameter("type");
         String category = request.getParameter("category");
         
         
         
-        int ret = voteServiceImpl.userVote(user_id, Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
+        int ret = voteServiceImpl.userVote(user.getUser_id(), Integer.parseInt(to_id), Integer.parseInt(type), Integer.parseInt(category));
         System.out.println("sdadasdsadad"+ret);
         if(ret==0) {
         	out.write("0");

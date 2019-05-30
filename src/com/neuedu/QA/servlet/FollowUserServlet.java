@@ -39,6 +39,15 @@ public class FollowUserServlet extends HttpServlet {
 		
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
+        
+UserInfo user=(UserInfo)request.getSession().getAttribute("user");
+        
+        if (user==null){ 
+			out.write("2");
+			System.out.println("Ê§°Ü ÇëÏÈµÇÂ¼");
+			return;
+		}
+        
         String type = request.getParameter("type");
         System.out.println(type);
         if(type.equals("add")) {

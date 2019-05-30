@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.neuedu.QA.entity.Answer;
+import com.neuedu.QA.entity.UserInfo;
 import com.neuedu.QA.service.impl.AnswerServiceImpl;
 
 /**
@@ -37,12 +38,17 @@ public class AnswerServlet extends HttpServlet {
 
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
+        UserInfo user=(UserInfo)request.getSession().getAttribute("user");
         
+        if (user==null){ 
+			out.write("2");
+			System.out.println("Ê§°Ü ÇëÏÈµÇÂ¼");
+			return;
+		}
 
         String question_id = request.getParameter("question_id");
         String content = request.getParameter("content");
-        String user_id = request.getParameter("user_id");
-        int ret = answerServiceImpl.addAnswer(new Answer(0,Integer.parseInt(question_id),user_id,content,0,0,0,new Date()));
+        int ret = answerServiceImpl.addAnswer(new Answer(0,Integer.parseInt(question_id),user.getUser_id(),content,0,0,0,new Date()));
         
         if(ret==0) {
         	out.write("0");
