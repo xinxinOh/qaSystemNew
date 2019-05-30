@@ -339,8 +339,8 @@ function remove_collect(obj){
 	var Qid = id.split("_");//collect_remove_$(question.question_id)
 	var question_id = Qid[2];
 	
-	alert(id);
-	alert(question_id)
+	//alert(id);
+	//alert(question_id)
 	
 	$.ajax({
 		async:false,
@@ -370,17 +370,17 @@ function remove_collect(obj){
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/MainPage.css">
 <div class="layui-tab layui-tab-card">
   	<ul class="layui-tab-title content_bar">
-		<li class="layui-this">动态</li>
-		<li>回答</li>
+		<li class="layui-this">欢迎</li>
+		<li >回答</li>
 		<li>收藏</li>
 		<li>提问</li>
 	</ul>
 	<div class="layui-tab-content" style="">
 	
-    	<div class="layui-tab-item layui-show contentDetail_box">暂无动态</div>
+    	<div class="layui-tab-item layui-show contentDetail_box">欢迎来到个人中心！</div>
     
     	<!-- 回答 -->
-    	<div class="layui-tab-item contentDetail_box" varStatus="status" id = "">
+    	<div class="layui-tab-item contentDetail_box" varStatus="status">
     		<div id = "answer_content_box">
     		<div class = "content_box">
     		<c:forEach items = "${answers}" var="answer">
@@ -388,14 +388,14 @@ function remove_collect(obj){
 				<div class="layui-row ">&nbsp;</div>
 				
 				<div class="title">
-					<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}">"${answerQuestions.get(status.count).title}"</a>
+					<a id="title_${answerQuestions.get(status.index).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.index).question_id}&title=${answerQuestions.get(status.index).title}">"${answerQuestions.get(status.index).title}"</a>
 				</div>
 				
 				<div class="layui-row ">
 					<div class="layui-col-md8">
 						<div class="brief">
 							<a href="">${answer.content}</a>
-							<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}" style="color: steelblue;">查看全文</a>
+							<a id="title_${answerQuestions.get(status.index).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.index).question_id}&title=${answerQuestions.get(status.index).title}" style="color: steelblue;">查看全文</a>
 							<a style="visibility: hidden;" name="questionID"></a>
 						</div>
 					</div>
@@ -421,7 +421,7 @@ function remove_collect(obj){
 						</div>
 
 						<div class="comment div-inline question-btn-padding-right">
-							<a id="title_${answerQuestions.get(status.count).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.count).question_id}&title=${answerQuestions.get(status.count).title}">
+							<a id="title_${answerQuestions.get(status.index).question_id}" href="question.jsp?question_id=${answerQuestions.get(status.index).question_id}&title=${answerQuestions.get(status.index).title}">
 								<i class="layui-icon layui-icon-reply-fill" style="font-size: 20px; color: darkseagreen;"></i>					
 								<span>${answer.comment_num}评论</span>
 							</a>
