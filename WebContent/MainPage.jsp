@@ -9,15 +9,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>主页</title>
+		<script src="./js/mainPage.js"></script>
+		<script src="./js/jquery-1.8.3.js"></script>
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.css" media="all">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/MainPage.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/user_home_page.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/layui.mobile.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/modules/layer/default/layer.css">
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/modules/laydate/default/ladate.css">
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/layui/css/modules/laydate/default/laydate.css">
 
-		<script src="<%=request.getContextPath()%>/js/mainPage.js"></script>
-		<script src="<%=request.getContextPath()%>/js/jquery-1.8.3.js"></script>
 		<script src="<%=request.getContextPath()%>/layui/layui.js"></script>
 		<script src="<%=request.getContextPath()%>/layui/layui.all.js"></script>
 		<script src="<%=request.getContextPath()%>/layui/lay/modules/layer.js"></script>
@@ -77,7 +77,7 @@
 
 			</div>
 			<div class=" layui-col-md4">
-
+           
 			</div>
 
 		</div>

@@ -35,16 +35,19 @@ public class UserCollectServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Í¬²½£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡");
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
-        //UserInfo user=(UserInfo)request.getSession().getAttribute("user");
-		/*
-		 * if (user==null) { request.setAttribute("message", "ÇëÏÈµÇÂ¼£¡");
-		 * request.getRequestDispatcher("//MainPage.jsp").forward(request, response); }
-		 * else {
-		 */
-        //String user_id = user.getUser_id();
-        String user_id ="test";
+        UserInfo user=(UserInfo)request.getSession().getAttribute("user");
+		//System.out.println("!!!!!!!"+"!!!!!"+user.getUser_id());
+		 if (user==null){ 
+			 out.write("2");
+			System.out.println("ÊÕ²ØÊ§°Ü ÇëÏÈµÇÂ¼");
+		 }
+		 else {
+		 
+        String user_id = user.getUser_id();
+        //String user_id ="test";
         String q_id=request.getParameter("questionID"); 
   	    System.out.println("collect servlet question_id:"+q_id);
   	    CollectionServiceImpl collectionServiceImpl=new CollectionServiceImpl();
@@ -54,7 +57,9 @@ public class UserCollectServlet extends HttpServlet {
 		  //request.getSession().setAttribute("questions", jsonString);
 		out.write(string);
 		System.out.println("collection servlet run lines:"+string);
-      //  }
+        }
+		 
+		 
 	}
 
 	/**

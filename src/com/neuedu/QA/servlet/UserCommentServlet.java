@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.neuedu.QA.entity.Comment;
+import com.neuedu.QA.entity.UserInfo;
 import com.neuedu.QA.service.impl.UserCommentServiceImpl;
 
 /**
@@ -39,11 +40,17 @@ public class UserCommentServlet extends HttpServlet {
 		response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
         
+        UserInfo user=(UserInfo)request.getSession().getAttribute("user");
+        
+        if (user==null){ 
+			out.write("2");
+			System.out.println("Ê§°Ü ÇëÏÈµÇÂ¼");
+			return;
+		}
         if(request.getParameter("type").equals("answer_comment")){
         String answer_id = request.getParameter("answer_id");
         String content = request.getParameter("content");
-        String user_id = request.getParameter("user_id");
-        int ret = userCommentServiceImpl.AddComment(new Comment(0,Integer.parseInt(answer_id),user_id,content,new Date(),0,0));
+        int ret = userCommentServiceImpl.AddComment(new Comment(0,Integer.parseInt(answer_id),user.getUser_id(),content,new Date(),0,0));
         if(ret==0) {
         	out.write("0");
         }
@@ -58,9 +65,8 @@ public class UserCommentServlet extends HttpServlet {
         	
             String comment_id = request.getParameter("comment_id");
             String content = request.getParameter("content");
-            String user_id = request.getParameter("user_id");
             
-            int ret = userCommentServiceImpl.AddSecondComment(new Comment(0,null,user_id,content,new Date(),0,0), Integer.parseInt(comment_id));
+            int ret = userCommentServiceImpl.AddSecondComment(new Comment(0,null,user.getUser_id(),content,new Date(),0,0), Integer.parseInt(comment_id));
             System.out.println(content);
             if(ret==0) {
             	out.write("0");

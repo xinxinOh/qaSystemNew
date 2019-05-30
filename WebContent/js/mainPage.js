@@ -2,11 +2,12 @@ var cate='100';//默认种类为2 显示社会新闻
 var collectQuestionID;
 
 window.onload = function() {
+	collectQuestionID=new Array();
 	    collectQuestionID=load_user_collect();
 
 		$.ajax({
 		type: "GET",
-		url: "LoadQuestionServlet?start="+0+"&end="+4,
+		url: "/qaSystemNew/LoadQuestionServlet?start="+"0"+"&end="+"4",
 		dataType: "json",
 		success: function(result) {
 			$(".innerQuestion").remove();
@@ -91,51 +92,56 @@ window.onload = function() {
 				"</div>"+
 			"</div>  "; 
 	             $('#question').append(div);  
+	           check_collect(s1);
 	         });
 		},
 		error: function() {
-			alert(123);
+			alert("onloadError123");
 		}
 	});
-		check_collect();
+		//check_collect();
 }
 
 function load_user_collect(){
-	var collect_question_id = new Array()
+	var collect_question_id = new Array();
 				$.ajax({
 					async: false,
 					type: "GET",
-					url: "LoadUserCollectServlet",
+					url: "/qaSystemNew/LoadUserCollectServlet",
 					dataType: "text",
 					success: function(data_question) {
+						if(data_question=="2"){
+							//layer.msg('请先登录');
+						}else{
+							$.each($.parseJSON(data_question), function(idx_question, obj_question) {
+								collect_question_id[idx_question] = obj_question.question_id;
+								//alert(collect_question_id[idx_question]);
+								//alert(obj_question.question_id);
+							})
+						}
 						
-						$.each($.parseJSON(data_question), function(idx_question, obj_question) {
-							collect_question_id[idx_question] = obj_question.question_id;
-							//alert(collect_question_id[idx_question]);
-							//alert(obj_question.question_id);
-						})
 					},
 					error: function() {
-						alert(123);
+						alert("load_user_collect error");
 					}
 				});
 				return collect_question_id;
 }
 
-function check_collect() {
-				var str = "collect_" ;
-				var question_id ="";
-				//alert(Follow_user[0]);
-				for(x in collectQuestionID) {			
-					question_id = str + collectQuestionID[x];
-					//alert(question_id);
-					//var spanid='#collect_'+question_id;
-					//$("button[id='" + follow_id + "'")
-					var collectSpan=$("span[id='" + question_id + "'");
-					collectSpan.prev().removeClass("layui-icon layui-icon-star");
-					collectSpan.prev().addClass("layui-icon layui-icon-star-fill");
-				}
-			}
+
+function check_collect(id) {
+	var str = "collect_" ;
+	var question_id ="";
+	//alert(Follow_user[0]);
+	for(x in collectQuestionID) {	
+		if(id==collectQuestionID[x]){
+			question_id = str + collectQuestionID[x];
+			var collectSpan=$("span[id='" + question_id + "'");
+			collectSpan.prev().removeClass("layui-icon layui-icon-star");
+			collectSpan.prev().addClass("layui-icon layui-icon-star-fill");
+		}
+	}
+}
 
 
 function getCategory(category) {
@@ -144,7 +150,7 @@ function getCategory(category) {
 	cate=category;
 	$.ajax({
 		type: "GET",
-		url: "LoadCategoryQuestionServlet?category="+cate+"&start="+0+"&end="+3,
+		url: "/qaSystemNew/LoadCategoryQuestionServlet?category="+cate+"&start="+0+"&end="+3,
 		dataType: "json",
 		success: function(result) {
 			$(".innerQuestion").remove();
@@ -230,11 +236,12 @@ function getCategory(category) {
 				"</div>"+
 			"</div>  "; 
 	             $('#question').append(div);  
+	              check_collect(s1);
 	         });
-			 check_collect();
+			// check_collect();
 		},
 		error: function() {
-			alert(123);
+			alert("getCategory error");
 		}
 	});
 	
@@ -253,9 +260,9 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
     	var end=start+3;
  
     	if(cate=="100")//在热门页面
-    		var Surl="LoadQuestionServlet?start="+start+"&end="+end;
+    		var Surl="/qaSystemNew/LoadQuestionServlet?start="+start+"&end="+end;
     	else
-    		var Surl="LoadCategoryQuestionServlet?category="+cate+"&start="+start+"&end="+end;
+    		var Surl="/qaSystemNew/LoadCategoryQuestionServlet?category="+cate+"&start="+start+"&end="+end;
     	collectQuestionID=load_user_collect();
     	$.ajax({
     		type: "GET",
@@ -354,13 +361,14 @@ window.onscroll = function () { // console.log("1:" + $(document).scrollTop());
 				"</div>"+
 			"</div>  "; 
     	             $('#question').append(div);  
+    	              check_collect(s1);
     	         });
     		},
     		error: function() {
-    			alert(1231231)
+    			alert("window.onscroll error");
     		}
     	});
-    	check_collect();
+    	//check_collect();
     	
             //假设你的列表返回在data集合中
     		/*if(res.data==null){
@@ -387,7 +395,7 @@ function collect(a){
 		$.ajax({
 		async:false,
 		type: "GET",
-		url: "DeleteUserCollectServlet?questionID="+Qid[1],
+		url: "/qaSystemNew/DeleteUserCollectServlet?questionID="+Qid[1],
 		dataType: "json",
 		success: function(data) {
 			console.log(data);
@@ -397,12 +405,12 @@ function collect(a){
 				a.prev().removeClass("layui-icon layui-icon-star-fill");
 				a.prev().addClass("layui-icon layui-icon-star");
 			}
-			//if(data=="0"){
-			//	layer.msg('您已收藏过该问题');			
-			//}	
+			if(data=="2"){
+				layer.msg('请先登录');
+			}
 		},
 		error: function() {
-			alert(1231231)
+			alert("取消collect error");
 		}
 		
 	})
@@ -412,7 +420,7 @@ function collect(a){
 		$.ajax({
 		async:false,
 		type: "GET",
-		url: "UserCollectServlet?questionID="+Qid[1],
+		url: "/qaSystemNew/UserCollectServlet?questionID="+Qid[1],
 		dataType: "json",
 		success: function(data) {
 			console.log(data);
@@ -422,14 +430,13 @@ function collect(a){
 				a.prev().removeClass("layui-icon layui-icon-star");
 				a.prev().addClass("layui-icon layui-icon-star-fill");
 			}
-			//if(data=="0"){
-				//layer.msg('您已收藏过该问题');
-				
-			//}
+			if(data=="2"){
+				layer.msg('请先登录');
+			}
 			
 		},
 		error: function() {
-			alert(1231231)
+			alert("collect error");
 		}
 	
 	});

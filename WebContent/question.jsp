@@ -15,6 +15,11 @@
 		<script src="<%=request.getContextPath()%>/layui/layer/layer.js"></script>
 
 		<script type="text/javascript">
+			var urlinfo = location.search.substr(1); //获取url中"?"符后的字串 ('?modFlag=business&role=1')  
+			var theRequest = new Object();
+			console.log(urlinfo);
+			var question_id = urlinfo.split('&')[0].split('=')[1];
+			var question_title = urlinfo.split('&')[1].split('=')[1];
 			var Follow_user = load_user_follow("bfdshter4");
 			var UpVote_answer_id = load_user_vote_answer("bfdshter4", 1, 0);
 			var DownVote_answer_id = load_user_vote_answer("bfdshter4", 0, 0);
@@ -50,6 +55,12 @@
 					}
 				});
 				return Follow_userid;
+			}
+
+			function LoadQuestion() {
+				$("body").children("div").attr('id', 'question-' + question_id);
+				$(".question-title").children("span").text(question_title);
+
 			}
 
 			function load_user_vote_answer(user_id, up_or_down, answer_or_comment) {
@@ -128,6 +139,61 @@
 
 					follow_id = str + Follow_user[x];
 					$("button[id='" + follow_id + "'").text("已关注");
+
+				}
+
+			}
+
+			function CollectQuestion() {
+
+				var id = a.attr('id');
+				var Qid = id.split("_");
+				var collectionClass = a.prev().attr('class');
+				console.log(collectionClass);
+				if(collectionClass == 'layui-icon layui-icon-star-fill') { //已收藏
+					$.ajax({
+						async: false,
+						type: "GET",
+						url: "DeleteUserCollectServlet?questionID=" + Qid[1],
+						dataType: "json",
+						success: function(data) {
+							console.log(data);
+							if(data == "1") {
+								layer.msg('取消收藏成功');
+								a.prev().removeClass("layui-icon layui-icon-star-fill");
+								a.prev().addClass("layui-icon layui-icon-star");
+							}
+						},
+						error: function() {
+							alert(1231231)
+						}
+
+					})
+				} else { //未收藏
+
+					$.ajax({
+						async: false,
+						type: "GET",
+						url: "UserCollectServlet?questionID=" + Qid[1],
+						dataType: "json",
+						success: function(data) {
+							console.log(data);
+							if(data == "1") {
+								layer.msg('收藏成功');
+								//a.text("已收藏");
+								a.prev().removeClass("layui-icon layui-icon-star");
+								a.prev().addClass("layui-icon layui-icon-star-fill");
+							}
+							//if(data=="0"){
+							//layer.msg('您已收藏过该问题');
+							//}
+
+						},
+						error: function() {
+							alert(1231231)
+						}
+
+					});
 
 				}
 
@@ -278,7 +344,7 @@
 				$.ajax({
 					async: false,
 					type: "GET",
-					url: "LoadAnswerServlet?type=answer&question_id=" + "1" + "&start=" + $('.all-answers').children().length + "&end=" + $('.all-answers').children().length + 3,
+					url: "LoadAnswerServlet?type=answer&question_id=" + question_id + "&start=" + $('.all-answers').children().length + "&end=" + $('.all-answers').children().length + 3,
 					dataType: "text",
 					success: function(data_answer) {
 						if($.parseJSON(data_answer) == "") {
@@ -344,7 +410,7 @@
 										'<div class="comment-container" style="margin-top: 30px;margin-bottom: 30px;background: #F8F8F8;">' +
 										'<div class="add-my-comment  div-inline" style="margin-bottom: 30px;">' +
 										'<div class="input-comment" style="padding-top: 30px;">' +
-										'<textarea id=textarea-answer-' + obj_answer.answer_id + ' name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 70px; width:540px; height:120px; "></textarea>' +
+										'<textarea id=textarea-answer-' + obj_answer.answer_id + ' name="" placeholder="" class="layui-textarea" autoHeight="true" style="margin-left: 70px; width:540px; height:120px; "></textarea>' +
 										'</div>' +
 										'</div>' +
 										'<div class="comment-submit" style="width: 480px;margin-left: 70px;height: 38px;">' +
@@ -598,7 +664,7 @@
 			}
 
 			$(document).ready(function() {
-
+				LoadQuestion();
 				loadAnswer();
 
 				$(".see-comment").parent().parent().next().hide();
@@ -671,9 +737,12 @@
 					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "0",
+						url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "0",
 						dataType: "text",
 						success: function(data) {
+							if(data == "2") {
+								layer.msg('请先登录');
+							}
 							if(data == 1) {
 								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
 								s.html(upvote_num + "赞");
@@ -693,7 +762,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "0",
+										url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "0",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -734,9 +803,12 @@
 					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "0",
+						url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "0",
 						dataType: "text",
 						success: function(data) {
+							if(data == "2") {
+								layer.msg('请先登录');
+							}
 							if(data == 1) {
 								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
 								s.html(downvote_num + "踩");
@@ -756,7 +828,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "0",
+										url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "0",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -797,9 +869,12 @@
 					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "1",
+						url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "1" + "&category=" + "1",
 						dataType: "text",
 						success: function(data) {
+							if(data == "2") {
+								layer.msg('请先登录');
+							}
 							if(data == 1) {
 								var upvote_num = parseInt(s.text().replace("赞", "")) + 1; //截取数字
 								s.html(upvote_num + "赞");
@@ -820,7 +895,7 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "1",
+										url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "3" + "&category=" + "1",
 										dataType: "text",
 										success: function(data_quxiao) {
 											if(data_quxiao == 1) {
@@ -861,9 +936,12 @@
 					var this_temp = $(this);
 					$.ajax({
 						type: "GET",
-						url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "1",
+						url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "0" + "&category=" + "1",
 						dataType: "text",
 						success: function(data) {
+							if(data == "2") {
+								layer.msg('请先登录');
+							}
 							if(data == 1) {
 								var downvote_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
 								s.html(downvote_num + "踩");
@@ -883,9 +961,10 @@
 								}, function() {
 									$.ajax({
 										type: "GET",
-										url: "VoteServlet?votetype=999&user_id=" + "bfdshter4" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "1",
+										url: "VoteServlet?votetype=999" + "&to_id=" + answer_id + "&type=" + "2" + "&category=" + "1",
 										dataType: "text",
 										success: function(data_quxiao) {
+
 											if(data_quxiao == 1) {
 
 												var downvote_num = parseInt(s.text().replace("踩", "")) - 1; //截取数字
@@ -922,61 +1001,76 @@
 					var content = $(this).parent().prev().find("textarea").val();
 					var s = $(this).parent().parent().prev().children(".comment").find("span");
 					var name = $(this).parent().prev().find("textarea").attr('name');
-					
+
 					if(name.indexOf("-") >= 0) {
-						
-						
-						if(content.substr(0,3) == "//@"){
-							
-						if(content.indexOf(" ") < 0){
-							layer.msg('请勿修改头部内容！');
-							return;
-						}
-						var split = content.split("@")[1].split(" ");
-						var user_id = $(this).parent().prev().find("textarea").attr('name').split('-')[0];
-						var comment_id = $(this).parent().prev().find("textarea").attr('name').split('-')[1];
-						var nickname = $(this).parent().prev().find("textarea").attr('name').split('-')[2];
-						var str = "";
-						console.log(nickname);
-						for(var i = 1; i < split.length; i++) {
-							str = str + split[i];
-						}
-						
-						if(str == ""){
-							layer.msg('请输入评论内容！');
-							return;
-						}
-						
-						if(split[0] != nickname){
-							layer.msg('请勿修改头部内容！');
-							return;
-						}
-						
-						$.ajax({
-							type: "GET",
-							url: "UserCommentServlet?type=comment_comment&comment_id=" + comment_id + "&content=" + str + "&user_id=" + "bfdshter4",
-							dataType: "text",
-							success: function(data) {
-								layer.msg('二级评论成功');
-								addNewSecondComment(str, comment_id);
-							},
-							error: function() {
-								alert(123);
+
+						if(content.substr(0, 3) == "//@") {
+
+							if(content.indexOf(" ") < 0) {
+								layer.msg('请勿修改头部内容！');
+								return;
 							}
-						});
-						
-}
-						
-						if(content.substr(0,3) != "//@"){
+							var split = content.split("@")[1].split(" ");
+							var user_id = $(this).parent().prev().find("textarea").attr('name').split('-')[0];
+							var comment_id = $(this).parent().prev().find("textarea").attr('name').split('-')[1];
+							var nickname = $(this).parent().prev().find("textarea").attr('name').split('-')[2];
+							var str = "";
+							console.log(str);
+							for(var i = 1; i < split.length; i++) {
+								str = str + split[i];
+							}
+
+							if(str == "") {
+								layer.msg('请输入评论内容！');
+
+								return;
+							}
+
+							if(split[0] != nickname) {
+								layer.msg('请勿修改头部内容！');
+								return;
+							}
+
+							$.ajax({
+								type: "GET",
+								url: "UserCommentServlet?type=comment_comment&comment_id=" + comment_id + "&content=" + str,
+								dataType: "text",
+								success: function(data) {
+									if(data == "2") {
+										layer.msg('请先登录！');
+										return;
+									}
+									layer.msg('二级评论成功');
+									addNewSecondComment(str, comment_id);
+								},
+								error: function() {
+									alert(123);
+								}
+							});
+
+						}
+
+						if(content.substr(0, 3) != "//@") {
 							layer.msg('请勿修改头部内容！');
 						}
 					}
 					if(name.indexOf("-") < 0) {
+					
+					if(content == "") {
+								layer.msg('请输入评论内容！');
+
+								return;
+							}
+					
 						$.ajax({
 							type: "GET",
-							url: "UserCommentServlet?type=answer_comment&answer_id=" + answer_id + "&content=" + content + "&user_id=" + "bfdshter4",
+							url: "UserCommentServlet?type=answer_comment&answer_id=" + answer_id + "&content=" + content,
 							dataType: "text",
 							success: function(data) {
+								if(data == "2") {
+									layer.msg('请先登录！');
+									return;
+								}
 								layer.msg('评论成功');
 								addNewComment(content, answer_id);
 								var comment_num = parseInt(s.text().replace("踩", "")) + 1; //截取数字
@@ -993,11 +1087,20 @@
 					var question_id = $($("body").children("div").get(0)).attr('id').split('-')[1];
 					var content = $(this).parent().parent().prev().find("textarea").val();
 					var s = $(this).parent().parent().prev().children(".comment").find("span");
+					if(content == "") {
+						layer.msg('请输入回答内容！');
+						return;
+					}
 					$.ajax({
 						type: "GET",
-						url: "AnswerServlet?question_id=" + question_id + "&content=" + content + "&user_id=" + "bfdshter4",
+						url: "AnswerServlet?question_id=" + question_id + "&content=" + content,
 						dataType: "text",
 						success: function(data) {
+							if(data == "2") {
+								layer.msg('请先登录');
+								return;
+							}
+
 							if(data == 1) {
 								layer.msg('回答成功');
 							} else {
@@ -1019,7 +1122,6 @@
 				});
 
 				$("body").on("click", ".user-follow", function() {
-
 					var to_user_id = $(this).attr('id').split('-')[3];
 					var s = $(this).find("span");
 					var this_temo = $(this);
@@ -1066,6 +1168,9 @@
 							url: "FollowUserServlet?type=add&user_id=" + "bfdshter4" + "&to_user_id=" + to_user_id,
 							dataType: "text",
 							success: function(data) {
+								if(data == "2") {
+									layer.msg('请先登录');
+								}
 								if(data == 1) {
 									this_temo.text("已关注");
 									layer.msg('关注成功', {
@@ -1080,14 +1185,69 @@
 					}
 				});
 
-			});
+				$("body").on("click", ".collect-question", function() {
+					var intext = $(this).children("a").children("span").text();
+					if(intext.indexOf("已收藏") >= 0) { //已收藏
+						$.ajax({
+							async: false,
+							type: "GET",
+							url: "/qaSystemNew/DeleteUserCollectServlet?questionID=" + question_id,
+							dataType: "json",
+							success: function(data) {
+								console.log(data);
+								if(data == "1") {
+									layer.msg('取消收藏成功');
+									//a.text("已收藏");
+									a.prev().removeClass("layui-icon layui-icon-star-fill");
+									a.prev().addClass("layui-icon layui-icon-star");
+								}
+								if(data == "2") {
+									layer.msg('请先登录');
+								}
+							},
+							error: function() {
+								alert("取消collect error");
+							}
+
+						})
+					} else { //未收藏
+
+						$.ajax({
+							async: false,
+							type: "GET",
+							url: "/qaSystemNew/UserCollectServlet?questionID=" + question_id,
+							dataType: "json",
+							success: function(data) {
+								console.log(data);
+								if(data == "1") {
+									layer.msg('收藏成功');
+									//a.text("已收藏");
+									a.prev().removeClass("layui-icon layui-icon-star");
+									a.prev().addClass("layui-icon layui-icon-star-fill");
+								}
+								if(data == "2") {
+									layer.msg('请先登录');
+								}
+
+							},
+							error: function() {
+								alert("collect error");
+							}
+
+						});
+
+					}
+
+				});
+
+			})
 		</script>
 
 	</head>
 
 	<body>
 
-		<div id="question-1">
+		<div>
 			<div class="layui-header">
 				<jsp:include page="Navbar.jsp" flush="true" />
 			</div>
@@ -1102,19 +1262,15 @@
 						</div>
 
 						<div class="question clearfix">
-							<div class="all-tags question-margin">
-								<a>三农</a>
-								<a>科技</a>
-							</div>
 
 							<div class="question-title question-margin">
-								<span>东软睿道？？？？</span>
+								<span>+question_title+</span>
 							</div>
 
 							<div class="question-button question-margin">
 
 								<div class="collect-question div-inline question-btn-padding-right">
-									<a href="">
+									<a href="javascript:;">
 										<i class="layui-icon layui-icon-star" style="font-size: 20px; color: darkseagreen;"></i>
 										<span>收藏问题</span>
 									</a>
@@ -1165,11 +1321,11 @@
 									<div class="layui-form-item layui-form-text">
 										<label class="layui-form-label"></label>
 										<div class="layui-input-block" style="margin-left:0px;margin-top:0px;min-height:0px">
-											<textarea name="desc" placeholder="" class="layui-textarea" autoHeight="true" style="overflow:hidden;"></textarea>
+											<textarea name="" placeholder="" class="layui-textarea" autoHeight="true" style="overflow:hidden;"></textarea>
 										</div>
 										<div class="layui-form-item">
 											<div class="layui-input-block" style="margin-left:0px;margin-top:30px;">
-												<button class="layui-btn answer-question-btn" style="background:darkseagreen;">回答</button>
+												<button type="button" class="layui-btn answer-question-btn" style="background:darkseagreen;">回答</button>
 												<button type="reset" class="layui-btn layui-btn-primary yq">重置</button>
 											</div>
 										</div>
