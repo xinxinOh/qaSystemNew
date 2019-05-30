@@ -17,7 +17,7 @@
 
 		<div class="form" style="position:relative">
 			<div class="form_register" style="position:absolute">
-				<form action="registerServlet" method="post">
+				<form action="<%=request.getContextPath()%>/registerServlet" method="post">
 					<h1>注册</h1>
 					<div class="form_item">
 						<label for="username">用户名:</label>
@@ -41,7 +41,7 @@
 					</div>
 				</form>
 				<div class="info">已有账号？点击
-					<a href="login.jsp"><span>登录</span></a>
+					<a href="<%=request.getContextPath()%>/login.jsp"><span>登录</span></a>
 				</div>
 			</div>
 		</div>

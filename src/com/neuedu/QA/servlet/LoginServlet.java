@@ -34,34 +34,36 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//请求编码
+		//璇锋眰缂栫爜
         request.setCharacterEncoding("UTF-8");
-        //响应类型
+        //鍝嶅簲绫诲瀷
         response.setContentType("text/html");
-        //响应编码
+        //鍝嶅簲缂栫爜
         response.setCharacterEncoding("UTF-8"); 
 		
-		//获取输入的用户名和密码
+		//鑾峰彇杈撳叆鐨勭敤鎴峰悕鍜屽瘑鐮�
 		String p1 = request.getParameter("username");
 		String p2 = request.getParameter("password");
 	    
-		//与数据库交互的方法
+		//涓庢暟鎹簱浜や簰鐨勬柟娉�
 		impl.Login(p1, p2);
 		//String selectedUser = impl.Login(p1, p2);
 		//System.out.println(selectedUser);
-		System.out.println("欢迎用户：--"+p1+"--登录成功");
+		System.out.println("娆㈣繋鐢ㄦ埛锛�--"+p1+"--鐧诲綍鎴愬姛");
         String i = impl.Login(p1, p2);
         if (i != null ) {
-			//response.getWriter().println("用户登录成功");
-			System.out.println("登录成功");
-			request.getRequestDispatcher("/success.jsp").forward(request, response);
+        	UserInfo user = impl.selectUser(p1);
+        	request.getSession().setAttribute("user", user);
+			//response.getWriter().println("鐢ㄦ埛鐧诲綍鎴愬姛");
+			System.out.println("鐧诲綍鎴愬姛");
+			request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
 		}else {
-                System.out.println("登录失败");
-				request.getRequestDispatcher("/default.jsp").forward(request, response);
+                System.out.println("鐧诲綍澶辫触");
+				request.getRequestDispatcher("//default.jsp").forward(request, response);
 				//response.sendRedirect("default.jsp");
 
 			    }
-        //获取MD5加密对象
+        //鑾峰彇MD5鍔犲瘑瀵硅薄
 //        MD5 pwd = new MD5();
 //
 //        try {
@@ -70,18 +72,18 @@ public class LoginServlet extends HttpServlet {
 //            // TODO: handle exceptio
 //            e.printStackTrace();
 //        }        
-//        //初始化dao层
+//        //鍒濆鍖杁ao灞�
 //        BaseDao userDao = new BaseDao();
-//        /**调用dao层的获取用户的方法*/
+//        /**璋冪敤dao灞傜殑鑾峰彇鐢ㄦ埛鐨勬柟娉�*/
 //        try {
 //            String user = BaseDao.executeSelect(p1 , p2);
 //            System.out.println(user);
 //            
-//            //获取session,将获取到的数据保存到session中
+//            //鑾峰彇session,灏嗚幏鍙栧埌鐨勬暟鎹繚瀛樺埌session涓�
 //            HttpSession session = request.getSession();
 //            session.setAttribute("user", user);
-//            //重定向，跳转到成功页面
-//            response.sendRedirect("主页.jsp");
+//            //閲嶅畾鍚戯紝璺宠浆鍒版垚鍔熼〉闈�
+//            response.sendRedirect("涓婚〉.jsp");
 //            
 //        } catch (Exception e) {      
         //            e.printStackTrace();

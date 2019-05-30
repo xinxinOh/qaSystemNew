@@ -19,7 +19,7 @@
     
      
       <li class="layui-nav-item" style="float: right;">
-        <a href="user_home_page/userPage.jsp"><img src="//t.cn/RCzsdCq" class="layui-nav-img">个人中心</a>
+        <a href="<%=request.getContextPath()%>/user_home_page/userPage.jsp"><img src="//t.cn/RCzsdCq" class="layui-nav-img">个人中心</a>
         <dl class="layui-nav-child">
           <dd><a href="javascript:;">修改信息</a></dd>
           <dd><a href="javascript:;">安全管理</a></dd>

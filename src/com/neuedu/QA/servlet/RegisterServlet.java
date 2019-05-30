@@ -39,15 +39,15 @@ public class RegisterServlet extends HttpServlet {
 		String p3 = request.getParameter("code");
 		String p4 = request.getParameter("yzmH");
 
-		//请求编码
+		//璇锋眰缂栫爜
         request.setCharacterEncoding("UTF-8");
-        //响应类型
+        //鍝嶅簲绫诲瀷
         response.setContentType("text/html");
-        //响应编码
+        //鍝嶅簲缂栫爜
         response.setCharacterEncoding("UTF-8"); 
-		//获取存入session的码
+		//鑾峰彇瀛樺叆session鐨勭爜
 		//String code=(String)request.getSession().getAttribute("p3");
-		//获取之后删除，防止下次验证错误
+		//鑾峰彇涔嬪悗鍒犻櫎锛岄槻姝笅娆￠獙璇侀敊璇�
 		request.getSession().removeAttribute("p3");
 
 		if ( (p3 !=null) && (p4.equals(p3))) {
@@ -55,18 +55,19 @@ public class RegisterServlet extends HttpServlet {
 			String i = impl.Register(temp);
 			System.out.println(i);
 			if (i != null) {
-				System.out.println("注册成功");
-				request.getRequestDispatcher("/success.jsp").forward(request, response);
+				System.out.println("娉ㄥ唽鎴愬姛");
+				request.getSession().setAttribute("user", temp);
+				request.getRequestDispatcher("//MainPage.jsp").forward(request, response);
 				}
 				else {
-	                System.out.println("注册失败");
-					request.getRequestDispatcher("/default.jsp").forward(request, response);
+	                System.out.println("娉ㄥ唽澶辫触");
+					request.getRequestDispatcher("//default.jsp").forward(request, response);
 					//response.sendRedirect("default.jsp");
 				    }				
 		}else {
-			//response.getWriter().println("用户登录成功");		
-			System.out.println("验证码输入错误");
-			request.getRequestDispatcher("/default.jsp").forward(request, response);
+			//response.getWriter().println("鐢ㄦ埛鐧诲綍鎴愬姛");		
+			System.out.println("楠岃瘉鐮佽緭鍏ラ敊璇�");
+			request.getRequestDispatcher("//default.jsp").forward(request, response);
 			//response.sendRedirect("default.jsp");
 			}	
 

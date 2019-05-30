@@ -2,6 +2,8 @@ package com.neuedu.QA.service.impl;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.sql.ResultSet;
+
 import com.neuedu.QA.dao.impl.UserInfoDaoImpl;
 import com.neuedu.QA.entity.UserInfo;
 import com.neuedu.QA.service.UserService;
@@ -13,13 +15,13 @@ public class UserServiceImpl implements UserService{
 	
 	  String getMD5String(String a) {
 	        try {
-	            // 生成一个MD5加密计算摘要
+	            // 鐢熸垚涓�涓狹D5鍔犲瘑璁＄畻鎽樿
 	            MessageDigest md = MessageDigest.getInstance("MD5");
-	            // 计算md5函数
+	            // 璁＄畻md5鍑芥暟
 	            md.update(a.getBytes());
-	            // digest()最后确定返回md5 hash值，返回值为8位字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
-	            // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
-	            //一个byte是八位二进制，也就是2位十六进制字符（2的8次方等于16的2次方）
+	            // digest()鏈�鍚庣‘瀹氳繑鍥瀖d5 hash鍊硷紝杩斿洖鍊间负8浣嶅瓧绗︿覆銆傚洜涓簃d5 hash鍊兼槸16浣嶇殑hex鍊硷紝瀹為檯涓婂氨鏄�8浣嶇殑瀛楃
+	            // BigInteger鍑芥暟鍒欏皢8浣嶇殑瀛楃涓茶浆鎹㈡垚16浣峢ex鍊硷紝鐢ㄥ瓧绗︿覆鏉ヨ〃绀猴紱寰楀埌瀛楃涓插舰寮忕殑hash鍊�
+	            //涓�涓猙yte鏄叓浣嶄簩杩涘埗锛屼篃灏辨槸2浣嶅崄鍏繘鍒跺瓧绗︼紙2鐨�8娆℃柟绛変簬16鐨�2娆℃柟锛�
 	            return new BigInteger(1, md.digest()).toString(16);
 	        } catch (Exception e) {
 	           e.printStackTrace();
@@ -35,13 +37,13 @@ public class UserServiceImpl implements UserService{
 		
 		if(userInfo.getUser_id().equals("") || userInfo.getUser_id() == null) {
 			
-			return "0 "+"�û���������";
+			return "0 "+"锟矫伙拷锟斤拷锟斤拷锟斤拷锟斤拷";
 			
 		}
 		
         if(userInfo.getUser_id().equals(id) && !userInfo.getPassword().equals(password)) {
 			
-			return "0 "+"�������";			
+			return "0 "+"锟斤拷锟斤拷锟斤拷锟�";			
 		}
         
         if(userInfo.getUser_id().equals(id) && userInfo.getPassword().equals(password)) {
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService{
 			return "1 "+id;			
 		} 
 		
-		return "0 "+"����δ֪����";
+		return "0 "+"锟斤拷锟斤拷未知锟斤拷锟斤拷";
 	}
 	
 	
@@ -59,14 +61,14 @@ public class UserServiceImpl implements UserService{
 		userinfo.setPassword(newword);
 		System.out.println(newword);
 
-		//将密码进行md5加密  ，然后再给她放在userinfo实例里
+		//灏嗗瘑鐮佽繘琛宮d5鍔犲瘑  锛岀劧鍚庡啀缁欏ス鏀惧湪userinfo瀹炰緥閲�
 		int ret = userInfoDaoImpl.addUser(userinfo);
 		
 		if(ret==1) {
-			return "1"+ " "+ "ע��ɹ�";
+			return "1"+ " "+ "注锟斤拷晒锟�";
 		}
 		else {
-			return "0"+ " "+ "ע��ʧ��";
+			return "0"+ " "+ "注锟斤拷失锟斤拷";
 		}
 	}
 
@@ -76,6 +78,12 @@ public class UserServiceImpl implements UserService{
 		int ret = userInfoDaoImpl.updateUser(userinfo);
 		
 		return ret;
+	}
+
+	@Override
+	public UserInfo selectUser(String user_id) {
+		// TODO Auto-generated method stub
+		return  userInfoDaoImpl.SelectUser(user_id);
 	}
 	
 }
