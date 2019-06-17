@@ -266,6 +266,7 @@ if(errorInfo != null) {
 				<%
 }
 %>
+<%@include file="/foot.jsp" %>
 	</body>
 
 </html>

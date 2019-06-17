@@ -13,6 +13,6 @@
 <font color="red"><a href="register.jsp">Click me</a> to register!</font>
 <br>
 <font color="red"><a href="login.jsp">Click me</a> to login!</font>
-
+<%@include file="/foot.jsp" %>
 </body>
 </html>

@@ -80,4 +80,5 @@ function changeUserAccount() {
 		
 	</div>
 </body>
+<%@include file="/foot.jsp" %>
 </html>
